@@ -47,7 +47,7 @@ import { normalizeURL, joinURL } from '@nuxt/ufo'
 // Result: /test?query=123%20123#hash,%20test
 normalizeURL('test?query=123 123#hash, test')
 
-// Result: http://loalhost:3000/
+// Result: http://localhost:3000/
 normalizeURL('http://localhost:3000')
 ```
 
