@@ -6,6 +6,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![Github Actions][github-actions-src]][github-actions-href]
 [![Codecov][codecov-src]][codecov-href]
+[![bundle][bundle-src]][bundle-href]
 
 - Depending on native `URL` to parse urls and encoding
 - Zero dependency
@@ -67,7 +68,7 @@ Ensures url ends with a trailing slash
 withTrailingSlash('/foo')
 ```
 
-## `withoutTrailingSlash`
+### `withoutTrailingSlash`
 
 Ensures url does not ends with a trailing slash
 
@@ -92,3 +93,6 @@ MIT. Made with 💖
 
 [codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/main?style=flat-square
 [codecov-href]: https://codecov.io/gh/nuxt-contrib/ufo
+
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@nuxt/ufo
+[bundle-href]: https://bundlephobia.com/result?p=@nuxt/ufo
