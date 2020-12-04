@@ -4,6 +4,7 @@
   "description": "URL utils for humans",
   "repository": "nuxt-contrib/ufo",
   "license": "MIT",
+  "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "browser": "dist/index.browser.js",
@@ -29,6 +30,5 @@
     "standard-version": "latest",
     "ts-jest": "latest",
     "typescript": "latest"
-  },
-  "sideEffetc": false
+  }
 }
