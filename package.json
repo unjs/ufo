@@ -1,7 +1,7 @@
 {
   "name": "@nuxt/ufo",
   "version": "0.0.1",
-  "description": "url utilities",
+  "description": "URL utils for humans",
   "repository": "nuxt-contrib/ufo",
   "license": "MIT",
   "main": "dist/index.js",

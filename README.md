@@ -1,6 +1,6 @@
-# ufo
+# 🛸 ufo
 
-> URL Utilities
+> URL utils for humans
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -87,8 +87,8 @@ MIT. Made with 💖
 [npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/ufo?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/@nuxt/ufo
 
-[github-actions-src]: https://img.shields.io/github/workflow/status/nuxt-contrib/ufo/ci/master?style=flat-square
+[github-actions-src]: https://img.shields.io/github/workflow/status/nuxt-contrib/ufo/ci/main?style=flat-square
 [github-actions-href]: https://github.com/nuxt-contrib/ufo/actions?query=workflow%3Aci
 
-[codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/master?style=flat-square
+[codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/main?style=flat-square
 [codecov-href]: https://codecov.io/gh/nuxt-contrib/ufo
