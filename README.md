@@ -32,6 +32,8 @@ const { normalizeURL, joinURL } = require('@nuxt/ufo')
 import { normalizeURL, joinURL } from '@nuxt/ufo'
 ```
 
+**Notice:** You may need to transpile package and add URL polyfill for legacy environments
+
 ## Usage
 
 ### `normalizeURL`

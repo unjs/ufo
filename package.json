@@ -5,6 +5,8 @@
   "repository": "nuxt-contrib/ufo",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "browser": "dist/index.browser.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -27,5 +29,6 @@
     "standard-version": "latest",
     "ts-jest": "latest",
     "typescript": "latest"
-  }
+  },
+  "sideEffetc": false
 }
