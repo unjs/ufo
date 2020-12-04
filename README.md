@@ -94,5 +94,5 @@ MIT. Made with 💖
 [codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/main?style=flat-square
 [codecov-href]: https://codecov.io/gh/nuxt-contrib/ufo
 
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/@nuxt/ufo
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@nuxt/ufo?style=flat-square
 [bundle-href]: https://bundlephobia.com/result?p=@nuxt/ufo
