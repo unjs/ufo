@@ -11,7 +11,8 @@ describe('normalizeURL', () => {
     'test?query=123#hash': '/test?query=123#hash',
     'http://foo.com/test?query=123#hash': 'http://foo.com/test?query=123#hash',
     '/test?query=123 123#hash, test': '/test?query=123%20123#hash,%20test',
-    'http://localhost:3000': 'http://localhost:3000/'
+    'http://localhost:3000': 'http://localhost:3000/',
+    'http://test.com/%C3%B6?foo=تست': 'http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA'
   }
 
   for (const input in tests) {
