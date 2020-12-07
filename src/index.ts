@@ -18,7 +18,7 @@ export function cleanDoubleSlashes (input: string = '/'): string {
 }
 
 export function hasProtocol (inputStr: string): boolean {
-  return /\w+:\//.test(inputStr)
+  return /^\w+:\//.test(inputStr)
 }
 
 export function parseURL (input: InputURL = '/'): ParsedURL {
