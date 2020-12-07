@@ -25,6 +25,10 @@ export function parseURL (input: InputURL = '/'): ParsedURL {
     return input
   }
   const _hasProtocol = hasProtocol(input)
+  if (!_hasProtocol) {
+    // clean double slashes
+    input = input.replace(/\/{2,}/g, '')
+  }
   const url = new URL(input, _hasProtocol ? undefined : 'default:/')
   return { url, hasProtocol: _hasProtocol }
 }
