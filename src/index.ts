@@ -13,6 +13,10 @@ export function withTrailingSlash (input: string = '/'): string {
   return input.endsWith('/') ? input : (input + '/')
 }
 
+export function withoutDoubleSlash (input: string = '/'): string {
+  return input.split('://').map(str => str.replace(/\/{2,}/g, '/')).join('://')
+}
+
 export function hasProtocol (inputStr: string): boolean {
   return /\w+:\//.test(inputStr)
 }
@@ -25,10 +29,6 @@ export function parseURL (input: InputURL = '/'): ParsedURL {
     return input
   }
   const _hasProtocol = hasProtocol(input)
-  if (!_hasProtocol) {
-    // clean double slashes
-    input = input.replace(/\/{2,}/g, '')
-  }
   const url = new URL(input, _hasProtocol ? undefined : 'default:/')
   return { url, hasProtocol: _hasProtocol }
 }
