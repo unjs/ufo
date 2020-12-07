@@ -13,7 +13,7 @@ export function withTrailingSlash (input: string = '/'): string {
   return input.endsWith('/') ? input : (input + '/')
 }
 
-export function cleanDoubleSlash (input: string = '/'): string {
+export function cleanDoubleSlashes (input: string = '/'): string {
   return input.split('://').map(str => str.replace(/\/{2,}/g, '/')).join('://')
 }
 

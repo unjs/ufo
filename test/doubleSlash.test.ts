@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { cleanDoubleSlash } from '../src'
+import { cleanDoubleSlashes } from '../src'
 
-describe('cleanDoubleSlash', () => {
+describe('cleanDoubleSlashes', () => {
   const tests = {
     '//foo//bar//': '/foo/bar/',
     'http://foo.com//': 'http://foo.com/',
@@ -11,7 +11,7 @@ describe('cleanDoubleSlash', () => {
 
   for (const input in tests) {
     test(input, () => {
-      expect(cleanDoubleSlash(input)).toBe(tests[input])
+      expect(cleanDoubleSlashes(input)).toBe(tests[input])
     })
   }
 })
