@@ -79,15 +79,15 @@ Ensures url does not ends with a trailing slash
 withoutTrailingSlash('/foo/')
 ```
 
-### `withoutDoubleSlash`
+### `cleanDoubleSlash`
 
 Ensures url does not have double slash (except for protocol)
 
 ```ts
 // Result: /foo/bar/
-withoutDoubleSlash('//foo//bar//')
+cleanDoubleSlash('//foo//bar//')
 // Result: http://example.com/analyze/http://localhost:3000/
-withoutDoubleSlash('http://example.com/analyze//http://localhost:3000//')
+cleanDoubleSlash('http://example.com/analyze//http://localhost:3000//')
 ```
 
 ## License

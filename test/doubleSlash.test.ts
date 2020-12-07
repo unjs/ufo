@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { withoutDoubleSlash } from '../src'
+import { cleanDoubleSlash } from '../src'
 
 describe('cleanDoubleSlash', () => {
   const tests = {
@@ -11,7 +11,7 @@ describe('cleanDoubleSlash', () => {
 
   for (const input in tests) {
     test(input, () => {
-      expect(withoutDoubleSlash(input)).toBe(tests[input])
+      expect(cleanDoubleSlash(input)).toBe(tests[input])
     })
   }
 })
