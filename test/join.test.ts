@@ -7,6 +7,7 @@ describe('joinURL', () => {
     { input: ['a'], out: '/a' },
     { input: ['a', 'b'], out: '/a/b' },
     { input: ['a', 'b/', 'c'], out: '/a/b/c' },
+    { input: ['a', 'b/', '/c'], out: '/a/b/c' },
     { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/a/b/c/?foo=bar#123' },
     { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' }
   ]

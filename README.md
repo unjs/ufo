@@ -79,6 +79,17 @@ Ensures url does not ends with a trailing slash
 withoutTrailingSlash('/foo/')
 ```
 
+### `cleanDoubleSlashes`
+
+Ensures url does not have double slash (except for protocol)
+
+```ts
+// Result: /foo/bar/
+cleanDoubleSlashes('//foo//bar//')
+// Result: http://example.com/analyze/http://localhost:3000/
+cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
+```
+
 ## License
 
 MIT. Made with 💖
