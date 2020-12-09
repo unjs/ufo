@@ -1,6 +1,6 @@
-![ufo](https://user-images.githubusercontent.com/904724/101661393-821e1d00-3a48-11eb-9308-069f2a352ee7.png)
+![ufo](https://user-images.githubusercontent.com/904724/101662999-716ea680-3a4a-11eb-99e2-26202b7376cc.png)
 
-# 🛸 ufo
+# 👽 ufo
 
 > URL utils for humans
 
