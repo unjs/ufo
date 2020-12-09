@@ -1,4 +1,6 @@
-# 🛸 ufo
+![ufo](https://user-images.githubusercontent.com/904724/101662999-716ea680-3a4a-11eb-99e2-26202b7376cc.png)
+
+# 👽 ufo
 
 > URL utils for humans
 
@@ -77,6 +79,17 @@ Ensures url does not ends with a trailing slash
 ```ts
 // Result: /foo
 withoutTrailingSlash('/foo/')
+```
+
+### `cleanDoubleSlashes`
+
+Ensures url does not have double slash (except for protocol)
+
+```ts
+// Result: /foo/bar/
+cleanDoubleSlashes('//foo//bar//')
+// Result: http://example.com/analyze/http://localhost:3000/
+cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
 ```
 
 ## License
