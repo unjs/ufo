@@ -3,11 +3,12 @@ import { joinURL, joinPath } from '../src'
 
 describe('joinURL', () => {
   const tests = [
-    { input: [], out: '/' },
-    { input: ['a'], out: '/a' },
-    { input: ['a', 'b'], out: '/a/b' },
-    { input: ['a', 'b/', 'c'], out: '/a/b/c' },
-    { input: ['a', 'b/', '/c'], out: '/a/b/c' },
+    { input: [], out: '' },
+    { input: ['/'], out: '/' },
+    { input: ['/a'], out: '/a' },
+    { input: ['a', 'b'], out: 'a/b' },
+    { input: ['a', 'b/', 'c'], out: 'a/b/c' },
+    { input: ['a', 'b/', '/c'], out: 'a/b/c' },
     { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/a/b/c/?foo=bar#123' },
     { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' }
   ]
@@ -27,10 +28,10 @@ describe('joinURL', () => {
   })
 
   test('no arguments', () => {
-    expect(joinURL()).toBe('/')
+    expect(joinURL()).toBe('')
   })
 
   test('joinPath', () => {
-    expect(joinPath()).toBe('/')
+    expect(joinPath()).toBe('')
   })
 })

@@ -14,4 +14,8 @@ describe('cleanDoubleSlashes', () => {
       expect(cleanDoubleSlashes(input)).toBe(tests[input])
     })
   }
+
+  test('no input', () => {
+    expect(cleanDoubleSlashes()).toBe('')
+  })
 })
