@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/nuxt-contrib/ufo/compare/v0.1.2...v0.1.3) (2020-12-12)
+
+
+### Bug Fixes
+
+* **withParams:** prevent double encoding raw params ([28eb848](https://github.com/nuxt-contrib/ufo/commit/28eb8484961a8af64ebfce12c369d844386c44bb))
+
 ### [0.1.2](https://github.com/nuxt-contrib/ufo/compare/v0.1.1...v0.1.2) (2020-12-12)
 
 
