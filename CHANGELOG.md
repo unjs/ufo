@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/nuxt-contrib/ufo/compare/v0.1.0...v0.1.1) (2020-12-12)
+
+
+### Features
+
+* `withParams` ([309f38a](https://github.com/nuxt-contrib/ufo/commit/309f38a1d1e9496ed08e219238fc8cd306e5e8b8))
+* getParams ([5ad02f6](https://github.com/nuxt-contrib/ufo/commit/5ad02f68e8b9deba144d090b5244dfc7d90f2443))
+
 ## [0.1.0](https://github.com/nuxt-contrib/ufo/compare/v0.0.3...v0.1.0) (2020-12-09)
 
 
