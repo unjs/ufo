@@ -72,6 +72,14 @@ export function getParams (input: InputURL): SearchParams {
 export function joinURL (input0: string, ...input: string[]): string {
   const path = input.map(parseURL)
   const baseURL = parseURL(input0)
+
+  for (const p of path) {
+    p.url.searchParams.forEach((value, key) => {
+      baseURL.url.searchParams.set(key, value)
+    })
+  }
+
   baseURL.url.pathname = joinPath(baseURL.url.pathname, ...path.map(p => p.url.pathname))
+
   return normalizeURL(baseURL)
 }

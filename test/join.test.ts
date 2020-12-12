@@ -10,7 +10,8 @@ describe('joinURL', () => {
     { input: ['a', 'b/', 'c'], out: 'a/b/c' },
     { input: ['a', 'b/', '/c'], out: 'a/b/c' },
     { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/a/b/c/?foo=bar#123' },
-    { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' }
+    { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' },
+    { input: ['a?p1=1', 'b?p2=2'], out: 'a/b?p1=1&p2=2' }
   ]
 
   for (const t of tests) {
