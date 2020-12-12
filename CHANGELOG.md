@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/nuxt-contrib/ufo/compare/v0.1.3...v0.1.4) (2020-12-12)
+
+
+### Bug Fixes
+
+* **joinURL:** preserve params from input path ([8f8f10a](https://github.com/nuxt-contrib/ufo/commit/8f8f10af829046ad27696acec7b123fecd8dca43))
+
 ### [0.1.3](https://github.com/nuxt-contrib/ufo/compare/v0.1.2...v0.1.3) (2020-12-12)
 
 
