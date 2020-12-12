@@ -1,14 +1,10 @@
-![ufo](https://user-images.githubusercontent.com/904724/101662999-716ea680-3a4a-11eb-99e2-26202b7376cc.png)
-
-# 👽 ufo
-
-> URL utils for humans
-
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![Github Actions][github-actions-src]][github-actions-href]
 [![Codecov][codecov-src]][codecov-href]
 [![bundle][bundle-src]][bundle-href]
+
+![👽 ufo](.github/banner.svg)
 
 - Depending on native `URL` to parse urls and encoding
 - Zero dependency
