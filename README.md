@@ -70,6 +70,13 @@ joinURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
 withParams('/foo?page=a', { token: 'secret' })
 ```
 
+### `getParams`
+
+```ts
+// Result: { test: '123', unicode: '好' }
+getParams('http://foo.com/foo?test=123&unicode=%E5%A5%BD')
+```
+
 ### `withTrailingSlash`
 
 Ensures url ends with a trailing slash

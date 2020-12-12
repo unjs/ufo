@@ -6,7 +6,7 @@ export interface ParsedURL {
 
 export type InputURL = string | ParsedURL
 
-export type URLParams = { [key: string]: any }
+export type SearchParams = { [key: string]: any }
 
 export function withoutTrailingSlash (input: string = ''): string {
   return input.endsWith('/') ? input.slice(0, -1) : input
@@ -52,12 +52,19 @@ export function normalizeURL (input: InputURL, stripBase?: boolean): string {
   return isRelative ? path.substr(1) : path
 }
 
-export function withParams (input: InputURL, params: URLParams): string {
+export function withParams (input: InputURL, params: SearchParams): string {
   const parsed = parseURL(input)
   for (const name in params) {
     parsed.url.searchParams.set(name, params[name])
   }
   return normalizeURL(parsed)
+}
+
+export function getParams (input: InputURL): SearchParams {
+  const parsed = parseURL(input)
+  const params: SearchParams = {}
+  parsed.url.searchParams.forEach((value, key) => { params[value] = key })
+  return params
 }
 
 export function joinURL (input0: string, ...input: string[]): string {
