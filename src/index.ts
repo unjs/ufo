@@ -63,7 +63,7 @@ export function withParams (input: InputURL, params: SearchParams): string {
 export function getParams (input: InputURL): SearchParams {
   const parsed = parseURL(input)
   const params: SearchParams = {}
-  parsed.url.searchParams.forEach((value, key) => { params[value] = key })
+  parsed.url.searchParams.forEach((value, key) => { params[key] = value })
   return params
 }
 

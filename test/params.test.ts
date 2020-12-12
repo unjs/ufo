@@ -20,7 +20,7 @@ describe('withParams', () => {
 
 describe('getParams', () => {
   const tests = {
-    'http://foo.com/foo?test=123&unicode=%E5%A5%BD': { 123: 'test', 好: 'unicode' }
+    'http://foo.com/foo?test=123&unicode=%E5%A5%BD': { test: '123', unicode: '好' }
   }
 
   for (const t in tests) {
