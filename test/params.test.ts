@@ -7,8 +7,9 @@ describe('withParams', () => {
     { input: '/', params: {}, out: '/' },
     { input: '?test', params: {}, out: '?test' },
     { input: '/?test', params: {}, out: '/?test' },
-    { input: '/?test', params: { foo: 1 }, out: '/?test=&foo=1' },
-    { input: '/?foo=1', params: { foo: 2 }, out: '/?foo=2' }
+    { input: '/?test', params: { foo: 1 }, out: '/?test&foo=1' },
+    { input: '/?foo=1', params: { foo: 2 }, out: '/?foo=2' },
+    { input: '/?x=1,2,3', params: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' }
   ]
 
   for (const t of tests) {

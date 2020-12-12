@@ -54,9 +54,11 @@ export function normalizeURL (input: InputURL, stripBase?: boolean): string {
 
 export function withParams (input: InputURL, params: SearchParams): string {
   const parsed = parseURL(input)
-  for (const name in params) {
-    parsed.url.searchParams.set(name, params[name])
-  }
+  const mergedParams = { ...getParams(input), ...params }
+  parsed.url.search = Object.keys(mergedParams).map((n) => {
+    const val = mergedParams[n]
+    return val ? `${n}=${decodeURIComponent(mergedParams[n])}` : n
+  }).join('&')
   return normalizeURL(parsed)
 }
 
