@@ -21,11 +21,11 @@ describe('joinURL', () => {
   }
 
   test('invalid URL (null)', () => {
-    expect(() => joinURL(null)).toThrow('URL input should be string recived object (null)')
+    expect(() => joinURL(null)).toThrow('URL input should be string received object (null)')
   })
 
   test('invalid URL (array)', () => {
-    expect(() => joinURL([])).toThrow('URL input should be string recived object ()')
+    expect(() => joinURL([])).toThrow('URL input should be string received object ()')
   })
 
   test('no arguments', () => {

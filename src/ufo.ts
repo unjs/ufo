@@ -14,7 +14,7 @@ export class UFO implements URL {
 
    constructor (input: string = '') {
      if (typeof input !== 'string') {
-       throw new TypeError(`URL input should be string recived ${typeof input} (${input})`)
+       throw new TypeError(`URL input should be string received ${typeof input} (${input})`)
      }
      const _hasProtocol = hasProtocol(input)
      const _isAbsolute = _hasProtocol || input[0] === '/'
@@ -75,7 +75,7 @@ export class UFO implements URL {
 
    append (url: UFO) {
      if (url.hasProtocol) {
-       throw new Error('cannot append a URL with protocol!')
+       throw new Error('Cannot append a URL with protocol')
      }
 
      Object.assign(this.params, url.params)
