@@ -24,10 +24,13 @@ export class UFO implements URL {
      this.hash = decode(parsed.hash || '')
      this.hostname = decode(parsed.hostname || '')
      this.pathname = decode(_isAbsolute ? withLeadingSlash(parsed.pathname) : withoutLeadingSlash(parsed.pathname))
+     if (_hasProtocol && this.pathname === '/' && !input.endsWith('/')) {
+       this.pathname = ''
+     }
      this.username = decode(parsed.username || '')
      this.password = decode(parsed.password || '')
      this.port = parsed.port || ''
-     this.protocol = _hasProtocol ? (parsed.protocol || '') : ''
+     this.protocol = (_hasProtocol && parsed.protocol) || ''
      this.params = parsed.params || {}
    }
 
