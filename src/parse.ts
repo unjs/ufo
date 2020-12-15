@@ -12,13 +12,13 @@ export interface ParsedURL {
 }
 
 export function parseURLNative (input: string = '', _hasProtocol: boolean): ParsedURL {
-  const url: URL & { params: ParamsObject } = new URL(input, _hasProtocol ? undefined : 'default:/') as any
+  const url: URL & { params: ParamsObject } = new URL(input, _hasProtocol ? undefined : 'http://default') as any
   url.params = entriesToObject(url.searchParams.entries())
   return url
 }
 
 export function hasProtocol (inputStr: string): boolean {
-  return /^\w+:\//.test(inputStr)
+  return /^\w+:\/\//.test(inputStr)
 }
 
 export function entriesToObject<T = string> (entries: IterableIterator<[string, T]>): Record<string, T | T[]> {

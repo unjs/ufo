@@ -70,7 +70,7 @@ export class UFO implements URL {
    }
 
    get href (): string {
-     return this.isAbsolute ? (this.origin + this.fullpath) : this.fullpath
+     return (this.hasProtocol && this.isAbsolute) ? (this.origin + this.fullpath) : this.fullpath
    }
 
    append (url: UFO) {
