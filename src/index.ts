@@ -21,7 +21,7 @@ export function cleanDoubleSlashes (input: string = ''): string {
 }
 
 export function hasProtocol (inputStr: string): boolean {
-  return /^\w+:\//.test(inputStr)
+  return /^\w+:\/\//.test(inputStr)
 }
 
 export function parseURL (input: InputURL = ''): ParsedURL {
@@ -33,7 +33,7 @@ export function parseURL (input: InputURL = ''): ParsedURL {
   }
   const _hasProtocol = hasProtocol(input)
   const isRelative = _hasProtocol ? false : (input[0] !== '/')
-  const url = new URL(input, _hasProtocol ? undefined : 'default:/')
+  const url = new URL(input, _hasProtocol ? undefined : 'http://default')
   return { url, hasProtocol: _hasProtocol, isRelative }
 }
 
