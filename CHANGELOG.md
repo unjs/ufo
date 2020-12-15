@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/nuxt-contrib/ufo/compare/v0.1.5...v0.1.6) (2020-12-15)
+
+
+### Bug Fixes
+
+* enforce double slash ([90d8172](https://github.com/nuxt-contrib/ufo/commit/90d8172189081a173b721a5c3d3bb53e8bed1e4b))
+
+### [0.1.5](https://github.com/nuxt-contrib/ufo/compare/v0.1.4...v0.1.5) (2020-12-15)
+
+
+### Bug Fixes
+
+* fix issue with hasProtocol ([239cdf7](https://github.com/nuxt-contrib/ufo/commit/239cdf748a47aa9c32cf054b91cce87d5cae29bc))
+
 ### [0.1.4](https://github.com/nuxt-contrib/ufo/compare/v0.1.3...v0.1.4) (2020-12-12)
 
 
