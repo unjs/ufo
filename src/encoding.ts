@@ -104,7 +104,7 @@ export function encodeParam (text: string | number): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decode (text: string | number): string {
+export function decode (text: string | number = ''): string {
   try {
     return decodeURIComponent('' + text)
   } catch (_err) {

@@ -1,4 +1,4 @@
-import { hasProtocol, parseURLNative, ParamsObject } from './parse'
+import { hasProtocol, parsePath, parseURLNative, ParamsObject } from './parse'
 import { withoutLeadingSlash, withLeadingSlash, withTrailingSlash } from './utils'
 import { encodeSearchParam, encodeHash, encode, encodePath, decode } from './encoding'
 
@@ -20,7 +20,7 @@ export class UFO implements URL {
      const _isAbsolute = _hasProtocol || input[0] === '/'
 
      // Use native URL for parsing (replacable)
-     const parsed = parseURLNative(input, _hasProtocol)
+     const parsed = _hasProtocol ? parseURLNative(input) : parsePath(input)
      this.hash = decode(parsed.hash || '')
      this.hostname = decode(parsed.hostname || '')
      this.pathname = decode(_isAbsolute ? withLeadingSlash(parsed.pathname) : withoutLeadingSlash(parsed.pathname))
