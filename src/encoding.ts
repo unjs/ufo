@@ -24,7 +24,7 @@ const ENC_SPACE_RE = /%20/g // }
  * @param text - string to encode
  * @returns encoded string
  */
-function commonEncode (text: string | number): string {
+export function encode (text: string | number): string {
   return encodeURI('' + text)
     .replace(ENC_PIPE_RE, '|')
     .replace(ENC_BRACKET_OPEN_RE, '[')
@@ -38,7 +38,7 @@ function commonEncode (text: string | number): string {
  * @returns encoded string
  */
 export function encodeHash (text: string): string {
-  return commonEncode(text)
+  return encode(text)
     .replace(ENC_CURLY_OPEN_RE, '{')
     .replace(ENC_CURLY_CLOSE_RE, '}')
     .replace(ENC_CARET_RE, '^')
@@ -53,7 +53,7 @@ export function encodeHash (text: string): string {
  */
 export function encodeQueryValue (text: string | number): string {
   return (
-    commonEncode(text)
+    encode(text)
       // Encode the space as +, encode the + to differentiate it from the space
       .replace(PLUS_RE, '%2B')
       .replace(ENC_SPACE_RE, '+')
@@ -82,7 +82,7 @@ export function encodeQueryKey (text: string | number): string {
  * @returns encoded string
  */
 export function encodePath (text: string | number): string {
-  return commonEncode(text).replace(HASH_RE, '%23').replace(IM_RE, '%3F')
+  return encode(text).replace(HASH_RE, '%23').replace(IM_RE, '%3F')
 }
 
 /**
@@ -118,8 +118,8 @@ export function encodeSearchParam (key: string, val: string | string[]) {
   }
 
   if (Array.isArray(val)) {
-    return val.map(_val => `${key}=${encodeParam(_val)}`).join('&')
+    return val.map(_val => `${encodeQueryKey(key)}=${encodeParam(_val)}`).join('&')
   }
 
-  return `${key}=${encodeParam(val)}`
+  return `${encodeQueryKey(key)}=${encodeParam(val)}`
 }

@@ -1,6 +1,6 @@
 import { hasProtocol, parseURLNative, ParamsObject } from './parse'
 import { withoutLeadingSlash, withLeadingSlash, withTrailingSlash } from './utils'
-import { encodeSearchParam } from './encoding'
+import { encodeSearchParam, encodeHash, encode, encodePath, decode } from './encoding'
 
 export class UFO implements URL {
    params: ParamsObject = {}
@@ -21,11 +21,11 @@ export class UFO implements URL {
 
      // Use native URL for parsing (replacable)
      const parsed = parseURLNative(input, _hasProtocol)
-     this.hash = parsed.hash || ''
-     this.hostname = parsed.hostname || ''
-     this.pathname = _isAbsolute ? withLeadingSlash(parsed.pathname) : withoutLeadingSlash(parsed.pathname)
-     this.username = parsed.username || ''
-     this.password = parsed.password || ''
+     this.hash = decode(parsed.hash || '')
+     this.hostname = decode(parsed.hostname || '')
+     this.pathname = decode(_isAbsolute ? withLeadingSlash(parsed.pathname) : withoutLeadingSlash(parsed.pathname))
+     this.username = decode(parsed.username || '')
+     this.password = decode(parsed.password || '')
      this.port = parsed.port || ''
      this.protocol = _hasProtocol ? (parsed.protocol || '') : ''
      this.params = parsed.params || {}
@@ -58,7 +58,7 @@ export class UFO implements URL {
    }
 
    get host () {
-     return this.hostname + (this.port ? `:${this.port}` : '')
+     return encode(this.hostname) + (this.port ? `:${this.port}` : '')
    }
 
    get origin (): string {
@@ -66,7 +66,7 @@ export class UFO implements URL {
    }
 
    get fullpath (): string {
-     return this.pathname + this.search + this.hash
+     return encodePath(this.pathname) + this.search + encodeHash(this.hash)
    }
 
    get href (): string {
