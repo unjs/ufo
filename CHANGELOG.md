@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/nuxt-contrib/ufo/compare/v0.1.6...v0.2.0) (2020-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* rewrite with URL ponyfill (#4)
+
+### Features
+
+* rewrite with URL ponyfill ([#4](https://github.com/nuxt-contrib/ufo/issues/4)) ([3809d28](https://github.com/nuxt-contrib/ufo/commit/3809d28e0fcb653ae91ed9c9707ad670ded68c6e))
+
 ### [0.1.6](https://github.com/nuxt-contrib/ufo/compare/v0.1.5...v0.1.6) (2020-12-15)
 
 
