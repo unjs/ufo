@@ -1,6 +1,6 @@
 import { hasProtocol, parseURLNative, ParamsObject } from './parse'
 import { withoutLeadingSlash, withLeadingSlash, withTrailingSlash } from './utils'
-import { encodeSearchParam, encodeHash, encode, encodeParam, encodePath, decode } from './encoding'
+import { encodeSearchParam, encodeHash, encode, encodePath, decode } from './encoding'
 
 export class UFO implements URL {
    params: ParamsObject = {}
