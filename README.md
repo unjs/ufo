@@ -6,9 +6,6 @@
 
 ![👽 ufo](.github/banner.svg)
 
-- Depending on native `URL` to parse urls and encoding
-- Zero dependency
-- Treeshakable
 
 ## Install
 

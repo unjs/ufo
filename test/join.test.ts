@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { joinURL, joinPath } from '../src'
+import { joinURL } from '../src'
 
 describe('joinURL', () => {
   const tests = [
@@ -11,7 +11,7 @@ describe('joinURL', () => {
     { input: ['a', 'b/', '/c'], out: 'a/b/c' },
     { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/a/b/c/?foo=bar#123' },
     { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' },
-    { input: ['a?p1=1', 'b?p2=2'], out: 'a/b?p1=1&p2=2' }
+    { input: ['a?x=1', 'b?y=2&y=3&z=4'], out: 'a/b?x=1&y=2&y=3&z=4' }
   ]
 
   for (const t of tests) {
@@ -21,18 +21,14 @@ describe('joinURL', () => {
   }
 
   test('invalid URL (null)', () => {
-    expect(() => joinURL(null)).toThrow('Invalid url: null')
+    expect(() => joinURL(null)).toThrow('URL input should be string received object (null)')
   })
 
   test('invalid URL (array)', () => {
-    expect(() => joinURL([])).toThrow('Invalid url: []')
+    expect(() => joinURL([])).toThrow('URL input should be string received object ()')
   })
 
   test('no arguments', () => {
     expect(joinURL()).toBe('')
-  })
-
-  test('joinPath', () => {
-    expect(joinPath()).toBe('')
   })
 })
