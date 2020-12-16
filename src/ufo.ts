@@ -74,7 +74,7 @@ export class UFO implements URL {
 
    get auth () {
      if (this.username || this.password) {
-       return encodeURIComponent(this.username) + ':' + encodeURIComponent(this.password) + '@'
+       return encodeURIComponent(this.username) + (this.password ? (':' + encodeURIComponent(this.password)) : '') + '@'
      }
      return ''
    }
