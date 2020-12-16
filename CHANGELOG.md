@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/nuxt-contrib/ufo/compare/v0.5.0...v0.5.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* update encodeQueryValue to match URL spec for space and plus ([9446d9c](https://github.com/nuxt-contrib/ufo/commit/9446d9c3f0decaa76754ab74954905375e3b0fc7))
+
 ## [0.5.0](https://github.com/nuxt-contrib/ufo/compare/v0.4.0...v0.5.0) (2020-12-16)
 
 
