@@ -1,0 +1,2 @@
+- https://github.com/web-platform-tests/wpt/blob/master/url/resources/urltestdata.json
+- https://github.com/web-platform-tests/wpt/blob/master/url/resources/toascii.json
