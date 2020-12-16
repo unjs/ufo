@@ -1,7 +1,7 @@
 import { parseURL, parseAuth, parseHost } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
 import { withoutLeadingSlash, withTrailingSlash } from './utils'
-import { encodeHash, encodePath, decode, encodeHost, encode } from './encoding'
+import { encodeHash, encodePath, decode, encodeHost } from './encoding'
 
 export class $URL implements URL {
   protocol: string
