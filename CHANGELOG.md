@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/nuxt-contrib/ufo/compare/v0.2.0...v0.3.0) (2020-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **pkg:** add exports and drop browser field
+* custom url parser
+
+### Features
+
+* **pkg:** add exports and drop browser field ([218225d](https://github.com/nuxt-contrib/ufo/commit/218225d8f5e29462bcba5721d4c484cce573c3ea))
+* compact punycode support ([edaf5ca](https://github.com/nuxt-contrib/ufo/commit/edaf5ca6ec07bfe7f54ca80cda7c86c3d0dfafce))
+* custom url parser ([be8578f](https://github.com/nuxt-contrib/ufo/commit/be8578f5c556e72f6473fe682ef6ecee00ef306f))
+* use custom parsers for urls without hostname ([b22eb2e](https://github.com/nuxt-contrib/ufo/commit/b22eb2ec12c160ed7c713d9bc1285e3509048c1f)), closes [nuxt/nuxt.js#8457](https://github.com/nuxt/nuxt.js/issues/8457)
+
+
+### Bug Fixes
+
+* preserve trailingslash from parse state ([adc9688](https://github.com/nuxt-contrib/ufo/commit/adc9688f2a9096e79910f7475e702839ceef9fb9))
+* remove password from auth when is not provided ([6616f02](https://github.com/nuxt-contrib/ufo/commit/6616f0288f0df757f5896eed5f9290ea1d3b1632))
+
 ## [0.2.0](https://github.com/nuxt-contrib/ufo/compare/v0.1.6...v0.2.0) (2020-12-15)
 
 
