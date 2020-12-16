@@ -20,7 +20,7 @@ describe('normalizeURL', () => {
     'http://foo.com/test?query=123#hash': 'http://foo.com/test?query=123#hash',
     'http://localhost:3000': 'http://localhost:3000',
     'http://my_email%40gmail.com:password@www.my_site.com': 'http://my_email%40gmail.com:password@www.my_site.com',
-    '/test?query=123+123#hash, test': '/test?query=123%2B123#hash,%20test',
+    '/test?query=123,123#hash, test': '/test?query=123,123#hash,%20test',
     'http://test.com/%C3%B6?foo=تست': 'http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA',
     '/http:/': '/http:/',
     'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/': 'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/'
@@ -55,7 +55,7 @@ describe('normalizeURL', () => {
     'http://code.google.com/events/#&product=browser',
     'http://j.mp',
     'ftp://foo.bar/baz',
-    'http://foo.bar/?q=Test%20URL-encoded%20stuff',
+    'http://foo.bar/?q=Tes +URL-encoded stuff#FOO bAR+BAZ',
     'http://مثال.إختبار',
     'http://例子.测试',
     'http://उदाहरण.परीक्षा',
@@ -73,7 +73,8 @@ describe('normalizeURL', () => {
 
   for (const input of validURLS) {
     test(input, () => {
-      expect(withoutTrailingSlash(normalizeURL(input).replace(/\+/g, '%20'))).toBe(withoutTrailingSlash(new URL(input).href))
+      expect(withoutTrailingSlash(normalizeURL(input)))
+        .toBe(withoutTrailingSlash(new URL(input).href))
     })
   }
 })
