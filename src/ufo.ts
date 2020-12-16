@@ -17,16 +17,12 @@ export class UFO implements URL {
        throw new TypeError(`URL input should be string received ${typeof input} (${input})`)
      }
      const _hasProtocol = hasProtocol(input)
-     const _isAbsolute = _hasProtocol || input[0] === '/'
 
      // Use native URL for parsing (replacable)
      const parsed = _hasProtocol ? parseURL(input) : parsePath(input)
      this.hash = decode(parsed.hash || '')
      this.hostname = decode(parsed.hostname || '')
-     this.pathname = decode(_isAbsolute ? withLeadingSlash(parsed.pathname) : withoutLeadingSlash(parsed.pathname))
-     if (_hasProtocol && this.pathname === '/' && !input.endsWith('/')) {
-       this.pathname = ''
-     }
+     this.pathname = decode(parsed.pathname)
      this.username = decode(parsed.username || '')
      this.password = decode(parsed.password || '')
      this.port = parsed.port || ''
