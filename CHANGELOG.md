@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/nuxt-contrib/ufo/compare/v0.5.1...v0.5.2) (2020-12-16)
+
+
+### Bug Fixes
+
+* **pkg:** allow requiring package.json ([#6](https://github.com/nuxt-contrib/ufo/issues/6)) ([5fd5dc7](https://github.com/nuxt-contrib/ufo/commit/5fd5dc7fd0336915e97cb92b52e01e897b04d2e4))
+
 ### [0.5.1](https://github.com/nuxt-contrib/ufo/compare/v0.5.0...v0.5.1) (2020-12-16)
 
 
