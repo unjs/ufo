@@ -7,6 +7,15 @@
 ![👽 ufo](.github/banner.svg)
 
 
+UFO exports URL utilities based on a URL-like interface with some improvements:
+
+- Supporting schemeless and hostless URLs
+- Supporting relative URLs
+- Preserving trailing-slash status
+- Decoded and mutable classs properties
+- Consistent URL parser independent of environment
+- Consistent encoding independent of environment
+
 ## Install
 
 Install using npm or yarn:
@@ -101,7 +110,9 @@ cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
 
 ## License
 
-MIT. Made with 💖
+[MIT](./LICENSE)
+
+Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) for [encoding utlities](https://github.com/vuejs/vue-router-next/blob/v4.0.1/src/encoding.ts)
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/@nuxt/ufo?style=flat-square
