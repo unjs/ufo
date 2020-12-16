@@ -57,9 +57,14 @@ export function parseAuth (input: string = ''): ParsedAuth {
 }
 
 export function parseHost (input: string = ''): ParsedHost {
-  const [hostname, port] = (input.match(/([^/]*)(:0-9+)?/) || []).splice(1)
+  const lastIndex = input.lastIndexOf(':')
+  let port = ''
+  if (lastIndex >= 0) {
+    port = input.substr(lastIndex + 1)
+    input = input.substr(0, lastIndex)
+  }
   return {
-    hostname: decode(hostname),
+    hostname: decode(input),
     port
   }
 }

@@ -84,8 +84,12 @@ export class $URL implements URL {
 
   get href (): string {
     const auth = this.encodedAuth
-    const originWithAuth = (this.protocol ? this.protocol + '//' : '') + (auth ? auth + '@' : '') + encodeHost(this.host)
-    return (this.hasProtocol && this.isAbsolute) ? (originWithAuth + this.fullpath) : this.fullpath
+    const { hostname, port } = parseHost(this.host.toLowerCase())
+    const K = { 'http:': '80', 'ws:': '80', 'https:': '443', wss: '443', ftp: '21' }
+    const portMatchingProto = (port && this.protocol && (K[this.protocol] as string) === port)
+    const originWithAuth = (this.protocol ? this.protocol + '//' : '') + (auth ? auth + '@' : '') + encodeHost(hostname) + ((port && !portMatchingProto) ? ':' + port : '')
+    const normalizedPath = (this.fullpath || '/').replace(/\\/g, '/')
+    return (this.hasProtocol && this.isAbsolute) ? (originWithAuth + normalizedPath) : this.fullpath
   }
 
   append (url: $URL) {
