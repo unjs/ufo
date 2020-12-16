@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/nuxt-contrib/ufo/compare/v0.4.0...v0.5.0) (2020-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* api updates and params renamed to query
+
+### Features
+
+* reduce dependency on $URL for less encode/decoding ([38631cf](https://github.com/nuxt-contrib/ufo/commit/38631cfb90995acde56e0cbef0e341710dcc9e65))
+
 ## [0.4.0](https://github.com/nuxt-contrib/ufo/compare/v0.3.1...v0.4.0) (2020-12-16)
 
 
