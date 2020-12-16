@@ -41,6 +41,16 @@ export function getParams (input: string): ParamsObject {
 }
 
 export function joinURL (base: string, ...input: string[]): string {
+  let url = base || ''
+
+  for (const i of input) {
+    url = withTrailingSlash(url) + withoutLeadingSlash(i)
+  }
+
+  return url
+}
+
+export function resolveURL (base: string, ...input: string[]): string {
   const url = createURL(base)
 
   for (const i of input) {

@@ -60,7 +60,11 @@ normalizeURL('http://localhost:3000')
 ```ts
 // Result: a/b/c
 joinURL('a', '/b', '/c')
+```
 
+### `resolveURL`
+
+```ts
 // Result: http://foo.com/foo/bar/baz?test=123#token
 joinURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
 ```
