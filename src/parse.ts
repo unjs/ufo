@@ -13,9 +13,9 @@ export interface ParsedURL {
 }
 
 export function parseURL (input: string = ''): ParsedURL {
-  const [protocol, auth, hostAndPath] = (input.match(/([^/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
+  const [protocol, auth, hostAndPath] = (input.match(/([^:/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
   const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
-  const [hostname = '', port = ''] = host.split(':')
+  const [hostname = '', port = ''] = (host.match(/([^/]*)(:0-9+)?/) || []).splice(1)
   const { pathname, params, hash } = parsePath(path)
   const [username, password] = auth ? auth.substr(0, auth.length - 1).split(':') : []
 
