@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/nuxt-contrib/ufo/compare/v0.3.1...v0.4.0) (2020-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* lightweight joinURL + resolveURL
+
+### Features
+
+* lightweight joinURL + resolveURL ([9a34622](https://github.com/nuxt-contrib/ufo/commit/9a3462285bd84a5fec68bac1439828f21794e418))
+
 ### [0.3.1](https://github.com/nuxt-contrib/ufo/compare/v0.3.0...v0.3.1) (2020-12-16)
 
 
