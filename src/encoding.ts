@@ -1,3 +1,6 @@
+// @ts-ignore
+import { toASCII } from './punycode'
+
 // Utils used from https://github.com/vuejs/vue-router-next/blob/master/src/encoding.ts (Author @posva)
 
 const HASH_RE = /#/g // %23
@@ -122,4 +125,8 @@ export function encodeSearchParam (key: string, val: string | string[]) {
   }
 
   return `${encodeQueryKey(key)}=${encodeParam(val)}`
+}
+
+export function encodeHost (name: string = '') {
+  return toASCII(name)
 }

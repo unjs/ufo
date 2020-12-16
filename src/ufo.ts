@@ -1,6 +1,6 @@
 import { hasProtocol, parsePath, ParamsObject, parseURL } from './parse'
-import { withoutLeadingSlash, withLeadingSlash, withTrailingSlash } from './utils'
-import { encodeSearchParam, encodeHash, encode, encodePath, decode } from './encoding'
+import { withoutLeadingSlash, withTrailingSlash } from './utils'
+import { encodeSearchParam, encodeHash, encodePath, decode, encodeHost } from './encoding'
 
 export class UFO implements URL {
    params: ParamsObject = {}
@@ -57,7 +57,7 @@ export class UFO implements URL {
    }
 
    get host () {
-     return encode(this.hostname) + (this.port ? `:${this.port}` : '')
+     return encodeHost(this.hostname) + (this.port ? `:${this.port}` : '')
    }
 
    get origin (): string {
