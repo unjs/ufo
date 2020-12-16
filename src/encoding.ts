@@ -115,18 +115,6 @@ export function decode (text: string | number = ''): string {
   }
 }
 
-export function encodeSearchParam (key: string, val: string | string[]) {
-  if (!val) {
-    return key
-  }
-
-  if (Array.isArray(val)) {
-    return val.map(_val => `${encodeQueryKey(key)}=${encodeParam(_val)}`).join('&')
-  }
-
-  return `${encodeQueryKey(key)}=${encodeParam(val)}`
-}
-
 export function encodeHost (name: string = '') {
   return toASCII(name)
 }

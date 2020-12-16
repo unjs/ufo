@@ -1,5 +1,10 @@
-import { UFO } from './ufo'
-import { ParamsObject } from './parse'
+import { $URL } from './url'
+import { parseURL, stringifyParsedURL } from './parse'
+import { QueryObject, parseQuery, stringifyQuery } from './query'
+
+export function hasProtocol (inputStr: string): boolean {
+  return /^\w+:\/\//.test(inputStr)
+}
 
 export function withoutTrailingSlash (input: string = ''): string {
   return input.endsWith('/') ? input.slice(0, -1) : input
@@ -21,23 +26,15 @@ export function cleanDoubleSlashes (input: string = ''): string {
   return input.split('://').map(str => str.replace(/\/{2,}/g, '/')).join('://')
 }
 
-export function createURL (input: string): UFO {
-  return new UFO(input)
+export function withQuery (input: string, query: QueryObject): string {
+  const parsed = parseURL(input)
+  const mergedQuery = { ...parseQuery(parsed.search), ...query }
+  parsed.search = stringifyQuery(mergedQuery)
+  return stringifyParsedURL(parsed)
 }
 
-export function normalizeURL (input: string): string {
-  return createURL(input).toString()
-}
-
-export function withParams (input: string, params: ParamsObject): string {
-  const parsed = createURL(input)
-  const mergedParams = { ...getParams(input), ...params }
-  parsed.params = mergedParams
-  return parsed.toString()
-}
-
-export function getParams (input: string): ParamsObject {
-  return createURL(input).params
+export function getQuery (input: string): QueryObject {
+  return parseQuery(parseURL(input).search)
 }
 
 export function joinURL (base: string, ...input: string[]): string {
@@ -48,6 +45,16 @@ export function joinURL (base: string, ...input: string[]): string {
   }
 
   return url
+}
+
+// $URL based utils
+
+export function createURL (input: string): $URL {
+  return new $URL(input)
+}
+
+export function normalizeURL (input: string): string {
+  return createURL(input).toString()
 }
 
 export function resolveURL (base: string, ...input: string[]): string {

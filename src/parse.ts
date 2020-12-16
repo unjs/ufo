@@ -1,32 +1,39 @@
 import { decode } from './encoding'
-export type ParamsObject = Record<string, string | string[]>
-
+import { hasProtocol } from './utils'
 export interface ParsedURL {
   protocol?: string
-  hostname?: string
-  port?: string
-  username?: string
-  password?: string
+  host?: string
+  auth?: string
   pathname: string
-  hash?: string
-  params?: ParamsObject
+  hash: string
+  search: string
+}
+
+export interface ParsedAuth {
+  username: string
+  password: string
+}
+
+export interface ParsedHost {
+  hostname: string
+  port: string
 }
 
 export function parseURL (input: string = ''): ParsedURL {
+  if (!hasProtocol(input)) {
+    return parsePath(input)
+  }
+
   const [protocol, auth, hostAndPath] = (input.match(/([^:/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
   const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
-  const [hostname = '', port = ''] = (host.match(/([^/]*)(:0-9+)?/) || []).splice(1)
-  const { pathname, params, hash } = parsePath(path)
-  const [username, password] = auth ? auth.substr(0, auth.length - 1).split(':') : []
+  const { pathname, search, hash } = parsePath(path)
 
   return {
     protocol,
-    username,
-    password,
-    hostname,
-    port,
+    auth: auth ? auth.substr(0, auth.length - 1) : '',
+    host,
     pathname,
-    params,
+    search,
     hash
   }
 }
@@ -36,34 +43,31 @@ export function parsePath (input: string = ''): ParsedURL {
 
   return {
     pathname,
-    params: search ? parsedParamsToObject(parseParams(search.substr(1))) : {},
+    search,
     hash
   }
 }
 
-export function parseParams (paramsStr: string = ''): [string, string][] {
-  return paramsStr.split('&').map((param) => {
-    const [key, value] = param.split('=')
-    return [decode(key), decode(value)]
-  })
-}
-
-export function hasProtocol (inputStr: string): boolean {
-  return /^\w+:\/\//.test(inputStr)
-}
-
-export function parsedParamsToObject (entries: [string, string][]): Record<string, string|string[]> {
-  const obj: Record<string, string | string[]> = {}
-  for (const [key, value] of entries) {
-    if (obj[key]) {
-      if (Array.isArray(obj[key])) {
-        (obj[key] as string[]).push(value)
-      } else {
-        obj[key] = [obj[key] as string, value]
-      }
-    } else {
-      obj[key] = value
-    }
+export function parseAuth (input: string = ''): ParsedAuth {
+  const [username, password] = input.split(':')
+  return {
+    username: decode(username),
+    password: decode(password)
   }
-  return obj
+}
+
+export function parseHost (input: string = ''): ParsedHost {
+  const [hostname, port] = (input.match(/([^/]*)(:0-9+)?/) || []).splice(1)
+  return {
+    hostname: decode(hostname),
+    port
+  }
+}
+
+export function stringifyParsedURL (parsed: ParsedURL) {
+  const fullpath = parsed.pathname + (parsed.search ? '?' + parsed.search : '') + parsed.hash
+  if (!parsed.protocol) {
+    return fullpath
+  }
+  return parsed.protocol + '//' + (parsed.auth ? parsed.auth + '@' : '') + parsed.host + fullpath
 }

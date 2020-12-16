@@ -6,16 +6,6 @@
 
 ![👽 ufo](.github/banner.svg)
 
-
-UFO exports URL utilities based on a URL-like interface with some improvements:
-
-- Supporting schemeless and hostless URLs
-- Supporting relative URLs
-- Preserving trailing-slash status
-- Decoded and mutable classs properties
-- Consistent URL parser independent of environment
-- Consistent encoding independent of environment
-
 ## Install
 
 Install using npm or yarn:
@@ -69,19 +59,31 @@ joinURL('a', '/b', '/c')
 joinURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
 ```
 
-### `withparams`
+### `withQuery`
 
 ```ts
 // Result: /foo?page=a&token=secret
-withParams('/foo?page=a', { token: 'secret' })
+withQuery('/foo?page=a', { token: 'secret' })
 ```
 
-### `getParams`
+### `getQuery`
 
 ```ts
 // Result: { test: '123', unicode: '好' }
-getParams('http://foo.com/foo?test=123&unicode=%E5%A5%BD')
+getQuery('http://foo.com/foo?test=123&unicode=%E5%A5%BD')
 ```
+
+### `$URL`
+
+Implementing URL interface with some improvements:
+
+- Supporting schemeless and hostless URLs
+- Supporting relative URLs
+- Preserving trailing-slash status
+- Decoded and mutable classs properties (`protocol`, `host`, `auth`, `pathname`, `query`, `hash`)
+- Consistent URL parser independent of environment
+- Consistent encoding independent of environment
+- Punycode support for host encoding
 
 ### `withTrailingSlash`
 
