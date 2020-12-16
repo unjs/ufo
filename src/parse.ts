@@ -12,30 +12,31 @@ export interface ParsedURL {
   params?: ParamsObject
 }
 
-export function parseURLNative (input: string = ''): ParsedURL {
-  const url: URL & { params: ParamsObject } = new URL(input) as any
-  url.params = parsedParamsToObject(Array.from(url.searchParams.entries()))
-  return url
+export function parseURL (input: string = ''): ParsedURL {
+  const [protocol, auth, hostAndPath] = (input.match(/([^/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
+  const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
+  const [hostname = '', port = ''] = host.split(':')
+  const { pathname, params, hash } = parsePath(path)
+  const [username, password] = auth ? auth.substr(0, auth.length - 1).split(':') : []
+
+  return {
+    protocol,
+    username,
+    password,
+    hostname,
+    port,
+    pathname,
+    params,
+    hash
+  }
 }
 
 export function parsePath (input: string = ''): ParsedURL {
-  const searchIndex = input.indexOf('?')
-  const hashIndex = input.indexOf('#')
-  let search, hash
-
-  if (hashIndex >= 0) {
-    hash = input.substr(hashIndex)
-    input = input.substr(0, hashIndex)
-  }
-
-  if (searchIndex >= 0) {
-    search = input.substr(searchIndex + 1)
-    input = input.substr(0, searchIndex)
-  }
+  const [pathname = '', search = '', hash = ''] = (input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []).splice(1)
 
   return {
-    pathname: input,
-    params: search ? parsedParamsToObject(parseParams(search)) : {},
+    pathname,
+    params: search ? parsedParamsToObject(parseParams(search.substr(1))) : {},
     hash
   }
 }
