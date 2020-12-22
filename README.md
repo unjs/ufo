@@ -11,19 +11,19 @@
 Install using npm or yarn:
 
 ```bash
-npm i @nuxt/ufo
+npm i ufo
 # or
-yarn add @nuxt/ufo
+yarn add ufo
 ```
 
 Import:
 
 ```js
 // CommonJS
-const { normalizeURL, joinURL } = require('@nuxt/ufo')
+const { normalizeURL, joinURL } = require('ufo')
 
 // ESM
-import { normalizeURL, joinURL } from '@nuxt/ufo'
+import { normalizeURL, joinURL } from 'ufo'
 ```
 
 **Notice:** You may need to transpile package and add URL polyfill for legacy environments
@@ -121,11 +121,11 @@ cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
 Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) for [encoding utlities](https://github.com/vuejs/vue-router-next/blob/v4.0.1/src/encoding.ts)
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/@nuxt/ufo?style=flat-square
-[npm-version-href]: https://npmjs.com/package/@nuxt/ufo
+[npm-version-src]: https://img.shields.io/npm/v/ufo?style=flat-square
+[npm-version-href]: https://npmjs.com/package/ufo
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/ufo?style=flat-square
-[npm-downloads-href]: https://npmjs.com/package/@nuxt/ufo
+[npm-downloads-src]: https://img.shields.io/npm/dm/ufo?style=flat-square
+[npm-downloads-href]: https://npmjs.com/package/ufo
 
 [github-actions-src]: https://img.shields.io/github/workflow/status/nuxt-contrib/ufo/ci/main?style=flat-square
 [github-actions-href]: https://github.com/nuxt-contrib/ufo/actions?query=workflow%3Aci
@@ -133,5 +133,5 @@ Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) 
 [codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/main?style=flat-square
 [codecov-href]: https://codecov.io/gh/nuxt-contrib/ufo
 
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/@nuxt/ufo?style=flat-square
-[bundle-href]: https://bundlephobia.com/result?p=@nuxt/ufo
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/ufo?style=flat-square
+[bundle-href]: https://bundlephobia.com/result?p=ufo
