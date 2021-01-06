@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/nuxt-contrib/ufo/compare/v0.5.2...v0.5.3) (2021-01-06)
+
+
+### Bug Fixes
+
+* **parseQuery:** skip ? in query value while parsing (fixes [#9](https://github.com/nuxt-contrib/ufo/issues/9)) ([0cf9f1a](https://github.com/nuxt-contrib/ufo/commit/0cf9f1aed440013e53f7186b8f47648121c4bc8e))
+
 ### [0.5.2](https://github.com/nuxt-contrib/ufo/compare/v0.5.1...v0.5.2) (2020-12-16)
 
 
