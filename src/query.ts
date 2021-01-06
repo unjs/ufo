@@ -9,10 +9,10 @@ export function parseQuery (paramsStr: string = ''): QueryObject {
     paramsStr = paramsStr.substr(1)
   }
   for (const param of paramsStr.split('&')) {
-    const s = param.split('=')
-    if (!s[0]) { continue }
-    const key = decode(s[0])
-    const value = decode(s[1])
+    const s = (param.match(/([^=]+)=?(.*)/) || [])
+    if (s.length < 2) { continue }
+    const key = decode(s[1])
+    const value = decode(s[2] || '')
     if (obj[key]) {
       if (Array.isArray(obj[key])) {
         (obj[key] as string[]).push(value)

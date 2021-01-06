@@ -23,7 +23,8 @@ describe('normalizeURL', () => {
     '/test?query=123,123#hash, test': '/test?query=123,123#hash,%20test',
     'http://test.com/%C3%B6?foo=تست': 'http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA',
     '/http:/': '/http:/',
-    'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/': 'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/'
+    'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/': 'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/',
+    'http://localhost/?redirect=http://google.com?q=test': 'http://localhost/?redirect=http://google.com?q=test'
   }
 
   const validURLS = [
