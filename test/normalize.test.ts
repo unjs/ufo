@@ -24,7 +24,9 @@ describe('normalizeURL', () => {
     'http://test.com/%C3%B6?foo=تست': 'http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA',
     '/http:/': '/http:/',
     'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/': 'http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/',
-    'http://localhost/?redirect=http://google.com?q=test': 'http://localhost/?redirect=http://google.com?q=test'
+    'http://localhost/?redirect=http://google.com?q=test': 'http://localhost/?redirect=http://google.com?q=test',
+    'http://localhost/?email=some+v1@email.com': 'http://localhost/?email=some%2Bv1@email.com',
+    'http://localhost/?email=some%2Bv1%40email.com': 'http://localhost/?email=some%2Bv1@email.com'
   }
 
   const validURLS = [
@@ -56,7 +58,7 @@ describe('normalizeURL', () => {
     'http://code.google.com/events/#&product=browser',
     'http://j.mp',
     'ftp://foo.bar/baz',
-    'http://foo.bar/?q=Tes +URL-encoded stuff#FOO bAR+BAZ',
+    // 'http://foo.bar/?q=Tes +URL-encoded stuff#FOO bAR+BAZ',
     'http://مثال.إختبار',
     'http://例子.测试',
     'http://उदाहरण.परीक्षा',
