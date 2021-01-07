@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { normalizeURL, withoutTrailingSlash } from '../src'
 
+const charactersBelow7F = Array.from(new Array(127)).map((_, i) => String.fromCharCode(i)).join('')
+
 describe('normalizeURL', () => {
   const tests = {
     'http://foo.com': 'http://foo.com',
@@ -65,7 +67,10 @@ describe('normalizeURL', () => {
     // 'http://-.~_!$&\'() * +,;=:% 40: 80 % 2f:::::: @example.com',
     'http://1337.net',
     'http://a.b-c.de',
-    'http://223.255.255.254'
+    'http://223.255.255.254',
+    'http://foo.com/foo?u=https%3A%2F%2Fexample.com%2Fpath%3Fq%3Dstring',
+    'http://foo.com/foo?u=https%3A%2F%2Fexample.com%2Fpath%3Fone%3Dparam%26another%3Dparam%23fragment#realfragment',
+    'http://foo.com/foo?x=' + encodeURIComponent(charactersBelow7F)
   ]
 
   for (const input in tests) {
