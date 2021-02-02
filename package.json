@@ -21,7 +21,8 @@
   "scripts": {
     "build": "siroc build",
     "lint": "eslint --ext .ts .",
-    "release": "yarn test && yarn build && standard-version && git push --follow-tags && npm publish",
+    "prepublishOnly": "yarn build",
+    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
     "test": "yarn lint && jest"
   },
   "dependencies": {},
