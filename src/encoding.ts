@@ -116,7 +116,7 @@ export function decode (text: string | number = ''): string {
 }
 
 /**
- * Decode query value (taking care to handle vue-router substitutions).
+ * Decode query value (consitant with encodeQueryValue for plus encoding).
  *
  * @param text - string to decode
  * @returns decoded string
