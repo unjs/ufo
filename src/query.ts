@@ -1,4 +1,9 @@
-import { decode, encodeQueryKey, encodeQueryValue } from './encoding'
+import {
+  decode,
+  decodeQueryValue,
+  encodeQueryKey,
+  encodeQueryValue,
+} from './encoding'
 
 export type QueryValue = string | string[] | undefined
 export type QueryObject = Record<string, QueryValue>
@@ -12,7 +17,7 @@ export function parseQuery (paramsStr: string = ''): QueryObject {
     const s = (param.match(/([^=]+)=?(.*)/) || [])
     if (s.length < 2) { continue }
     const key = decode(s[1])
-    const value = decode(s[2] || '')
+    const value = decodeQueryValue(s[2] || '')
     if (obj[key]) {
       if (Array.isArray(obj[key])) {
         (obj[key] as string[]).push(value)

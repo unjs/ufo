@@ -10,6 +10,11 @@ const EQUAL_RE = /=/g // %3D
 const IM_RE = /\?/g // %3F
 const PLUS_RE = /\+/g // %2B
 
+const BACKTICK_RE = /\`/g
+const CURLY_OPEN_RE = /\{/g
+const CURLY_CLOSE_RE = /\}/g
+const CARET_RE = /\^/g
+
 const ENC_BRACKET_OPEN_RE = /%5B/g // [
 const ENC_BRACKET_CLOSE_RE = /%5D/g // ]
 const ENC_CARET_RE = /%5E/g // ^
@@ -113,6 +118,24 @@ export function decode (text: string | number = ''): string {
   } catch (_err) {
     return '' + text
   }
+}
+
+/**
+ * Decode query value (taking care to handle vue-router substitutions).
+ *
+ * @param text - string to decode
+ * @returns decoded string
+ */
+export function decodeQueryValue(text: string): string {
+  return decode(
+    text
+      // Decode plus as space
+      .replace(PLUS_RE, encodeURIComponent(' '))
+      .replace(BACKTICK_RE, encodeURIComponent('`'))
+      .replace(CURLY_OPEN_RE, encodeURIComponent(`{`))
+      .replace(CURLY_CLOSE_RE, encodeURIComponent(`}`))
+      .replace(CARET_RE, encodeURIComponent(`^`))
+  )
 }
 
 export function encodeHost (name: string = '') {

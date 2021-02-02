@@ -9,7 +9,17 @@ describe('withQuery', () => {
     { input: '/?test', query: {}, out: '/?test' },
     { input: '/?test', query: { foo: 1 }, out: '/?test&foo=1' },
     { input: '/?foo=1', query: { foo: 2 }, out: '/?foo=2' },
-    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' }
+    {
+      input: '/',
+      query: { email: 'some email.com' },
+      out: '/?email=some+email.com',
+    },
+    {
+      input: '/',
+      query: { str: '&', str2: '%26' },
+      out: '/?str=%26&str2=%2526',
+    },
+    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' },
   ]
 
   for (const t of tests) {
