@@ -115,6 +115,16 @@ export function decode (text: string | number = ''): string {
   }
 }
 
+/**
+ * Decode query value (consitant with encodeQueryValue for plus encoding).
+ *
+ * @param text - string to decode
+ * @returns decoded string
+ */
+export function decodeQueryValue (text: string): string {
+  return decode(text.replace(PLUS_RE, ' '))
+}
+
 export function encodeHost (name: string = '') {
   return toASCII(name)
 }
