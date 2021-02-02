@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/nuxt-contrib/ufo/compare/v0.5.4...v0.6.0) (2021-02-02)
+
+
+### Features
+
+* `decodeQueryValue` and decode query params with support for space ([#11](https://github.com/nuxt-contrib/ufo/issues/11)) ([44a0538](https://github.com/nuxt-contrib/ufo/commit/44a05380c7619d942059d0f62a9eee4e3da68639))
+
 ### [0.5.4](https://github.com/nuxt-contrib/ufo/compare/v0.5.3...v0.5.4) (2021-01-07)
 
 
