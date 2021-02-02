@@ -2,7 +2,7 @@ import {
   decode,
   decodeQueryValue,
   encodeQueryKey,
-  encodeQueryValue,
+  encodeQueryValue
 } from './encoding'
 
 export type QueryValue = string | string[] | undefined

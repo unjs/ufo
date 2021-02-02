@@ -12,14 +12,14 @@ describe('withQuery', () => {
     {
       input: '/',
       query: { email: 'some email.com' },
-      out: '/?email=some+email.com',
+      out: '/?email=some+email.com'
     },
     {
       input: '/',
       query: { str: '&', str2: '%26' },
-      out: '/?str=%26&str2=%2526',
+      out: '/?str=%26&str2=%2526'
     },
-    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' },
+    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' }
   ]
 
   for (const t of tests) {

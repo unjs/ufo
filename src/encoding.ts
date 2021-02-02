@@ -10,7 +10,7 @@ const EQUAL_RE = /=/g // %3D
 const IM_RE = /\?/g // %3F
 const PLUS_RE = /\+/g // %2B
 
-const BACKTICK_RE = /\`/g
+const BACKTICK_RE = /`/g
 const CURLY_OPEN_RE = /\{/g
 const CURLY_CLOSE_RE = /\}/g
 const CARET_RE = /\^/g
@@ -126,15 +126,15 @@ export function decode (text: string | number = ''): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decodeQueryValue(text: string): string {
+export function decodeQueryValue (text: string): string {
   return decode(
     text
       // Decode plus as space
       .replace(PLUS_RE, encodeURIComponent(' '))
       .replace(BACKTICK_RE, encodeURIComponent('`'))
-      .replace(CURLY_OPEN_RE, encodeURIComponent(`{`))
-      .replace(CURLY_CLOSE_RE, encodeURIComponent(`}`))
-      .replace(CARET_RE, encodeURIComponent(`^`))
+      .replace(CURLY_OPEN_RE, encodeURIComponent('{'))
+      .replace(CURLY_CLOSE_RE, encodeURIComponent('}'))
+      .replace(CARET_RE, encodeURIComponent('^'))
   )
 }
 
