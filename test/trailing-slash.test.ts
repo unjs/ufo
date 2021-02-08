@@ -21,7 +21,8 @@ describe('withTrailingSlash', () => {
 
 describe('withoutTrailingSlash', () => {
   const tests = {
-    '': '',
+    '': '/',
+    '/': '/',
     bar: 'bar',
     'bar/': 'bar'
   }
@@ -33,6 +34,6 @@ describe('withoutTrailingSlash', () => {
   }
 
   test('falsy value', () => {
-    expect(withoutTrailingSlash()).toBe('')
+    expect(withoutTrailingSlash()).toBe('/')
   })
 })

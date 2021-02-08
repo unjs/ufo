@@ -8,7 +8,7 @@ export function hasProtocol (inputStr: string): boolean {
 }
 
 export function withoutTrailingSlash (input: string = ''): string {
-  return input.endsWith('/') ? input.slice(0, -1) : input
+  return (input.endsWith('/') ? input.slice(0, -1) : input) || '/'
 }
 
 export function withTrailingSlash (input: string = ''): string {
@@ -16,7 +16,7 @@ export function withTrailingSlash (input: string = ''): string {
 }
 
 export function withoutLeadingSlash (input: string = ''): string {
-  return input.startsWith('/') ? input.substr(1) : input
+  return (input.startsWith('/') ? input.substr(1) : input) || '/'
 }
 
 export function withLeadingSlash (input: string = ''): string {
