@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/nuxt-contrib/ufo/compare/v0.6.3...v0.6.4) (2021-02-08)
+
+
+### Bug Fixes
+
+* **joinURL:** don't allow double '//' when single slashes are passed ([#13](https://github.com/nuxt-contrib/ufo/issues/13)) ([e44fe2b](https://github.com/nuxt-contrib/ufo/commit/e44fe2bc3f8aa65a7c6a7c8d70458b8ccd73a979))
+
 ### [0.6.3](https://github.com/nuxt-contrib/ufo/compare/v0.6.2...v0.6.3) (2021-02-08)
 
 
