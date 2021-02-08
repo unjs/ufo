@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/nuxt-contrib/ufo/compare/v0.6.2...v0.6.3) (2021-02-08)
+
+
+### Bug Fixes
+
+* avoid empty string with without*Slash utils ([126667d](https://github.com/nuxt-contrib/ufo/commit/126667dc9125905077ce79ad699935ba806a2600))
+
 ### [0.6.2](https://github.com/nuxt-contrib/ufo/compare/v0.6.1...v0.6.2) (2021-02-08)
 
 
