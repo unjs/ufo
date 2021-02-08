@@ -114,6 +114,15 @@ cleanDoubleSlashes('//foo//bar//')
 cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
 ```
 
+### `isSamePath`
+
+Check two paths are equal or not. Trailing slash and encoding are normalized before comparation.
+
+```ts
+// Result: true
+isSamePath('/foo', '/foo/')
+```
+
 ## License
 
 [MIT](./LICENSE)

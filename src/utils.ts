@@ -1,6 +1,7 @@
 import { $URL } from './url'
 import { parseURL, stringifyParsedURL } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
+import { decode } from './encoding'
 
 export function hasProtocol (inputStr: string): boolean {
   return /^\w+:\/\//.test(inputStr)
@@ -65,4 +66,8 @@ export function resolveURL (base: string, ...input: string[]): string {
   }
 
   return url.toString()
+}
+
+export function isSamePath (p1: string, p2: string) {
+  return decode(withoutTrailingSlash(p1)) === decode(withoutTrailingSlash(p2))
 }
