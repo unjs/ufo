@@ -17,6 +17,8 @@ describe('normalizeURL', () => {
     './?foo=123#hash': './?foo=123#hash',
     '/test?query=123#hash': '/test?query=123#hash',
     'test?query=123#hash': 'test?query=123#hash',
+    '/%c': '/%25c',
+    '/%': '/%25',
     'http://foo.com/test?query=123#hash': 'http://foo.com/test?query=123#hash',
     'http://localhost:3000': 'http://localhost:3000',
     'http://my_email%40gmail.com:password@www.my_site.com': 'http://my_email%40gmail.com:password@www.my_site.com',
