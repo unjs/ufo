@@ -42,7 +42,10 @@ export function joinURL (base: string, ...input: string[]): string {
   let url = base || ''
 
   for (const i of input) {
-    url = withTrailingSlash(url) + withoutLeadingSlash(i)
+    const part = withoutLeadingSlash(i)
+    if (part !== '/') {
+      url = withTrailingSlash(url) + part
+    }
   }
 
   return url
