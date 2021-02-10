@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/nuxt-contrib/ufo/compare/v0.6.4...v0.6.5) (2021-02-10)
+
+
+### Features
+
+* `withBase` and `withoutBase` utils ([1667eca](https://github.com/nuxt-contrib/ufo/commit/1667eca8199a42fbec3403375d716ced38a5b6c5))
+
 ### [0.6.4](https://github.com/nuxt-contrib/ufo/compare/v0.6.3...v0.6.4) (2021-02-08)
 
 
