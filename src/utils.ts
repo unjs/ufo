@@ -7,24 +7,48 @@ export function hasProtocol (inputStr: string): boolean {
   return /^\w+:\/\//.test(inputStr)
 }
 
+export function hasTrailingSlash (input: string = ''): boolean {
+  return input.endsWith('/')
+}
+
 export function withoutTrailingSlash (input: string = ''): string {
-  return (input.endsWith('/') ? input.slice(0, -1) : input) || '/'
+  return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || '/'
 }
 
 export function withTrailingSlash (input: string = ''): string {
   return input.endsWith('/') ? input : (input + '/')
 }
 
+export function hasLeadingSlash (input: string = ''): boolean {
+  return input.startsWith('/')
+}
+
 export function withoutLeadingSlash (input: string = ''): string {
-  return (input.startsWith('/') ? input.substr(1) : input) || '/'
+  return (hasLeadingSlash(input) ? input.substr(1) : input) || '/'
 }
 
 export function withLeadingSlash (input: string = ''): string {
-  return input.startsWith('/') ? input : ('/' + input)
+  return hasLeadingSlash(input) ? input : ('/' + input)
 }
 
 export function cleanDoubleSlashes (input: string = ''): string {
   return input.split('://').map(str => str.replace(/\/{2,}/g, '/')).join('://')
+}
+
+export function withBase (input: string, base: string) {
+  const _base = withoutTrailingSlash(base)
+  if (input.startsWith(_base)) {
+    return input
+  }
+  return joinURL(_base, input)
+}
+
+export function withoutBase (input: string, base: string) {
+  const _base = withoutTrailingSlash(base)
+  if (input.startsWith(_base)) {
+    return input.substr(_base.length) || '/'
+  }
+  return input
 }
 
 export function withQuery (input: string, query: QueryObject): string {
