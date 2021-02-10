@@ -36,6 +36,9 @@ export function cleanDoubleSlashes (input: string = ''): string {
 }
 
 export function withBase (input: string, base: string) {
+  if (!base || base === '/') {
+    return input
+  }
   const _base = withoutTrailingSlash(base)
   if (input.startsWith(_base)) {
     return input
@@ -44,6 +47,9 @@ export function withBase (input: string, base: string) {
 }
 
 export function withoutBase (input: string, base: string) {
+  if (!base || base === '/') {
+    return input
+  }
   const _base = withoutTrailingSlash(base)
   if (input.startsWith(_base)) {
     return input.substr(_base.length) || '/'

@@ -30,7 +30,8 @@ describe('withoutBase', () => {
     { base: '/base', input: '/base/', out: '/' },
     { base: '/base', input: '/base/a', out: '/a' },
     { base: '/base/', input: '/base/a', out: '/a' },
-    { base: '/base/a/', input: '/base/a', out: '/' }
+    { base: '/base/a/', input: '/base/a', out: '/' },
+    { base: '/', input: '/test/', out: '/test/' }
   ]
 
   for (const t of tests) {
