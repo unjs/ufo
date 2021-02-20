@@ -68,12 +68,18 @@ export function getQuery (input: string): QueryObject {
   return parseQuery(parseURL(input).search)
 }
 
+export function isRelativeUrl (input: string): boolean {
+  return ['./', '../'].some(part => input.startsWith(part))
+}
+
 export function joinURL (base: string, ...input: string[]): string {
   let url = base || ''
 
   for (const i of input) {
     const part = withoutLeadingSlash(i)
-    if (part !== '/') {
+    if (!url && isRelativeUrl(i)) {
+      url = part
+    } else if (part !== '/') {
       url = withTrailingSlash(url) + part
     }
   }

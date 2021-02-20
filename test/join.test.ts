@@ -5,6 +5,8 @@ describe('joinURL', () => {
   const tests = [
     { input: [], out: '' },
     { input: ['/'], out: '/' },
+    { input: [null, './'], out: './' },
+    { input: ['/', './'], out: '/./' },
     { input: ['/a'], out: '/a' },
     { input: ['a', 'b'], out: 'a/b' },
     { input: ['/', '/b'], out: '/b' },
