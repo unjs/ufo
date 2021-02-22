@@ -79,11 +79,9 @@ export function isNonEmptyURL (url: string) {
 export function joinURL (base: string, ...input: string[]): string {
   let url = base || ''
 
-  for (const i of input) {
+  for (const i of input.filter(isNonEmptyURL)) {
     const part = withoutLeadingSlash(i)
-    if (part !== '/') {
-      url = withTrailingSlash(url) + part
-    }
+    url = withTrailingSlash(url) + part
   }
 
   return url
@@ -102,7 +100,7 @@ export function normalizeURL (input: string): string {
 export function resolveURL (base: string, ...input: string[]): string {
   const url = createURL(base)
 
-  for (const i of input) {
+  for (const i of input.filter(isNonEmptyURL)) {
     url.append(createURL(i))
   }
 
