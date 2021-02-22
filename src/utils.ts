@@ -76,6 +76,10 @@ export function isNonEmptyURL (url: string) {
   return url && url !== '/'
 }
 
+export function isAbsolutePath (url: string) {
+  return url && url[0] === '/'
+}
+
 export function isRelativeUrl (input: string): boolean {
   return ['./', '../'].some(part => input.startsWith(part))
 }
@@ -104,7 +108,7 @@ export function resolveURL (base: string, ...input: string[]): string {
   const url = createURL(base)
 
   for (const i of input.filter(isNonEmptyURL)) {
-    url.append(createURL(i))
+    url.resolve(createURL(i))
   }
 
   return url.toString()

@@ -1,6 +1,6 @@
 import { parseURL, parseAuth, parseHost } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
-import { joinURL } from './utils'
+import { isAbsolutePath, joinURL, withLeadingSlash, withoutLeadingSlash } from './utils'
 import { encodeHash, encodePath, decode, encodeHost } from './encoding'
 
 export class $URL implements URL {
@@ -47,7 +47,7 @@ export class $URL implements URL {
   }
 
   get isAbsolute () {
-    return this.hasProtocol || this.pathname[0] === '/'
+    return this.hasProtocol || isAbsolutePath(this.pathname)
   }
 
   get search (): string {
@@ -102,6 +102,53 @@ export class $URL implements URL {
     if (url.hash) {
       this.hash = url.hash
     }
+  }
+
+  resolve (url: $URL) {
+    this.hash = url.hash
+
+    if (Object.keys(url.query).length || url.pathname) {
+      this.query = url.query
+    }
+
+    if (!url.pathname) {
+      return
+    }
+
+    if (url.hasProtocol) {
+      this.protocol = url.protocol
+      this.host = url.host
+      this.auth = url.auth
+      this.pathname = url.pathname
+      this.query = url.query
+      this.hash = url.hash
+      return
+    }
+
+    if (isAbsolutePath(url.pathname)) {
+      this.pathname = url.pathname
+      return
+    }
+
+    const wasAbsolute = isAbsolutePath(this.pathname)
+
+    const segments = [
+      ...withoutLeadingSlash(this.pathname).split('/').slice(0, -1),
+      ...withoutLeadingSlash(url.pathname).split('/')
+    ].reduce((segments, segment, currentIndex, array) => {
+      if (segment === '..' && segments.length && segments[segments.length - 1] !== '..') {
+        segments.pop()
+      } else if (segment !== '.') {
+        segments.push(segment)
+      }
+      // Ensure final relative segment leaves trailing slash
+      if (currentIndex === array.length - 1 && ['..', '.'].includes(segment)) {
+        segments.push('')
+      }
+      return segments
+    }, [] as string[])
+
+    this.pathname = wasAbsolute ? withLeadingSlash(segments.join('/')) : segments.join('/')
   }
 
   toJSON (): string {
