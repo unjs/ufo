@@ -73,18 +73,9 @@ export function isRelativeUrl (input: string): boolean {
 }
 
 export function joinURL (base: string, ...input: string[]): string {
-  let url = base || ''
-
-  for (const i of input) {
-    const part = withoutLeadingSlash(i)
-    if (!url && isRelativeUrl(i)) {
-      url = part
-    } else if (part !== '/') {
-      url = withTrailingSlash(url) + part
-    }
-  }
-
-  return url
+  return input
+    .filter(i => i && i !== '/')
+    .reduce((p, c) => withTrailingSlash(p) + withoutLeadingSlash(c), base || '')
 }
 
 // $URL based utils
