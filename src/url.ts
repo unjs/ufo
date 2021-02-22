@@ -1,6 +1,6 @@
 import { parseURL, parseAuth, parseHost } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
-import { withoutLeadingSlash, withTrailingSlash } from './utils'
+import { joinURL } from './utils'
 import { encodeHash, encodePath, decode, encodeHost } from './encoding'
 
 export class $URL implements URL {
@@ -96,7 +96,7 @@ export class $URL implements URL {
     Object.assign(this.query, url.query)
 
     if (url.pathname) {
-      this.pathname = withTrailingSlash(this.pathname) + withoutLeadingSlash(url.pathname)
+      this.pathname = joinURL(this.pathname, url.pathname)
     }
 
     if (url.hash) {
