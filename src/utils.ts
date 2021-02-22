@@ -36,7 +36,7 @@ export function cleanDoubleSlashes (input: string = ''): string {
 }
 
 export function withBase (input: string, base: string) {
-  if (!base || base === '/') {
+  if (isEmptyURL(base)) {
     return input
   }
   const _base = withoutTrailingSlash(base)
@@ -47,7 +47,7 @@ export function withBase (input: string, base: string) {
 }
 
 export function withoutBase (input: string, base: string) {
-  if (!base || base === '/') {
+  if (isEmptyURL(base)) {
     return input
   }
   const _base = withoutTrailingSlash(base)
@@ -68,14 +68,27 @@ export function getQuery (input: string): QueryObject {
   return parseQuery(parseURL(input).search)
 }
 
+export function isEmptyURL (url: string) {
+  return !url || url === '/'
+}
+
+export function isNonEmptyURL (url: string) {
+  return url && url !== '/'
+}
+
 export function isRelativeUrl (input: string): boolean {
   return ['./', '../'].some(part => input.startsWith(part))
 }
 
 export function joinURL (base: string, ...input: string[]): string {
-  return input
-    .filter(i => i && i !== '/')
-    .reduce((p, c) => withTrailingSlash(p) + withoutLeadingSlash(c), base || '')
+  let url = base || ''
+
+  for (const i of input.filter(isNonEmptyURL)) {
+    const part = withoutLeadingSlash(i)
+    url = withTrailingSlash(url) + part
+  }
+
+  return url
 }
 
 // $URL based utils
@@ -91,7 +104,7 @@ export function normalizeURL (input: string): string {
 export function resolveURL (base: string, ...input: string[]): string {
   const url = createURL(base)
 
-  for (const i of input) {
+  for (const i of input.filter(isNonEmptyURL)) {
     url.append(createURL(i))
   }
 
