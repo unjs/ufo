@@ -36,7 +36,7 @@ export function cleanDoubleSlashes (input: string = ''): string {
 }
 
 export function withBase (input: string, base: string) {
-  if (!base || base === '/') {
+  if (isEmptyURL(base)) {
     return input
   }
   const _base = withoutTrailingSlash(base)
@@ -47,7 +47,7 @@ export function withBase (input: string, base: string) {
 }
 
 export function withoutBase (input: string, base: string) {
-  if (!base || base === '/') {
+  if (isEmptyURL(base)) {
     return input
   }
   const _base = withoutTrailingSlash(base)
@@ -66,6 +66,14 @@ export function withQuery (input: string, query: QueryObject): string {
 
 export function getQuery (input: string): QueryObject {
   return parseQuery(parseURL(input).search)
+}
+
+export function isEmptyURL (url: string) {
+  return !url || url === '/'
+}
+
+export function isNonEmptyURL (url: string) {
+  return url && url !== '/'
 }
 
 export function joinURL (base: string, ...input: string[]): string {
