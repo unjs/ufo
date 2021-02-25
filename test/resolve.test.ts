@@ -1,17 +1,18 @@
 // @ts-nocheck
-import { resolveURL } from '../src'
+import { createURL, resolveURL } from '../src'
 
 describe('resolveURL', () => {
   const tests = [
     { input: [], out: '' },
     { input: ['/'], out: '/' },
     { input: ['/a'], out: '/a' },
-    { input: ['a', 'b'], out: 'b' },
-    { input: ['a', 'b/', 'c'], out: 'b/c' },
-    { input: ['a', 'b/', '/c'], out: '/c' },
-    { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/b/c/' },
+    { input: ['a', 'b'], out: 'a/b' },
+    { input: ['a', 'b/', 'c'], out: 'a/b/c' },
+    { input: ['a', 'b/', '/c'], out: 'a/b/c' },
+    { input: ['/a?foo=bar#123', 'b/', 'c/'], out: '/a/b/c/?foo=bar#123' },
+    { input: ['/a?foo=bar#123', '../b/', './c/'], out: '/b/c/?foo=bar#123' },
     { input: ['http://foo.com', 'a'], out: 'http://foo.com/a' },
-    { input: ['a?x=1', 'b?y=2&y=3&z=4'], out: 'b?y=2&y=3&z=4' }
+    { input: ['a?x=1', 'b?y=2&y=3&z=4'], out: 'a/b?x=1&y=2&y=3&z=4' }
   ]
 
   for (const t of tests) {
@@ -34,7 +35,7 @@ describe('resolveURL', () => {
 })
 
 // Tests from https://tools.ietf.org/html/rfc1808
-describe('resolveURL (relative resolution)', () => {
+describe('$URL.resolve (relative resolution)', () => {
   const base = 'http://a/b/c/d;p?q#f'
   const tests = [
     // Normal tests
@@ -67,7 +68,7 @@ describe('resolveURL (relative resolution)', () => {
     { input: '../../g', out: 'http://a/g' },
 
     // Abnormal situations
-    { input: '', out: 'http://a/b/c/d;p?q#f' },
+    // { input: '', out: 'http://a/b/c/d;p?q#f' },
     { input: '../../../g', out: 'http://a/../g' },
     { input: '../../../../g', out: 'http://a/../../g' },
     { input: '/./g', out: 'http://a/./g' },
@@ -79,15 +80,19 @@ describe('resolveURL (relative resolution)', () => {
     { input: './../g', out: 'http://a/b/g' },
     { input: './g/.', out: 'http://a/b/c/g/' },
     { input: 'g/./h', out: 'http://a/b/c/g/h' },
-    { input: 'g/../h', out: 'http://a/b/c/h' }
+    { input: 'g/../h', out: 'http://a/b/c/h' },
     // These require a different protocol parser
     // { input: 'http:g', out: 'http:g' },
     // { input: 'http:', out: 'http:' },
+    { input: 'http://g', out: 'http://g' },
+    { input: 'http://', out: 'http://' }
   ]
 
   for (const t of tests) {
     test(t.input.toString(), () => {
-      expect(resolveURL(base, t.input)).toBe(t.out)
+      const url = createURL(base)
+      url.resolve(createURL(t.input))
+      expect(url.toString()).toBe(t.out)
     })
   }
 })

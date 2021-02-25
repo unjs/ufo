@@ -141,7 +141,7 @@ export function resolveURL (base: string, ...input: string[]): string {
   const url = createURL(base)
 
   for (const i of input.filter(isNonEmptyURL)) {
-    url.resolve(createURL(i))
+    url.append(createURL(i))
   }
 
   return url.toString()

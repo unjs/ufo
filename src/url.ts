@@ -96,6 +96,9 @@ export class $URL implements URL {
     Object.assign(this.query, url.query)
 
     if (url.pathname) {
+      if (!this.pathname && this.host) {
+        this.pathname = '/'
+      }
       this.pathname = joinURL(this.pathname, url.pathname)
     }
 
@@ -111,10 +114,6 @@ export class $URL implements URL {
       this.query = url.query
     }
 
-    if (!url.pathname) {
-      return
-    }
-
     if (url.hasProtocol) {
       this.protocol = url.protocol
       this.host = url.host
@@ -122,6 +121,10 @@ export class $URL implements URL {
       this.pathname = url.pathname
       this.query = url.query
       this.hash = url.hash
+      return
+    }
+
+    if (!url.pathname) {
       return
     }
 
