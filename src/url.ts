@@ -1,6 +1,6 @@
 import { parseURL, parseAuth, parseHost } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
-import { isAbsolutePath, joinURL, withLeadingSlash, withoutLeadingSlash } from './utils'
+import { isAbsolutePath, joinURL, resolveRelativeSegments, withLeadingSlash } from './utils'
 import { encodeHash, encodePath, decode, encodeHost } from './encoding'
 
 export class $URL implements URL {
@@ -131,24 +131,8 @@ export class $URL implements URL {
     }
 
     const wasAbsolute = isAbsolutePath(this.pathname)
-
-    const segments = [
-      ...withoutLeadingSlash(this.pathname).split('/').slice(0, -1),
-      ...withoutLeadingSlash(url.pathname).split('/')
-    ].reduce((segments, segment, currentIndex, array) => {
-      if (segment === '..' && segments.length && segments[segments.length - 1] !== '..') {
-        segments.pop()
-      } else if (segment !== '.') {
-        segments.push(segment)
-      }
-      // Ensure final relative segment leaves trailing slash
-      if (currentIndex === array.length - 1 && ['..', '.'].includes(segment)) {
-        segments.push('')
-      }
-      return segments
-    }, [] as string[])
-
-    this.pathname = wasAbsolute ? withLeadingSlash(segments.join('/')) : segments.join('/')
+    const resolvedPath = resolveRelativeSegments(this.pathname, url.pathname)
+    this.pathname = wasAbsolute ? withLeadingSlash(resolvedPath) : resolvedPath
   }
 
   toJSON (): string {

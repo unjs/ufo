@@ -84,11 +84,44 @@ export function isRelativeUrl (input: string): boolean {
   return ['./', '../'].some(part => input.startsWith(part))
 }
 
+/* eslint-disable no-redeclare */
+export function resolveRelativeSegments (segments: string[]): string
+export function resolveRelativeSegments (base: string, path: string): string
+export function resolveRelativeSegments (arg1: string[] | string, arg2 = '') {
+  const wasAbsolute = isAbsolutePath(arg1[0])
+  const segments = (
+    Array.isArray(arg1)
+      ? arg1
+      : [
+          ...withoutLeadingSlash(arg1).split('/').slice(0, -1),
+          ...withoutLeadingSlash(arg2).split('/')
+        ]).reduce((segments, segment, currentIndex, array) => {
+    if (
+      segment === '..' &&
+      segments.length &&
+      segments[segments.length - 1] !== '..'
+    ) {
+      segments.pop()
+    } else if (segment !== '.') {
+      segments.push(segment)
+    }
+    // Ensure final relative segment leaves trailing slash
+    if (currentIndex === array.length - 1 && ['..', '.'].includes(segment)) {
+      segments.push('')
+    }
+    return segments
+  }, [] as string[])
+
+  const resolvedPath = segments.join('/')
+  return wasAbsolute ? withLeadingSlash(resolvedPath) : resolvedPath
+}
+/* eslint-enable no-redeclare */
+
 export function joinURL (base: string, ...input: string[]): string {
   let url = base || ''
 
   for (const i of input.filter(isNonEmptyURL)) {
-    url = withTrailingSlash(url) + withoutLeadingSlash(i)
+    url = url ? resolveRelativeSegments(withTrailingSlash(url), withoutLeadingSlash(i)) : i
   }
 
   return url

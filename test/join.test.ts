@@ -5,12 +5,15 @@ describe('joinURL', () => {
   const tests = [
     { input: [], out: '' },
     { input: ['/'], out: '/' },
-    { input: [null, './'], out: '/./' },
-    { input: ['/', './'], out: '/./' },
+    { input: [null, './'], out: './' },
+    { input: ['/', './'], out: '/' },
     { input: ['/a'], out: '/a' },
     { input: ['a', 'b'], out: 'a/b' },
+    { input: ['a', './b'], out: 'a/b' },
     { input: ['/', '/b'], out: '/b' },
     { input: ['a', 'b/', 'c'], out: 'a/b/c' },
+    { input: ['a', '../b/', 'c'], out: 'b/c' },
+    { input: ['/a', '../b/', 'c'], out: '/b/c' },
     { input: ['a', 'b/', '/c'], out: 'a/b/c' }
   ]
 
