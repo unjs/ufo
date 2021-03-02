@@ -8,10 +8,7 @@ export function hasProtocol (inputStr: string): boolean {
 }
 
 export function isURL (inputStr: string, acceptProtocolRelative = false): boolean {
-  if (!acceptProtocolRelative) {
-    return hasProtocol(inputStr)
-  }
-  return /^(\w+:)?\/\/.+/.test(inputStr)
+  return hasProtocol(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
 
 export function hasTrailingSlash (input: string = ''): boolean {
