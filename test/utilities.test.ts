@@ -2,8 +2,10 @@ import { hasProtocol, isURL } from '../src'
 
 describe('isURL', () => {
   const tests = [
-    { input: '//', out: [true, false] },
-    { input: 'https://', out: [true, true] },
+    { input: '//', out: [false, false] },
+    { input: '//test.com', out: [true, false] },
+    { input: 'https://', out: [false, false] },
+    { input: 'https://test.com', out: [true, true] },
     { input: '/test', out: [false, false] },
     { input: 'file:///home/user', out: [true, true] }
   ]
@@ -20,7 +22,8 @@ describe('isURL', () => {
 describe('hasProtocol', () => {
   const tests = [
     { input: '//', out: false },
-    { input: 'https://', out: true },
+    { input: 'https://', out: false },
+    { input: 'https://test.com', out: true },
     { input: '/test', out: false },
     { input: 'file:///home/user', out: true }
   ]

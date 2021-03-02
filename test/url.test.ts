@@ -3,7 +3,7 @@ import { parseURL } from '../src'
 describe('parseURL', () => {
   const tests = [
     { input: '//test', out: { auth: '', hash: '', host: 'test', pathname: '', protocol: '', search: '' } },
-    { input: 'https://', out: { auth: '', hash: '', host: '', pathname: '', protocol: 'https:', search: '' } },
+    { input: 'https://test.com', out: { auth: '', hash: '', host: 'test.com', pathname: '', protocol: 'https:', search: '' } },
     { input: '/test', out: { hash: '', pathname: '/test', search: '' } },
     { input: 'file:///home/user', out: { auth: '', hash: '', host: '', pathname: '/home/user', protocol: 'file:', search: '' } }
   ]
