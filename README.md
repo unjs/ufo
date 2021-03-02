@@ -123,6 +123,17 @@ Check two paths are equal or not. Trailing slash and encoding are normalized bef
 isSamePath('/foo', '/foo/')
 ```
 
+### `isURL`
+
+Check whether a given path has a protocol (or starts with `//`).
+
+```ts
+// Result: true
+isURL('https://nuxtjs.org/')
+// Result: false
+isURL('/')
+```
+
 ## License
 
 [MIT](./LICENSE)

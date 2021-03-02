@@ -1,5 +1,5 @@
 import { decode } from './encoding'
-import { hasProtocol } from './utils'
+import { isURL } from './utils'
 export interface ParsedURL {
   protocol?: string
   host?: string
@@ -20,11 +20,11 @@ export interface ParsedHost {
 }
 
 export function parseURL (input: string = ''): ParsedURL {
-  if (!hasProtocol(input)) {
+  if (!isURL(input)) {
     return parsePath(input)
   }
 
-  const [protocol, auth, hostAndPath] = (input.match(/([^:/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
+  const [protocol = '', auth, hostAndPath] = (input.match(/([^:/]+:)?\/\/([^/@]+@)?(.*)/) || []).splice(1)
   const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
   const { pathname, search, hash } = parsePath(path)
 

@@ -7,6 +7,10 @@ export function hasProtocol (inputStr: string): boolean {
   return /^\w+:\/\//.test(inputStr)
 }
 
+export function isURL (inputStr: string): boolean {
+  return /^(\w+:)?\/\//.test(inputStr)
+}
+
 export function hasTrailingSlash (input: string = ''): boolean {
   return input.endsWith('/')
 }
