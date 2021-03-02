@@ -20,7 +20,7 @@ export interface ParsedHost {
 }
 
 export function parseURL (input: string = ''): ParsedURL {
-  if (!isURL(input)) {
+  if (!isURL(input, true)) {
     return parsePath(input)
   }
 

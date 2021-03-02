@@ -125,13 +125,15 @@ isSamePath('/foo', '/foo/')
 
 ### `isURL`
 
-Check whether a given path has a protocol (or starts with `//`).
+Check whether a given path has a protocol. To consider paths beginning with `//` as URLs, pass `true` as the second parameter (but note that [protocol-relative URLs are an anti-pattern](https://www.paulirish.com/2010/the-protocol-relative-url/)).
 
 ```ts
 // Result: true
 isURL('https://nuxtjs.org/')
 // Result: false
 isURL('/')
+// Result: true
+isURL('//', true)
 ```
 
 ## License

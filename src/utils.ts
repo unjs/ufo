@@ -7,7 +7,10 @@ export function hasProtocol (inputStr: string): boolean {
   return /^\w+:\/\//.test(inputStr)
 }
 
-export function isURL (inputStr: string): boolean {
+export function isURL (inputStr: string, acceptProtocolRelative = false): boolean {
+  if (!acceptProtocolRelative) {
+    return hasProtocol(inputStr)
+  }
   return /^(\w+:)?\/\//.test(inputStr)
 }
 
