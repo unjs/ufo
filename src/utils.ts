@@ -3,12 +3,8 @@ import { parseURL, stringifyParsedURL } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
 import { decode } from './encoding'
 
-export function hasProtocol (inputStr: string): boolean {
-  return /^\w+:\/\/.+/.test(inputStr)
-}
-
-export function isURL (inputStr: string, acceptProtocolRelative = false): boolean {
-  return hasProtocol(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
+export function hasProtocol (inputStr: string, acceptProtocolRelative = false): boolean {
+  return /^\w+:\/\/.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
 
 export function hasTrailingSlash (input: string = ''): boolean {

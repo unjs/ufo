@@ -1,5 +1,5 @@
 import { decode } from './encoding'
-import { isURL } from './utils'
+import { hasProtocol } from './utils'
 export interface ParsedURL {
   protocol?: string
   host?: string
@@ -20,7 +20,7 @@ export interface ParsedHost {
 }
 
 export function parseURL (input: string = ''): ParsedURL {
-  if (!isURL(input, true)) {
+  if (!hasProtocol(input, true)) {
     return parsePath(input)
   }
 
