@@ -84,8 +84,9 @@ describe('$URL.resolve (relative resolution)', () => {
     // These require a different protocol parser
     // { input: 'http:g', out: 'http:g' },
     // { input: 'http:', out: 'http:' },
-    { input: 'http://g', out: 'http://g' },
-    { input: 'http://', out: 'http://' }
+    { input: 'http://g', out: 'http://g' }
+    // We have decided to treat http:// as an invalid URL so this test won't pass
+    // { input: 'http://', out: 'http://' }
   ]
 
   for (const t of tests) {
