@@ -84,8 +84,7 @@ export function joinURL (base: string, ...input: string[]): string {
   let url = base || ''
 
   for (const i of input.filter(isNonEmptyURL)) {
-    const part = withoutLeadingSlash(i)
-    url = withTrailingSlash(url) + part
+    url = url ? withTrailingSlash(url) + withoutLeadingSlash(i) : i
   }
 
   return url
