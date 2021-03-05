@@ -20,11 +20,11 @@ export interface ParsedHost {
 }
 
 export function parseURL (input: string = ''): ParsedURL {
-  if (!hasProtocol(input)) {
+  if (!hasProtocol(input, true)) {
     return parsePath(input)
   }
 
-  const [protocol, auth, hostAndPath] = (input.match(/([^:/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
+  const [protocol = '', auth, hostAndPath] = (input.match(/([^:/]+:)?\/\/([^/@]+@)?(.*)/) || []).splice(1)
   const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
   const { pathname, search, hash } = parsePath(path)
 
