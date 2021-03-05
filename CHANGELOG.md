@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/nuxt-contrib/ufo/compare/v0.6.7...v0.6.8) (2021-03-05)
+
+
+### Features
+
+* **hasProtocol:** optionally allow protocol relative url ([#16](https://github.com/nuxt-contrib/ufo/issues/16)) ([81a3f3e](https://github.com/nuxt-contrib/ufo/commit/81a3f3e9f203fb27869ea7d3d0e99f256d33e968))
+
 ### [0.6.7](https://github.com/nuxt-contrib/ufo/compare/v0.6.6...v0.6.7) (2021-02-22)
 
 
