@@ -1,4 +1,4 @@
-import { hasProtocol } from '../src'
+import { hasProtocol, isRelative } from '../src'
 
 describe('hasProtocol', () => {
   const tests = [
@@ -16,6 +16,21 @@ describe('hasProtocol', () => {
       const [withAcceptRelative, withoutAcceptRelative] = t.out
       expect(hasProtocol(t.input, true)).toBe(withAcceptRelative)
       expect(hasProtocol(t.input)).toBe(withoutAcceptRelative)
+    })
+  }
+})
+
+describe('isRelative', () => {
+  const tests = [
+    { input: '/', out: false },
+    { input: './/', out: true },
+    { input: '../test', out: true },
+    { input: 'https://', out: false }
+  ]
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(isRelative(t.input)).toBe(t.out)
     })
   }
 })

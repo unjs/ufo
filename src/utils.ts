@@ -3,6 +3,10 @@ import { parseURL, stringifyParsedURL } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
 import { decode } from './encoding'
 
+export function isRelative (inputStr: string) {
+  return ['./', '../'].some(str => inputStr.startsWith(str))
+}
+
 export function hasProtocol (inputStr: string, acceptProtocolRelative = false): boolean {
   return /^\w+:\/\/.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
