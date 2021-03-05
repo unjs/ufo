@@ -123,6 +123,15 @@ Check two paths are equal or not. Trailing slash and encoding are normalized bef
 isSamePath('/foo', '/foo/')
 ```
 
+### `isRelative`
+
+Check if a path starts with `./` or `../`.
+
+```ts
+// Result: true
+isRelative('./foo')
+```
+
 ## License
 
 [MIT](./LICENSE)
