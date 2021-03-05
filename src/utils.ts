@@ -84,10 +84,6 @@ export function isAbsolutePath (url: string) {
   return url && url[0] === '/'
 }
 
-export function isRelativeUrl (input: string): boolean {
-  return ['./', '../'].some(part => input.startsWith(part))
-}
-
 /* eslint-disable no-redeclare */
 export function resolveRelativeSegments (segments: string[]): string
 export function resolveRelativeSegments (base: string, path: string): string
