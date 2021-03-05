@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.9](https://github.com/nuxt-contrib/ufo/compare/v0.6.8...v0.6.9) (2021-03-05)
+
+
+### Features
+
+* add `isRelative` helper ([#17](https://github.com/nuxt-contrib/ufo/issues/17)) ([63efb7b](https://github.com/nuxt-contrib/ufo/commit/63efb7bc7fe09be7a6c4e25957d6481ff68f5f6f))
+
 ### [0.6.8](https://github.com/nuxt-contrib/ufo/compare/v0.6.7...v0.6.8) (2021-03-05)
 
 
