@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.11](https://github.com/unjs/ufo/compare/v0.6.10...v0.6.11) (2021-04-06)
+
+
+### Bug Fixes
+
+* **pkg:** remove exports field to improve compatibility with webpack4 ([be3b1ae](https://github.com/unjs/ufo/commit/be3b1ae3a5880e5127006a7b86362fd833b4992a))
+
 ### [0.6.10](https://github.com/unjs/ufo/compare/v0.6.9...v0.6.10) (2021-03-09)
 
 
