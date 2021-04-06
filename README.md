@@ -145,11 +145,11 @@ Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) 
 [npm-downloads-src]: https://img.shields.io/npm/dm/ufo?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/ufo
 
-[github-actions-src]: https://img.shields.io/github/workflow/status/nuxt-contrib/ufo/ci/main?style=flat-square
-[github-actions-href]: https://github.com/nuxt-contrib/ufo/actions?query=workflow%3Aci
+[github-actions-src]: https://img.shields.io/github/workflow/status/unjs/ufo/ci/main?style=flat-square
+[github-actions-href]: https://github.com/unjs/ufo/actions?query=workflow%3Aci
 
-[codecov-src]: https://img.shields.io/codecov/c/gh/nuxt-contrib/ufo/main?style=flat-square
-[codecov-href]: https://codecov.io/gh/nuxt-contrib/ufo
+[codecov-src]: https://img.shields.io/codecov/c/gh/unjs/ufo/main?style=flat-square
+[codecov-href]: https://codecov.io/gh/unjs/ufo
 
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/ufo?style=flat-square
 [bundle-href]: https://bundlephobia.com/result?p=ufo
