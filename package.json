@@ -8,7 +8,7 @@
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "module": "./dist/index.mjs"
+      "import": "./dist/index.mjs"
     }
   },
   "main": "./dist/index.js",
