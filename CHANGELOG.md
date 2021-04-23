@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/unjs/ufo/compare/v0.6.11...v0.7.0) (2021-04-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* add module exports field
+
+### Features
+
+* add module exports field ([7c26571](https://github.com/unjs/ufo/commit/7c26571f0b5df2b93a694f4787cac4b6bdf73625))
+
 ### [0.6.11](https://github.com/unjs/ufo/compare/v0.6.10...v0.6.11) (2021-04-06)
 
 
