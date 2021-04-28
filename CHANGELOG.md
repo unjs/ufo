@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/unjs/ufo/compare/v0.7.1...v0.7.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* allow pkg subpath import ([#20](https://github.com/unjs/ufo/issues/20)) ([7b2a068](https://github.com/unjs/ufo/commit/7b2a068672c451b2bfa2698814d736cd2a14df79))
+
 ### [0.7.1](https://github.com/unjs/ufo/compare/v0.7.0...v0.7.1) (2021-04-23)
 
 ## [0.7.0](https://github.com/unjs/ufo/compare/v0.6.11...v0.7.0) (2021-04-23)
