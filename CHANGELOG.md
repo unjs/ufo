@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.3](https://github.com/unjs/ufo/compare/v0.7.2...v0.7.3) (2021-05-11)
+
+
+### Features
+
+* support query params for `trailingSlash` utils ([7655066](https://github.com/unjs/ufo/commit/7655066f6d8eee1bc7b6deae6fef76c4058b3fee)), closes [#19](https://github.com/unjs/ufo/issues/19)
+
+
+### Bug Fixes
+
+* **parseQuery:** prevent possible prototype pollution ([f4be854](https://github.com/unjs/ufo/commit/f4be854bf7ee46335fa70be170b61c6b76e0c2d3))
+* slash encode in path ([#23](https://github.com/unjs/ufo/issues/23)) ([912399f](https://github.com/unjs/ufo/commit/912399f0682974def7c9bea548f96ddab0d09659))
+
 ### [0.7.2](https://github.com/unjs/ufo/compare/v0.7.1...v0.7.2) (2021-04-28)
 
 
