@@ -1,7 +1,7 @@
 import { parseURL, parseAuth, parseHost } from './parse'
 import { QueryObject, parseQuery, stringifyQuery } from './query'
 import { withoutLeadingSlash, withTrailingSlash } from './utils'
-import { encodeHash, encodePath, decode, encodeHost } from './encoding'
+import { encodeHash, encodePath, decodePath, decode, encodeHost } from './encoding'
 
 export class $URL implements URL {
   protocol: string
@@ -21,7 +21,7 @@ export class $URL implements URL {
     this.protocol = decode(parsed.protocol)
     this.host = decode(parsed.host)
     this.auth = decode(parsed.auth)
-    this.pathname = decode(parsed.pathname)
+    this.pathname = decodePath(parsed.pathname)
     this.query = parseQuery(parsed.search)
     this.hash = decode(parsed.hash)
   }
