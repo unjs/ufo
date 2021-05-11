@@ -11,26 +11,16 @@ export function hasProtocol (inputStr: string, acceptProtocolRelative = false): 
   return /^\w+:\/\/.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
 
-const TRAILING_SLASH_RE = /\/$|\/\?/
-
 export function hasTrailingSlash (input: string = ''): boolean {
-  return TRAILING_SLASH_RE.test(input)
+  return input.endsWith('/')
 }
 
 export function withoutTrailingSlash (input: string = ''): string {
-  if (!hasTrailingSlash(input)) {
-    return input || '/'
-  }
-  const [s0, ...s] = input.split('?')
-  return (s0.slice(0, -1) || '/') + (s.length ? `?${s.join('?')}` : '')
+  return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || '/'
 }
 
 export function withTrailingSlash (input: string = ''): string {
-  if (hasTrailingSlash(input)) {
-    return input || '/'
-  }
-  const [s0, ...s] = input.split('?')
-  return s0 + '/' + (s.length ? `?${s.join('?')}` : '')
+  return input.endsWith('/') ? input : (input + '/')
 }
 
 export function hasLeadingSlash (input: string = ''): boolean {
