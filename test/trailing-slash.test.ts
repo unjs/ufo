@@ -5,7 +5,9 @@ describe('withTrailingSlash', () => {
   const tests = {
     '': '/',
     bar: 'bar/',
-    'bar/': 'bar/'
+    'bar/': 'bar/',
+    'foo?123': 'foo/?123',
+    'foo/?123': 'foo/?123'
   }
 
   for (const input in tests) {
@@ -24,7 +26,9 @@ describe('withoutTrailingSlash', () => {
     '': '/',
     '/': '/',
     bar: 'bar',
-    'bar/': 'bar'
+    'bar/': 'bar',
+    'foo?123': 'foo?123',
+    'foo/?123': 'foo?123'
   }
 
   for (const input in tests) {
