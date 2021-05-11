@@ -17,6 +17,9 @@ export function parseQuery (paramsStr: string = ''): QueryObject {
     const s = (param.match(/([^=]+)=?(.*)/) || [])
     if (s.length < 2) { continue }
     const key = decode(s[1])
+    if (key === '__proto__' || key === 'constructor') {
+      continue
+    }
     const value = decodeQueryValue(s[2] || '')
     if (obj[key]) {
       if (Array.isArray(obj[key])) {
