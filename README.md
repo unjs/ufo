@@ -24,6 +24,9 @@ const { normalizeURL, joinURL } = require('ufo')
 
 // ESM
 import { normalizeURL, joinURL } from 'ufo'
+
+// Deno
+import { parseURL } from 'https://unpkg.com/ufo/dist/index.mjs'
 ```
 
 **Notice:** You may need to transpile package and add URL polyfill for legacy environments
