@@ -19,9 +19,9 @@ export interface ParsedHost {
   port: string
 }
 
-export function parseURL (input: string = ''): ParsedURL {
+export function parseURL (input: string = '', defaultProto?: string): ParsedURL {
   if (!hasProtocol(input, true)) {
-    return parsePath(input)
+    return defaultProto ? parseURL(defaultProto + input) : parsePath(input)
   }
 
   const [protocol = '', auth, hostAndPath] = (input.match(/([^:/]+:)?\/\/([^/@]+@)?(.*)/) || []).splice(1)
