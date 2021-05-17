@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.5](https://github.com/unjs/ufo/compare/v0.7.4...v0.7.5) (2021-05-17)
+
+
+### Features
+
+* **parseURL:** support default proto ([f0f79f0](https://github.com/unjs/ufo/commit/f0f79f0f9ebc3acee41441d62a4f451a714281c1)), closes [#25](https://github.com/unjs/ufo/issues/25)
+
 ### [0.7.4](https://github.com/unjs/ufo/compare/v0.7.3-deno...v0.7.4) (2021-05-11)
 
 ### [0.7.3](https://github.com/unjs/ufo/compare/v0.7.2...v0.7.3) (2021-05-11)
