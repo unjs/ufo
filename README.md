@@ -62,6 +62,19 @@ joinURL('a', '/b', '/c')
 joinURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
 ```
 
+### `parseURL`
+
+```ts
+// Result: { protocol: 'http:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
+parseURL('http://foo.com/foo?test=123#token')
+
+// Result: { pathname: 'foo.com/foo', search: '?test=123', hash: '#token' }
+parseURL('foo.com/foo?test=123#token')
+
+// Result: { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
+parseURL('foo.com/foo?test=123#token', 'https://')
+```
+
 ### `withQuery`
 
 ```ts
