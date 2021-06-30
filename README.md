@@ -97,6 +97,11 @@ Ensures url ends with a trailing slash
 withTrailingSlash('/foo')
 ```
 
+```ts
+// Result: /path/?query=true
+withTrailingSlash('/path?query=true', true)
+```
+
 ### `withoutTrailingSlash`
 
 Ensures url does not ends with a trailing slash
@@ -104,6 +109,11 @@ Ensures url does not ends with a trailing slash
 ```ts
 // Result: /foo
 withoutTrailingSlash('/foo/')
+```
+
+```ts
+// Result: /path?query=true
+withoutTrailingSlash('/path/?query=true', true)
 ```
 
 ### `cleanDoubleSlashes`
