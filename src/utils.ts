@@ -13,20 +13,29 @@ export function hasProtocol (inputStr: string, acceptProtocolRelative = false): 
 
 const TRAILING_SLASH_RE = /\/$|\/\?/
 
-export function hasTrailingSlash (input: string = ''): boolean {
+export function hasTrailingSlash (input: string = '', queryParams: boolean = false): boolean {
+  if (!queryParams) {
+    return input.endsWith('/')
+  }
   return TRAILING_SLASH_RE.test(input)
 }
 
-export function withoutTrailingSlash (input: string = ''): string {
-  if (!hasTrailingSlash(input)) {
+export function withoutTrailingSlash (input: string = '', queryParams: boolean = false): string {
+  if (!queryParams) {
+    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || '/'
+  }
+  if (!hasTrailingSlash(input, true)) {
     return input || '/'
   }
   const [s0, ...s] = input.split('?')
   return (s0.slice(0, -1) || '/') + (s.length ? `?${s.join('?')}` : '')
 }
 
-export function withTrailingSlash (input: string = ''): string {
-  if (hasTrailingSlash(input)) {
+export function withTrailingSlash (input: string = '', queryParams: boolean = false): string {
+  if (!queryParams) {
+    return input.endsWith('/') ? input : (input + '/')
+  }
+  if (hasTrailingSlash(input, true)) {
     return input || '/'
   }
   const [s0, ...s] = input.split('?')
