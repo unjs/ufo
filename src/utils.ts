@@ -11,16 +11,35 @@ export function hasProtocol (inputStr: string, acceptProtocolRelative = false): 
   return /^\w+:\/\/.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
 
-export function hasTrailingSlash (input: string = ''): boolean {
-  return input.endsWith('/')
+const TRAILING_SLASH_RE = /\/$|\/\?/
+
+export function hasTrailingSlash (input: string = '', queryParams: boolean = false): boolean {
+  if (!queryParams) {
+    return input.endsWith('/')
+  }
+  return TRAILING_SLASH_RE.test(input)
 }
 
-export function withoutTrailingSlash (input: string = ''): string {
-  return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || '/'
+export function withoutTrailingSlash (input: string = '', queryParams: boolean = false): string {
+  if (!queryParams) {
+    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || '/'
+  }
+  if (!hasTrailingSlash(input, true)) {
+    return input || '/'
+  }
+  const [s0, ...s] = input.split('?')
+  return (s0.slice(0, -1) || '/') + (s.length ? `?${s.join('?')}` : '')
 }
 
-export function withTrailingSlash (input: string = ''): string {
-  return input.endsWith('/') ? input : (input + '/')
+export function withTrailingSlash (input: string = '', queryParams: boolean = false): string {
+  if (!queryParams) {
+    return input.endsWith('/') ? input : (input + '/')
+  }
+  if (hasTrailingSlash(input, true)) {
+    return input || '/'
+  }
+  const [s0, ...s] = input.split('?')
+  return s0 + '/' + (s.length ? `?${s.join('?')}` : '')
 }
 
 export function hasLeadingSlash (input: string = ''): boolean {
