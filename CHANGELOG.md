@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.6](https://github.com/unjs/ufo/compare/v0.7.5...v0.7.6) (2021-06-30)
+
+
+### Bug Fixes
+
+* **stringifyParsedURL:** check query existence in search ([#29](https://github.com/unjs/ufo/issues/29)) ([dd8bc35](https://github.com/unjs/ufo/commit/dd8bc3563c8a134a50ed5a484326c86c15261656))
+
 ### [0.7.5](https://github.com/unjs/ufo/compare/v0.7.4...v0.7.5) (2021-05-17)
 
 
