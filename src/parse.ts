@@ -65,7 +65,7 @@ export function parseHost (input: string = ''): ParsedHost {
 }
 
 export function stringifyParsedURL (parsed: ParsedURL) {
-  const fullpath = parsed.pathname + (parsed.search ? (parsed.search.includes('?') ? '' : '?') + parsed.search : '') + parsed.hash
+  const fullpath = parsed.pathname + (parsed.search ? (parsed.search.startsWith('?') ? '' : '?') + parsed.search : '') + parsed.hash
   if (!parsed.protocol) {
     return fullpath
   }
