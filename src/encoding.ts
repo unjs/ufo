@@ -18,7 +18,7 @@ const ENC_CURLY_OPEN_RE = /%7B/g // {
 const ENC_PIPE_RE = /%7C/g // |
 const ENC_CURLY_CLOSE_RE = /%7D/g // }
 const ENC_SPACE_RE = /%20/g
-const ENC_SLASH_RE = /%2F/g
+const ENC_SLASH_RE = /%2F/gi
 const ENC_ENC_SLASH_RE = /%252F/g
 
 /**
@@ -87,7 +87,11 @@ export function encodeQueryKey (text: string | number): string {
  * @returns encoded string
  */
 export function encodePath (text: string | number): string {
-  return encode(text).replace(HASH_RE, '%23').replace(IM_RE, '%3F').replace(ENC_ENC_SLASH_RE, '%2F')
+  return encode(text)
+           .replace(HASH_RE, '%23')
+           .replace(IM_RE, '%3F')
+           .replace(ENC_ENC_SLASH_RE, '%2F')
+           .replace(AMPERSAND_RE, '%26')
 }
 
 /**

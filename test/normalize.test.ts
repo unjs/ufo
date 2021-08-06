@@ -29,7 +29,8 @@ describe('normalizeURL', () => {
     'http://localhost/?redirect=http://google.com?q=test': 'http://localhost/?redirect=http://google.com?q=test',
     'http://localhost/?email=some+v1@email.com': 'http://localhost/?email=some+v1@email.com',
     'http://localhost/?email=some%2Bv1%40email.com': 'http://localhost/?email=some%2Bv1@email.com',
-    'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com': 'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com'
+    'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com': 'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com',
+    'http://localhost/abc/deg%2f%3f%26test?email=some+v1@email.com': 'http://localhost/abc/deg%2F%3F%26test?email=some+v1@email.com'
   }
 
   const validURLS = [
