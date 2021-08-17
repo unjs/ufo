@@ -19,7 +19,8 @@ describe('withQuery', () => {
       query: { str: '&', str2: '%26' },
       out: '/?str=%26&str2=%2526'
     },
-    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' }
+    { input: '/?x=1,2,3', query: { y: '1,2,3' }, out: '/?x=1,2,3&y=1,2,3' },
+    { input: 'http://a.com?v=1', query: { x: 2 }, out: 'http://a.com?v=1&x=2' }
   ]
 
   for (const t of tests) {
