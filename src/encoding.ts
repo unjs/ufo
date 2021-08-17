@@ -92,6 +92,7 @@ export function encodePath (text: string | number): string {
     .replace(IM_RE, '%3F')
     .replace(ENC_ENC_SLASH_RE, '%2F')
     .replace(AMPERSAND_RE, '%26')
+    .replace(PLUS_RE, '%2B')
 }
 
 /**
