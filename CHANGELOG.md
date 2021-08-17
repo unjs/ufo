@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.8](https://github.com/unjs/ufo/compare/v0.7.7...v0.7.8) (2021-08-17)
+
+
+### Bug Fixes
+
+* handle uppercase encoding ([#32](https://github.com/unjs/ufo/issues/32)) ([7a663e2](https://github.com/unjs/ufo/commit/7a663e21d1d0e7eec21be5c4b57eae9ad81cf590))
+
 ### [0.7.7](https://github.com/unjs/ufo/compare/v0.7.6...v0.7.7) (2021-06-30)
 
 
