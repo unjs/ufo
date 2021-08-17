@@ -10,16 +10,16 @@ const EQUAL_RE = /=/g // %3D
 const IM_RE = /\?/g // %3F
 const PLUS_RE = /\+/g // %2B
 
-const ENC_BRACKET_OPEN_RE = /%5B/g // [
-const ENC_BRACKET_CLOSE_RE = /%5D/g // ]
-const ENC_CARET_RE = /%5E/g // ^
-const ENC_BACKTICK_RE = /%60/g // `
-const ENC_CURLY_OPEN_RE = /%7B/g // {
-const ENC_PIPE_RE = /%7C/g // |
-const ENC_CURLY_CLOSE_RE = /%7D/g // }
-const ENC_SPACE_RE = /%20/g
+const ENC_BRACKET_OPEN_RE = /%5B/gi // [
+const ENC_BRACKET_CLOSE_RE = /%5D/gi // ]
+const ENC_CARET_RE = /%5E/gi // ^
+const ENC_BACKTICK_RE = /%60/gi // `
+const ENC_CURLY_OPEN_RE = /%7B/gi // {
+const ENC_PIPE_RE = /%7C/gi // |
+const ENC_CURLY_CLOSE_RE = /%7D/gi // }
+const ENC_SPACE_RE = /%20/gi
 const ENC_SLASH_RE = /%2F/gi
-const ENC_ENC_SLASH_RE = /%252F/g
+const ENC_ENC_SLASH_RE = /%252F/gi
 
 /**
  * Encode characters that need to be encoded on the path, search and hash
@@ -88,10 +88,10 @@ export function encodeQueryKey (text: string | number): string {
  */
 export function encodePath (text: string | number): string {
   return encode(text)
-           .replace(HASH_RE, '%23')
-           .replace(IM_RE, '%3F')
-           .replace(ENC_ENC_SLASH_RE, '%2F')
-           .replace(AMPERSAND_RE, '%26')
+    .replace(HASH_RE, '%23')
+    .replace(IM_RE, '%3F')
+    .replace(ENC_ENC_SLASH_RE, '%2F')
+    .replace(AMPERSAND_RE, '%26')
 }
 
 /**
