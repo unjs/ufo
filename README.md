@@ -59,7 +59,7 @@ joinURL('a', '/b', '/c')
 
 ```ts
 // Result: http://foo.com/foo/bar/baz?test=123#token
-joinURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
+resolveURL('http://foo.com/foo?test=123#token', 'bar', 'baz')
 ```
 
 ### `parseURL`
