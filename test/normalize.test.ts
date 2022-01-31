@@ -31,7 +31,8 @@ describe('normalizeURL', () => {
     'http://localhost/?email=some+v1@email.com': 'http://localhost/?email=some+v1@email.com',
     'http://localhost/?email=some%2Bv1%40email.com': 'http://localhost/?email=some%2Bv1@email.com',
     'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com': 'http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com',
-    'http://localhost/abc/deg%2f%3f%26?email=some+v1@email.com&foo=bar': 'http://localhost/abc/deg%2F%3F%26?email=some+v1@email.com&foo=bar'
+    'http://localhost/abc/deg%2f%3f%26?email=some+v1@email.com&foo=bar': 'http://localhost/abc/deg%2F%3F%26?email=some+v1@email.com&foo=bar',
+    'http://example.com/foo\\bar': 'http://example.com/foo/bar'
   }
 
   const validURLS = [
