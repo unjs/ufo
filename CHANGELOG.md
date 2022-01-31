@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.12](https://github.com/unjs/ufo/compare/v0.6.11...v0.6.12) (2022-01-31)
+
+
+### Bug Fixes
+
+* **parseURL:** normalize unescaped backslash to slash ([ee0017c](https://github.com/unjs/ufo/commit/ee0017c4953357f7b0361a77727b7c8fba90f166))
+
 ### [0.6.11](https://github.com/unjs/ufo/compare/v0.6.10...v0.6.11) (2021-04-06)
 
 
