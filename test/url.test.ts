@@ -5,7 +5,18 @@ describe('parseURL', () => {
     { input: '//test', out: { auth: '', hash: '', host: 'test', pathname: '', protocol: '', search: '' } },
     { input: 'https://test.com', out: { auth: '', hash: '', host: 'test.com', pathname: '', protocol: 'https:', search: '' } },
     { input: '/test', out: { hash: '', pathname: '/test', search: '' } },
-    { input: 'file:///home/user', out: { auth: '', hash: '', host: '', pathname: '/home/user', protocol: 'file:', search: '' } }
+    { input: 'file:///home/user', out: { auth: '', hash: '', host: '', pathname: '/home/user', protocol: 'file:', search: '' } },
+    {
+      input: 'https://host.name\\@foo.bar/meme3.php?url=http://0.0.0.0/2.svg',
+      out: {
+        auth: '',
+        hash: '',
+        host: 'host.name',
+        pathname: '/@foo.bar/meme3.php',
+        protocol: 'https:',
+        search: '?url=http://0.0.0.0/2.svg'
+      }
+    }
   ]
 
   for (const t of tests) {
