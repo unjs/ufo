@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/nuxt-contrib/ufo/compare/v0.5.4...v0.5.5) (2022-01-31)
+
+
+### Bug Fixes
+
+* **parseURL:** normalize unescaped backslash to slash ([402e081](https://github.com/nuxt-contrib/ufo/commit/402e0816479955ddd9755fdcd9866168acad431e))
+
 ### [0.5.4](https://github.com/nuxt-contrib/ufo/compare/v0.5.3...v0.5.4) (2021-01-07)
 
 
