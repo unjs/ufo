@@ -24,8 +24,8 @@ export function parseURL (input: string = ''): ParsedURL {
     return parsePath(input)
   }
 
-  const [protocol, auth, hostAndPath] = (input.match(/([^:/]+:)\/\/([^/@]+@)?(.*)/) || []).splice(1)
-  const [host = '', path = ''] = (hostAndPath.match(/([^/]*)(.*)?/) || []).splice(1)
+  const [protocol = '', auth, hostAndPath] = (input.replace(/\\/g, '/').match(/([^:/]+:)?\/\/([^/@]+@)?(.*)/) || []).splice(1)
+  const [host = '', path = ''] = (hostAndPath.match(/([^/?]*)(.*)?/) || []).splice(1)
   const { pathname, search, hash } = parsePath(path)
 
   return {
