@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.11](https://github.com/unjs/ufo/compare/v0.7.10...v0.7.11) (2022-02-25)
+
+
+### Bug Fixes
+
+* **parseURL:** exclude hash from hostname match (resolves [#42](https://github.com/unjs/ufo/issues/42)) ([53a1cea](https://github.com/unjs/ufo/commit/53a1ceaaefe07afb3add74ca55998d302a4ce218))
+
 ### [0.7.10](https://github.com/unjs/ufo/compare/v0.7.9...v0.7.10) (2022-01-31)
 
 
