@@ -18,6 +18,17 @@ describe('parseURL', () => {
         protocol: 'https:',
         search: '?url=http://0.0.0.0/2.svg'
       }
+    },
+    {
+      input: 'https://domain.test:3000#owo',
+      out: {
+        protocol: 'https:',
+        auth: '',
+        host: 'domain.test:3000',
+        pathname: '',
+        search: '',
+        hash: '#owo'
+      }
     }
   ]
 
