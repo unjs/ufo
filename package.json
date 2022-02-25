@@ -7,35 +7,35 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     },
     "./*": "./*"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "siroc build",
+    "build": "unbuild",
+    "dev": "vitest",
     "lint": "eslint --ext .ts .",
-    "prepublishOnly": "yarn build",
+    "prepack": "yarn build",
     "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "yarn lint && jest"
+    "test": "yarn lint && vitest run"
   },
   "dependencies": {},
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/flat": "latest",
-    "@types/jest": "latest",
     "@types/node": "latest",
+    "c8": "^7.11.0",
     "eslint": "latest",
-    "jest": "latest",
-    "siroc": "latest",
     "standard-version": "latest",
-    "ts-jest": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "unbuild": "latest",
+    "vitest": "latest"
   }
 }

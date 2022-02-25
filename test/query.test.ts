@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { describe, expect, test } from 'vitest'
 import { getQuery, withQuery } from '../src'
 
 describe('withQuery', () => {

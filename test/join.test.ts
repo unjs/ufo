@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { describe, expect, test } from 'vitest'
 import { joinURL } from '../src'
 
 describe('joinURL', () => {

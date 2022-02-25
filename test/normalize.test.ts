@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { describe, expect, test } from 'vitest'
 import { normalizeURL, withoutTrailingSlash } from '../src'
 
 describe('normalizeURL', () => {

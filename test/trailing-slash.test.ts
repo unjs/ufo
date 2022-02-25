@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { describe, expect, test } from 'vitest'
 import { withTrailingSlash, withoutTrailingSlash } from '../src'
 
 describe('withTrailingSlash, queryParams: false', () => {

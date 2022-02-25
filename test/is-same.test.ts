@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { describe, expect, test } from 'vitest'
 import { isSamePath } from '../src'
 
 describe('isSamePath', () => {

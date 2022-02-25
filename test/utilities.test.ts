@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { hasProtocol, isRelative, parsePath, stringifyParsedURL } from '../src'
 
 describe('hasProtocol', () => {
