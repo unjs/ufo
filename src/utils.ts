@@ -8,7 +8,7 @@ export function isRelative (inputStr: string) {
 }
 
 export function hasProtocol (inputStr: string, acceptProtocolRelative = false): boolean {
-  return /^\w+:\/\/.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
+  return /^\w+:(\/\/)?.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?/
