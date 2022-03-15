@@ -6,10 +6,13 @@ describe('hasProtocol', () => {
     { input: '//', out: [false, false] },
     { input: '///', out: [false, false] },
     { input: '//test.com', out: [true, false] },
-    { input: 'https://', out: [false, false] },
+    { input: 'https://', out: [true, true] },
     { input: 'https://test.com', out: [true, true] },
     { input: '/test', out: [false, false] },
-    { input: 'file:///home/user', out: [true, true] }
+    { input: 'file:///home/user', out: [true, true] },
+    { input: 'tel:', out: [false, false] },
+    { input: 'tel:123456', out: [true, true] },
+    { input: 'mailto:support@example.com', out: [true, true] }
   ]
 
   for (const t of tests) {
