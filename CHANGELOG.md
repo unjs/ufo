@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/unjs/ufo/compare/v0.8.0...v0.8.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* **parseURL:** don't fail if hostAndPath not matching ([d297e60](https://github.com/unjs/ufo/commit/d297e60d01c91c2367a20e0779d8a6705c996a3e))
+
 ## [0.8.0](https://github.com/unjs/ufo/compare/v0.7.11...v0.8.0) (2022-03-15)
 
 
