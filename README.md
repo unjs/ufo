@@ -158,6 +158,42 @@ Check if a path starts with `./` or `../`.
 isRelative('./foo')
 ```
 
+### `withHttp`
+
+Ensures url protocol is `http`
+
+```ts
+// Result: http://example.com
+withHttp('https://example.com')
+```
+
+### `withHttps`
+
+Ensures url protocol is `https`
+
+```ts
+// Result: https://example.com
+withHttps('http://example.com')
+```
+
+### `withProtocol`
+
+Changes url protocol passed as second argument
+
+```ts
+// Result: ftp://example.com
+withProtocol('http://example.com', 'ftp://')
+```
+
+### `withoutProtocol`
+
+Removes url protocol
+
+```ts
+// Result: example.com
+withoutProtocol('http://example.com')
+```
+
 ## License
 
 [MIT](./LICENSE)
