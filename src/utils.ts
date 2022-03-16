@@ -110,11 +110,11 @@ export function joinURL (base: string, ...input: string[]): string {
 }
 
 export function withHttp (input: string): string {
-  return withProtocol(input, 'http:')
+  return withProtocol(input, 'http://')
 }
 
 export function withHttps (input: string): string {
-  return withProtocol(input, 'https:')
+  return withProtocol(input, 'https://')
 }
 
 export function withoutProtocol (input: string): string {
@@ -122,7 +122,7 @@ export function withoutProtocol (input: string): string {
 }
 
 export function withProtocol (input: string, protocol: string): string {
-  return input.replace(/^\w+:/, protocol)
+  return input.replace(/^\w+:(\/\/)?/, protocol)
 }
 
 // $URL based utils

@@ -102,11 +102,13 @@ describe('withHttps', () => {
 
 describe('withProtocol', () => {
   const tests = [
-    { input: 'http://example.com', protocol: 'https:', out: 'https://example.com' },
-    { input: 'https://example.com', protocol: 'http:', out: 'http://example.com' },
-    { input: 'ftp://example.com/test?foo', protocol: 'http:', out: 'http://example.com/test?foo' },
-    { input: 'http://foo.com/test?query=123#hash', protocol: 'ftp:', out: 'ftp://foo.com/test?query=123#hash' },
-    { input: 'file:///home/user', protocol: 'https:', out: 'https:///home/user' }
+    { input: 'http://example.com', protocol: 'https://', out: 'https://example.com' },
+    { input: 'https://example.com', protocol: 'http://', out: 'http://example.com' },
+    { input: 'ftp://example.com/test?foo', protocol: 'http://', out: 'http://example.com/test?foo' },
+    { input: 'http://foo.com/test?query=123#hash', protocol: 'ftp://', out: 'ftp://foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', protocol: 'https://', out: 'https:///home/user' },
+    { input: 'tel:1234567890', protocol: 'skype:', out: 'skype:1234567890' },
+    { input: 'tel://+1234567890', protocol: 'callto://', out: 'callto://+1234567890' }
   ]
 
   for (const t of tests) {
@@ -118,11 +120,15 @@ describe('withProtocol', () => {
 
 describe('withoutProtocol', () => {
   const tests = [
-    { input: 'http://example.com', out: '//example.com' },
-    { input: 'https://example.com', out: '//example.com' },
-    { input: 'ftp://example.com/test?foo', out: '//example.com/test?foo' },
-    { input: 'http://foo.com/test?query=123#hash', out: '//foo.com/test?query=123#hash' },
-    { input: 'file:///home/user', out: '///home/user' }
+    { input: 'http://example.com', out: 'example.com' },
+    { input: 'https://example.com', out: 'example.com' },
+    { input: 'ftp://example.com/test?foo', out: 'example.com/test?foo' },
+    { input: 'http://foo.com/test?query=123#hash', out: 'foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', out: '/home/user' },
+    { input: 'tel:1234567890', out: '1234567890' },
+    { input: 'mailto:support@example.com', out: 'support@example.com' },
+    { input: 'skype:1234567890', out: '1234567890' },
+    { input: 'callto://+1234567890', out: '+1234567890' }
   ]
 
   for (const t of tests) {

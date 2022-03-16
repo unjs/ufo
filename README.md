@@ -182,7 +182,7 @@ Changes url protocol passed as second argument
 
 ```ts
 // Result: ftp://example.com
-withProtocol('http://example.com', 'ftp:')
+withProtocol('http://example.com', 'ftp://')
 ```
 
 ### `withoutProtocol`
@@ -190,7 +190,7 @@ withProtocol('http://example.com', 'ftp:')
 Removes url protocol
 
 ```ts
-// Result: //example.com
+// Result: example.com
 withoutProtocol('http://example.com')
 ```
 
