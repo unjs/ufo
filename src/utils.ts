@@ -109,6 +109,22 @@ export function joinURL (base: string, ...input: string[]): string {
   return url
 }
 
+export function withHttp (input: string): string {
+  return withProtocol(input, 'http:')
+}
+
+export function withHttps (input: string): string {
+  return withProtocol(input, 'https:')
+}
+
+export function withoutProtocol (input: string): string {
+  return withProtocol(input, '')
+}
+
+export function withProtocol (input: string, protocol: string): string {
+  return input.replace(/^\w+:/, protocol)
+}
+
 // $URL based utils
 
 export function createURL (input: string): $URL {

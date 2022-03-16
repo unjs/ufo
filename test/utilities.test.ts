@@ -1,5 +1,14 @@
 import { describe, expect, test } from 'vitest'
-import { hasProtocol, isRelative, parsePath, stringifyParsedURL } from '../src'
+import {
+  hasProtocol,
+  isRelative,
+  parsePath,
+  stringifyParsedURL,
+  withHttp,
+  withHttps,
+  withoutProtocol,
+  withProtocol
+} from '../src'
 
 describe('hasProtocol', () => {
   const tests = [
@@ -57,6 +66,68 @@ describe('stringifyParsedURL', () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(stringifyParsedURL(parsePath(t.input))).toBe(t.out)
+    })
+  }
+})
+
+describe('withHttp', () => {
+  const tests = [
+    { input: 'https://example.com', out: 'http://example.com' },
+    { input: 'ftp://example.com/test?foo', out: 'http://example.com/test?foo' },
+    { input: 'https://foo.com/test?query=123#hash', out: 'http://foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', out: 'http:///home/user' }
+  ]
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(withHttp(t.input)).toBe(t.out)
+    })
+  }
+})
+
+describe('withHttps', () => {
+  const tests = [
+    { input: 'http://example.com', out: 'https://example.com' },
+    { input: 'ftp://example.com/test?foo', out: 'https://example.com/test?foo' },
+    { input: 'http://foo.com/test?query=123#hash', out: 'https://foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', out: 'https:///home/user' }
+  ]
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(withHttps(t.input)).toBe(t.out)
+    })
+  }
+})
+
+describe('withProtocol', () => {
+  const tests = [
+    { input: 'http://example.com', protocol: 'https:', out: 'https://example.com' },
+    { input: 'https://example.com', protocol: 'http:', out: 'http://example.com' },
+    { input: 'ftp://example.com/test?foo', protocol: 'http:', out: 'http://example.com/test?foo' },
+    { input: 'http://foo.com/test?query=123#hash', protocol: 'ftp:', out: 'ftp://foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', protocol: 'https:', out: 'https:///home/user' }
+  ]
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(withProtocol(t.input, t.protocol)).toBe(t.out)
+    })
+  }
+})
+
+describe('withoutProtocol', () => {
+  const tests = [
+    { input: 'http://example.com', out: '//example.com' },
+    { input: 'https://example.com', out: '//example.com' },
+    { input: 'ftp://example.com/test?foo', out: '//example.com/test?foo' },
+    { input: 'http://foo.com/test?query=123#hash', out: '//foo.com/test?query=123#hash' },
+    { input: 'file:///home/user', out: '///home/user' }
+  ]
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(withoutProtocol(t.input)).toBe(t.out)
     })
   }
 })
