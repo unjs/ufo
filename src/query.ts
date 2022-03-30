@@ -35,7 +35,7 @@ export function parseQuery (paramsStr: string = ''): QueryObject {
 }
 
 export function encodeQueryItem (key: string, val: QueryValue): string {
-  if (typeof val === 'number') {
+  if (typeof val === 'number' || typeof val === 'boolean') {
     val = String(val)
   }
   if (!val) {
