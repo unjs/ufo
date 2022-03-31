@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/unjs/ufo/compare/v0.8.2...v0.8.3) (2022-03-31)
+
+
+### Bug Fixes
+
+* **withProtocol:** handle input without protocol (resolves [#52](https://github.com/unjs/ufo/issues/52)) ([4f66249](https://github.com/unjs/ufo/commit/4f66249c2a5946483554ead832bb68db724b612e))
+
 ### [0.8.2](https://github.com/unjs/ufo/compare/v0.8.1...v0.8.2) (2022-03-31)
 
 
