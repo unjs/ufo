@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.2](https://github.com/unjs/ufo/compare/v0.8.1...v0.8.2) (2022-03-31)
+
+
+### Features
+
+* withHttp, withHttps, withoutProtocol, withProtocol ([#48](https://github.com/unjs/ufo/issues/48)) ([f8ee0c0](https://github.com/unjs/ufo/commit/f8ee0c0a37f45ef695dd65943a5a20f838993e1e))
+
+
+### Bug Fixes
+
+* **encodeQueryItem:** stringify boolean values ([#51](https://github.com/unjs/ufo/issues/51)) ([469dd88](https://github.com/unjs/ufo/commit/469dd884deb3047ae70dce6fcbbf69154ad491b5))
+
 ### [0.8.1](https://github.com/unjs/ufo/compare/v0.8.0...v0.8.1) (2022-03-16)
 
 
