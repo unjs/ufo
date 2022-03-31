@@ -19,7 +19,7 @@ describe('hasProtocol', () => {
     { input: 'https://test.com', out: [true, true] },
     { input: '/test', out: [false, false] },
     { input: 'file:///home/user', out: [true, true] },
-    { input: 'tel:', out: [false, false] },
+    { input: 'tel:', out: [true, true] },
     { input: 'tel:123456', out: [true, true] },
     { input: 'mailto:support@example.com', out: [true, true] }
   ]
@@ -75,7 +75,8 @@ describe('withHttp', () => {
     { input: 'https://example.com', out: 'http://example.com' },
     { input: 'ftp://example.com/test?foo', out: 'http://example.com/test?foo' },
     { input: 'https://foo.com/test?query=123#hash', out: 'http://foo.com/test?query=123#hash' },
-    { input: 'file:///home/user', out: 'http:///home/user' }
+    { input: 'file:///home/user', out: 'http:///home/user' },
+    { input: 'foo.bar.com', out: 'http://foo.bar.com' }
   ]
 
   for (const t of tests) {
@@ -90,7 +91,8 @@ describe('withHttps', () => {
     { input: 'http://example.com', out: 'https://example.com' },
     { input: 'ftp://example.com/test?foo', out: 'https://example.com/test?foo' },
     { input: 'http://foo.com/test?query=123#hash', out: 'https://foo.com/test?query=123#hash' },
-    { input: 'file:///home/user', out: 'https:///home/user' }
+    { input: 'file:///home/user', out: 'https:///home/user' },
+    { input: 'foo.bar.com', out: 'https://foo.bar.com' }
   ]
 
   for (const t of tests) {

@@ -7,8 +7,11 @@ export function isRelative (inputStr: string) {
   return ['./', '../'].some(str => inputStr.startsWith(str))
 }
 
+const PROTOCOL_REGEX = /^\w+:(\/\/)?/
+const PROTOCOL_RELATIVE_REGEX = /^\/\/[^/]+/
+
 export function hasProtocol (inputStr: string, acceptProtocolRelative = false): boolean {
-  return /^\w+:(\/\/)?.+/.test(inputStr) || (acceptProtocolRelative && /^\/\/[^/]+/.test(inputStr))
+  return PROTOCOL_REGEX.test(inputStr) || (acceptProtocolRelative && PROTOCOL_RELATIVE_REGEX.test(inputStr))
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?/
@@ -122,7 +125,11 @@ export function withoutProtocol (input: string): string {
 }
 
 export function withProtocol (input: string, protocol: string): string {
-  return input.replace(/^\w+:(\/\/)?/, protocol)
+  const match = input.match(PROTOCOL_REGEX)
+  if (!match) {
+    return protocol + input
+  }
+  return protocol + input.substring(match[0].length)
 }
 
 // $URL based utils
