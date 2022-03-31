@@ -11,6 +11,7 @@ describe('withQuery', () => {
     { input: '/?test', query: { foo: 0 }, out: '/?test&foo=0' },
     { input: '/?test', query: { foo: 1 }, out: '/?test&foo=1' },
     { input: '/?foo=1', query: { foo: 2 }, out: '/?foo=2' },
+    { input: '/?foo=1', query: { foo: true, bar: false }, out: '/?foo=true&bar=false' },
     {
       input: '/',
       query: { email: 'some email.com' },
