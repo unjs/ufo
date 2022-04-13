@@ -29,7 +29,7 @@ export const traversePathTree = (url: string, runtime: TraversePathTreeRuntime =
   runtime.nodes.push(url || '/')
   const currentPathName = node.pathname
   // note: $URL will strip the leading slash
-  const childNode = new $URL(url.toString())
+  const childNode = new $URL(url)
   childNode.pathname = currentPathName.substring(0, currentPathName.lastIndexOf('/'))
   // need to do another step on the slash if we're dealing with a trailing slash
   if (runtime.trailingSlash) {
