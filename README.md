@@ -194,6 +194,22 @@ Removes url protocol
 withoutProtocol('http://example.com')
 ```
 
+### `traversePathTree`
+
+Steps through a URL removing the last segment each time, giving you a tree of urls leading up to the provided url.
+
+For example, the traversal for the path /blog/article/my-long-article-title will be:
+
+
+```ts
+// Result:
+// - /blog/article/my-long-article-title
+// - /blog/article
+// - /blog
+// - /
+traversePathTree('/blog/article/my-long-article-title')
+```
+
 ## License
 
 [MIT](./LICENSE)
