@@ -31,12 +31,12 @@
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/flat": "latest",
     "@types/node": "latest",
-    "c8": "^7.11.0",
+    "c8": "^7.11.2",
     "eslint": "latest",
     "standard-version": "latest",
     "typescript": "latest",
     "unbuild": "latest",
     "vitest": "latest"
   },
-  "packageManager": "pnpm@6.32.3"
+  "packageManager": "pnpm@6.32.11"
 }
