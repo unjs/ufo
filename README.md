@@ -194,6 +194,23 @@ Removes url protocol
 withoutProtocol('http://example.com')
 ```
 
+### `isEqual`
+
+Compare two URLs regardless of their slash condition or encoding:
+
+```ts
+// Result: true
+isEqual('/foo', 'foo')
+isEqual('foo/', 'foo')
+isEqual('/foo bar', '/foo%20bar')
+
+// Strict compare
+// Result: false
+isEqual('/foo', 'foo', { leadingSlash: true })
+isEqual('foo/', 'foo', { trailingSlash: true })
+isEqual('/foo bar', '/foo%20bar', { encoding: true })
+```
+
 ## License
 
 [MIT](./LICENSE)

@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import {
   hasProtocol,
+  isEqual,
   isRelative,
   parsePath,
   stringifyParsedURL,
@@ -136,6 +137,24 @@ describe('withoutProtocol', () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(withoutProtocol(t.input)).toBe(t.out)
+    })
+  }
+})
+
+describe('isEqual', () => {
+  const tests: { input: [string, string, any?], out: boolean }[] = [
+    { input: ['/foo', '/foo/'], out: true },
+    { input: ['foo', '/foo'], out: true },
+    { input: ['foo', '/foo/'], out: true },
+    { input: ['/foo%20bar/', '/foo bar'], out: true },
+    { input: ['foo', '/foo', { leadingSlash: true }], out: false },
+    { input: ['foo', 'foo/', { trailingSlash: true }], out: false },
+    { input: ['/foo%20bar/', '/foo bar', { encoding: true }], out: false }
+  ]
+
+  for (const t of tests) {
+    test(`${t.input[0]} == ${t.input[1]} ${t.input[2] ? JSON.stringify(t.input[2]) : ''}`, () => {
+      expect(isEqual(t.input[0], t.input[1], t.input[2])).toBe(t.out)
     })
   }
 })

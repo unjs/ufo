@@ -155,3 +155,25 @@ export function resolveURL (base: string, ...input: string[]): string {
 export function isSamePath (p1: string, p2: string) {
   return decode(withoutTrailingSlash(p1)) === decode(withoutTrailingSlash(p2))
 }
+
+interface CompareURLOptions {
+  trailingSlash?: boolean
+  leadingSlash?: boolean
+  encoding?: boolean
+}
+
+export function isEqual (a: string, b: string, opts: CompareURLOptions = {}) {
+  if (!opts.trailingSlash) {
+    a = withTrailingSlash(a)
+    b = withTrailingSlash(b)
+  }
+  if (!opts.leadingSlash) {
+    a = withLeadingSlash(a)
+    b = withLeadingSlash(b)
+  }
+  if (!opts.encoding) {
+    a = decode(a)
+    b = decode(b)
+  }
+  return a === b
+}
