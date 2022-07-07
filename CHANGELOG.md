@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.5](https://github.com/unjs/ufo/compare/v0.8.4...v0.8.5) (2022-07-07)
+
+
+### Bug Fixes
+
+* **withoutBase:** preserve leading slash ([fc72dd0](https://github.com/unjs/ufo/commit/fc72dd0b7e503c07e4788ebb7af6fb790c714035)), closes [#64](https://github.com/unjs/ufo/issues/64)
+
 ### [0.8.4](https://github.com/unjs/ufo/compare/v0.8.3...v0.8.4) (2022-05-06)
 
 
