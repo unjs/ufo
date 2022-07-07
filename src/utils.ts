@@ -77,10 +77,11 @@ export function withoutBase (input: string, base: string) {
     return input
   }
   const _base = withoutTrailingSlash(base)
-  if (input.startsWith(_base)) {
-    return input.substr(_base.length) || '/'
+  if (!input.startsWith(_base)) {
+    return input
   }
-  return input
+  const trimmed = input.substring(_base.length)
+  return trimmed[0] === '/' ? trimmed : ('/' + trimmed)
 }
 
 export function withQuery (input: string, query: QueryObject): string {
