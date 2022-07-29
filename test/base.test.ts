@@ -10,7 +10,9 @@ describe('withBase', () => {
     { base: '/base/', input: '/base', out: '/base' },
     { base: '/base', input: '/base/', out: '/base/' },
     { base: '/base', input: '/base/a', out: '/base/a' },
-    { base: '/base/', input: '/base/a', out: '/base/a' }
+    { base: '/base/', input: '/base/a', out: '/base/a' },
+    { base: '/base/', input: 'https://test.com', out: 'https://test.com' },
+    { base: '/', input: 'https://test.com', out: 'https://test.com' }
   ]
 
   for (const t of tests) {
@@ -33,7 +35,9 @@ describe('withoutBase', () => {
     { base: '/base/a/', input: '/base/a', out: '/' },
     { base: '/', input: '/test/', out: '/test/' },
     { base: '/', input: '/?test', out: '/?test' },
-    { base: '/api', input: '/api?test', out: '/?test' }
+    { base: '/api', input: '/api?test', out: '/?test' },
+    { base: '/base/', input: 'https://test.com', out: 'https://test.com' },
+    { base: '/', input: 'https://test.com', out: 'https://test.com' }
   ]
 
   for (const t of tests) {

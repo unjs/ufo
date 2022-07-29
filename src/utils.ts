@@ -62,7 +62,7 @@ export function cleanDoubleSlashes (input: string = ''): string {
 }
 
 export function withBase (input: string, base: string) {
-  if (isEmptyURL(base)) {
+  if (isEmptyURL(base) || hasProtocol(input)) {
     return input
   }
   const _base = withoutTrailingSlash(base)
