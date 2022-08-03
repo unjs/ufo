@@ -5,7 +5,7 @@ import {
   encodeQueryValue
 } from './encoding'
 
-export type QueryValue = string | string[] | undefined
+export type QueryValue = string | string[] | undefined | null
 export type QueryObject = Record<string, QueryValue>
 
 export function parseQuery (paramsStr: string = ''): QueryObject {
@@ -50,5 +50,5 @@ export function encodeQueryItem (key: string, val: QueryValue): string {
 }
 
 export function stringifyQuery (query: QueryObject) {
-  return Object.keys(query).map(k => encodeQueryItem(k, query[k])).join('&')
+  return Object.keys(query).filter(k => query[k] !== undefined).map(k => encodeQueryItem(k, query[k])).join('&')
 }
