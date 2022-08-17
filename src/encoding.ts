@@ -9,6 +9,8 @@ const SLASH_RE = /\//g // %2F
 const EQUAL_RE = /=/g // %3D
 const IM_RE = /\?/g // %3F
 const PLUS_RE = /\+/g // %2B
+const BRACKET_OPEN_RE = /\[/g // %5B
+const BRACKET_CLOSE_RE = /]/g // %5D
 
 const ENC_BRACKET_OPEN_RE = /%5B/gi // [
 const ENC_BRACKET_CLOSE_RE = /%5D/gi // ]
@@ -72,12 +74,15 @@ export function encodeQueryValue (text: string | number): string {
 }
 
 /**
- * Like `encodeQueryValue` but also encodes the `=` character.
+ * Like `encodeQueryValue` but also encodes the following characters: `=[]`.
  *
  * @param text - string to encode
  */
 export function encodeQueryKey (text: string | number): string {
-  return encodeQueryValue(text).replace(EQUAL_RE, '%3D')
+  return encodeQueryValue(text)
+    .replace(EQUAL_RE, '%3D')
+    .replace(BRACKET_OPEN_RE, '%5B')
+    .replace(BRACKET_CLOSE_RE, '%5D')
 }
 
 /**

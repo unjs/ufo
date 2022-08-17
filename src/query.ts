@@ -5,7 +5,8 @@ import {
   encodeQueryValue
 } from './encoding'
 
-export type QueryValue = string | string[] | undefined
+type QueryType = string | string[] | undefined
+export type QueryValue = QueryType | Record<string, QueryType>
 export type QueryObject = Record<string, QueryValue>
 
 export function parseQuery (paramsStr: string = ''): QueryObject {
@@ -44,6 +45,23 @@ export function encodeQueryItem (key: string, val: QueryValue): string {
 
   if (Array.isArray(val)) {
     return val.map(_val => `${encodeQueryKey(key)}=${encodeQueryValue(_val)}`).join('&')
+  }
+
+  if (typeof val === 'object' && val.constructor === Object) {
+    return Object.entries(val)
+      .map(([objKey, objVal]) => {
+        let thisKey = `${key}[${objKey}]`
+        const thisValue = encodeQueryItem(objKey, objVal)
+
+        const nextKey = decodeQueryValue(thisValue).match(/\[(.*?)]/) || []
+
+        if (nextKey.length === 2) {
+          thisKey += `[${nextKey[1]}]`
+        }
+
+        return `${encodeQueryKey(thisKey)}=${thisValue.split('=').pop()}`
+      })
+      .join('&')
   }
 
   return `${encodeQueryKey(key)}=${encodeQueryValue(val)}`
