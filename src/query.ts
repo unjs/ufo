@@ -47,7 +47,7 @@ export function encodeQueryItem (key: string, val: QueryValue): string {
     return val.map(_val => `${encodeQueryKey(key)}=${encodeQueryValue(_val)}`).join('&')
   }
 
-  if (typeof val === 'object' && val.constructor === Object) {
+  if (typeof val === 'object') {
     return Object.entries(val)
       .map(([objKey, objVal]) => {
         let thisKey = `${key}[${objKey}]`

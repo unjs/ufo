@@ -59,11 +59,20 @@ export class $URL implements URL {
     const p = new URLSearchParams()
     for (const name in this.query) {
       const value = this.query[name]
-      if (Array.isArray(value)) {
-        value.forEach(v => p.append(name, v))
-      } else {
-        p.append(name, value || '')
+
+      const appendValues = (name, value) => {
+        if (Array.isArray(value)) {
+          value.forEach(v => p.append(name, v))
+        } else if (typeof value === 'object') {
+          Object.entries(value).forEach(([objKey, objVal]) => {
+            appendValues(`${name}[${objKey}]`, objVal)
+          })
+        } else {
+          p.append(name, value || '')
+        }
       }
+
+      appendValues(name, value)
     }
     return p
   }
