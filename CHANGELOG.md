@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.6](https://github.com/unjs/ufo/compare/v0.8.5...v0.8.6) (2022-10-15)
+
+
+### Bug Fixes
+
+* ensure `withBase` does not prefix URLs with protocol ([#68](https://github.com/unjs/ufo/issues/68)) ([b520298](https://github.com/unjs/ufo/commit/b520298a4c6979cffe452000039ff5ca41f287b1))
+
 ### [0.8.5](https://github.com/unjs/ufo/compare/v0.8.4...v0.8.5) (2022-07-07)
 
 
