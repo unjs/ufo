@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/unjs/ufo/compare/v0.8.6...v1.0.0) (2022-11-14)
+
+
+### Features
+
+* remove undefined from withQuery ([#71](https://github.com/unjs/ufo/issues/71)) ([f8900d5](https://github.com/unjs/ufo/commit/f8900d5c1d6f8f2c34f6dda82aafc5d9521aba4e))
+
+
+### Bug Fixes
+
+* remove leading slash when parsing windows file urls ([#87](https://github.com/unjs/ufo/issues/87)) ([187afb0](https://github.com/unjs/ufo/commit/187afb0f954256eb953c1ef447fccf65e6ef5dff))
+
 ### [0.8.6](https://github.com/unjs/ufo/compare/v0.8.5...v0.8.6) (2022-10-15)
 
 
