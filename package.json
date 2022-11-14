@@ -27,11 +27,10 @@
     "test": "pnpm lint && vitest run"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "@types/node": "^18.11.9",
     "@vitest/coverage-c8": "^0.25.2",
-    "c8": "^7.12.0",
     "eslint": "^8.27.0",
+    "eslint-config-unjs": "^0.0.2",
     "standard-version": "^9.5.0",
     "typescript": "^4.8.4",
     "unbuild": "^0.9.4",
