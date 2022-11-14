@@ -26,7 +26,7 @@ export function parseURL (input: string = '', defaultProto?: string): ParsedURL 
 
   const [protocol = '', auth, hostAndPath = ''] = (input.replace(/\\/g, '/').match(/([^:/]+:)?\/\/([^/@]+@)?(.*)/) || []).splice(1)
   const [host = '', path = ''] = (hostAndPath.match(/([^/?#]*)(.*)?/) || []).splice(1)
-  const { pathname, search, hash } = parsePath(path)
+  const { pathname, search, hash } = parsePath(path.replace(/\/(?=[A-Za-z]:)/, ''))
 
   return {
     protocol,

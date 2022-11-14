@@ -8,6 +8,7 @@ describe('parseURL', () => {
     { input: 'http://test.com?foo=bar', out: { auth: '', hash: '', host: 'test.com', pathname: '', protocol: 'http:', search: '?foo=bar' } },
     { input: '/test', out: { hash: '', pathname: '/test', search: '' } },
     { input: 'file:///home/user', out: { auth: '', hash: '', host: '', pathname: '/home/user', protocol: 'file:', search: '' } },
+    { input: 'file:///C:/home/user', out: { auth: '', hash: '', host: '', pathname: 'C:/home/user', protocol: 'file:', search: '' } },
     {
       input: 'https://host.name\\@foo.bar/meme3.php?url=http://0.0.0.0/2.svg',
       out: {
