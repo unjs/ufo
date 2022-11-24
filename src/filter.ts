@@ -1,26 +1,27 @@
-import { isMatch } from 'picomatch'
+import { toRouteMatcher, createRouter } from 'radix3'
 
 export interface CreateFilterOptions {
     include?: (string | RegExp)[] | string | RegExp
     exclude?: (string | RegExp)[] | string | RegExp
-    matchOptions?: Record<string, any>
+    strictTrailingSlash?: boolean;
 }
 
-export function createFilter (options: CreateFilterOptions = {}) {
+export function createFilter (options: CreateFilterOptions = {}) : (path: string) => boolean {
   // include everything by default
-  options.include = options.include || ['**']
-  options.exclude = options.exclude || []
+  const asArray = i => i ? (Array.isArray(i) ? i : [i]) : []
+  const include = asArray(options.include) || []
+  const exclude = asArray(options.exclude) || []
 
-  return function (id: string): boolean {
-    for (const [k, v] of Object.entries({ exclude: false, include: true })) {
-      const matchers = (Array.isArray(options[k]) ? options[k] : [options[k]]).map(
-        id => id instanceof RegExp ? id : { test: (s: string) => isMatch(s, id, options.matchOptions) }
-      )
-      for (let i = 0; i < matchers.length; ++i) {
-        const matcher = matchers[i]
-        if (matcher.test(id)) { return v }
+  return function (path: string): boolean {
+    for (const v of [{ rules: exclude, result: false }, { rules: include, result: true }]) {
+      const regexRules = v.rules.filter(r => r instanceof RegExp)
+      // need to define routes as keys in an object
+      const routes = Object.fromEntries(Object.entries(v.rules.filter(r => !(r instanceof RegExp))).map(([k, v]) => [v, k]))
+      const routeRulesMatcher = toRouteMatcher(createRouter({ routes, ...options }))
+      if (regexRules.find(r => r.test(path)) || routeRulesMatcher.matchAll(path).length > 0) {
+        return Boolean(v.result)
       }
     }
-    return false
+    return include.length === 0
   }
 }

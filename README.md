@@ -213,7 +213,9 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 
 ### `createFilter`
 
-Create a filter function to check if a URL matches a pattern:
+Create a filter function to check if a URL matches a pattern.
+
+Supports basic glob patterns, regex and plain paths.
 
 ```ts
 const filter = createFilter({
@@ -230,6 +232,7 @@ filter('/page/admin')
 filter('/_api/abc')
 ```
 
+Internally this uses [radix3](https://github.com/unjs/radix3) route matcher, refer to the docs for valid tokens.
 
 ## License
 

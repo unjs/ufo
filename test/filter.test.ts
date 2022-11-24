@@ -18,6 +18,7 @@ describe('createFilter', () => {
   const invalid: string[] = [
     '/admin',
     '/admin/',
+    '/admin/test',
     '/admin/foo/some-really-long/url',
     '/regex/path',
     '/regex/'
@@ -64,7 +65,9 @@ describe('createFilter', () => {
       expect(bothFilter(t)).toBeFalsy()
     })
   }
+})
 
+describe('createFilter example', () => {
   const adminUrl = createFilter({
     include: ['/admin/**', '/admin', /^\/_api\/\d*/]
   })
