@@ -5,8 +5,8 @@ import {
   encodeQueryValue
 } from "./encoding";
 
-export type QueryValue = string | string[] | undefined | null
-export type QueryObject = Record<string, QueryValue>
+export type QueryValue = string | undefined | null
+export type QueryObject = Record<string, QueryValue | QueryValue[]>
 
 export function parseQuery (parametersString: string = ""): QueryObject {
   const object: QueryObject = {};
@@ -34,7 +34,7 @@ export function parseQuery (parametersString: string = ""): QueryObject {
   return object;
 }
 
-export function encodeQueryItem (key: string, value: QueryValue): string {
+export function encodeQueryItem (key: string, value: QueryValue | QueryValue[]): string {
   if (typeof value === "number" || typeof value === "boolean") {
     value = String(value);
   }
