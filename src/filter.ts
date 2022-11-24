@@ -1,21 +1,18 @@
 import { toRouteMatcher, createRouter } from "radix3";
 
 export interface CreateFilterOptions {
-    include?: (string | RegExp)[] | string | RegExp
-    exclude?: (string | RegExp)[] | string | RegExp
+    include?: (string | RegExp)[]
+    exclude?: (string | RegExp)[]
     strictTrailingSlash?: boolean;
 }
 
-const asArray = i => i ? (Array.isArray(i) ? i : [i]) : [];
-
 export function createFilter (options: CreateFilterOptions = {}) : (path: string) => boolean {
-  // include everything by default
-  const include = asArray(options.include) || [];
-  const exclude = asArray(options.exclude) || [];
+  const include = options.include || [];
+  const exclude = options.exclude || [];
 
   return function (path: string): boolean {
     for (const v of [{ rules: exclude, result: false }, { rules: include, result: true }]) {
-      const regexRules = v.rules.filter(r => r instanceof RegExp);
+      const regexRules = v.rules.filter(r => r instanceof RegExp) as RegExp[];
       // need to define routes as keys in an object
       const routes = Object.fromEntries(Object.entries(v.rules.filter(r => !(r instanceof RegExp))).map(([k, v]) => [v, k]));
       const routeRulesMatcher = toRouteMatcher(createRouter({ routes, ...options }));
