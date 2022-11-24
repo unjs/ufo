@@ -26,7 +26,9 @@
     "release": "pnpm test && standard-version && git push --follow-tags && pnpm publish",
     "test": "pnpm lint && vitest run"
   },
-  "dependencies": {},
+  "dependencies": {
+    "picomatch": "^2.3.1"
+  },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/flat": "latest",

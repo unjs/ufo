@@ -211,6 +211,26 @@ isEqual('foo/', 'foo', { trailingSlash: true })
 isEqual('/foo bar', '/foo%20bar', { encoding: true })
 ```
 
+### `createFilter`
+
+Create a filter function to check if a URL matches a pattern:
+
+```ts
+const filter = createFilter({
+  include: ['/admin/**', '/admin', /^\/_api\/\d*/]
+})
+// Result: true
+filter('/admin')
+filter('/admin/users')
+filter('/_api/123')
+
+// Result: false
+filter('/safe-url')
+filter('/page/admin')
+filter('/_api/abc')
+```
+
+
 ## License
 
 [MIT](./LICENSE)
