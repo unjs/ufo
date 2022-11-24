@@ -1,25 +1,25 @@
 // @ts-ignore
-import { toASCII } from './punycode'
+import { toASCII } from "./punycode";
 
 // Utils used from https://github.com/vuejs/vue-router-next/blob/master/src/encoding.ts (Author @posva)
 
-const HASH_RE = /#/g // %23
-const AMPERSAND_RE = /&/g // %26
-const SLASH_RE = /\//g // %2F
-const EQUAL_RE = /=/g // %3D
-const IM_RE = /\?/g // %3F
-const PLUS_RE = /\+/g // %2B
+const HASH_RE = /#/g; // %23
+const AMPERSAND_RE = /&/g; // %26
+const SLASH_RE = /\//g; // %2F
+const EQUAL_RE = /=/g; // %3D
+const IM_RE = /\?/g; // %3F
+const PLUS_RE = /\+/g; // %2B
 
-const ENC_BRACKET_OPEN_RE = /%5B/gi // [
-const ENC_BRACKET_CLOSE_RE = /%5D/gi // ]
-const ENC_CARET_RE = /%5E/gi // ^
-const ENC_BACKTICK_RE = /%60/gi // `
-const ENC_CURLY_OPEN_RE = /%7B/gi // {
-const ENC_PIPE_RE = /%7C/gi // |
-const ENC_CURLY_CLOSE_RE = /%7D/gi // }
-const ENC_SPACE_RE = /%20/gi
-const ENC_SLASH_RE = /%2F/gi
-const ENC_ENC_SLASH_RE = /%252F/gi
+const ENC_BRACKET_OPEN_RE = /%5b/gi; // [
+const ENC_BRACKET_CLOSE_RE = /%5d/gi; // ]
+const ENC_CARET_RE = /%5e/gi; // ^
+const ENC_BACKTICK_RE = /%60/gi; // `
+const ENC_CURLY_OPEN_RE = /%7b/gi; // {
+const ENC_PIPE_RE = /%7c/gi; // |
+const ENC_CURLY_CLOSE_RE = /%7d/gi; // }
+const ENC_SPACE_RE = /%20/gi;
+const ENC_SLASH_RE = /%2f/gi;
+const ENC_ENC_SLASH_RE = /%252f/gi;
 
 /**
  * Encode characters that need to be encoded on the path, search and hash
@@ -30,10 +30,10 @@ const ENC_ENC_SLASH_RE = /%252F/gi
  * @returns encoded string
  */
 export function encode (text: string | number): string {
-  return encodeURI('' + text)
-    .replace(ENC_PIPE_RE, '|')
-    .replace(ENC_BRACKET_OPEN_RE, '[')
-    .replace(ENC_BRACKET_CLOSE_RE, ']')
+  return encodeURI("" + text)
+    .replace(ENC_PIPE_RE, "|")
+    .replace(ENC_BRACKET_OPEN_RE, "[")
+    .replace(ENC_BRACKET_CLOSE_RE, "]");
 }
 
 /**
@@ -44,9 +44,9 @@ export function encode (text: string | number): string {
  */
 export function encodeHash (text: string): string {
   return encode(text)
-    .replace(ENC_CURLY_OPEN_RE, '{')
-    .replace(ENC_CURLY_CLOSE_RE, '}')
-    .replace(ENC_CARET_RE, '^')
+    .replace(ENC_CURLY_OPEN_RE, "{")
+    .replace(ENC_CURLY_CLOSE_RE, "}")
+    .replace(ENC_CARET_RE, "^");
 }
 
 /**
@@ -60,15 +60,15 @@ export function encodeQueryValue (text: string | number): string {
   return (
     encode(text)
       // Encode the space as +, encode the + to differentiate it from the space
-      .replace(PLUS_RE, '%2B')
-      .replace(ENC_SPACE_RE, '+')
-      .replace(HASH_RE, '%23')
-      .replace(AMPERSAND_RE, '%26')
-      .replace(ENC_BACKTICK_RE, '`')
-      .replace(ENC_CURLY_OPEN_RE, '{')
-      .replace(ENC_CURLY_CLOSE_RE, '}')
-      .replace(ENC_CARET_RE, '^')
-  )
+      .replace(PLUS_RE, "%2B")
+      .replace(ENC_SPACE_RE, "+")
+      .replace(HASH_RE, "%23")
+      .replace(AMPERSAND_RE, "%26")
+      .replace(ENC_BACKTICK_RE, "`")
+      .replace(ENC_CURLY_OPEN_RE, "{")
+      .replace(ENC_CURLY_CLOSE_RE, "}")
+      .replace(ENC_CARET_RE, "^")
+  );
 }
 
 /**
@@ -77,7 +77,7 @@ export function encodeQueryValue (text: string | number): string {
  * @param text - string to encode
  */
 export function encodeQueryKey (text: string | number): string {
-  return encodeQueryValue(text).replace(EQUAL_RE, '%3D')
+  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
 }
 
 /**
@@ -88,11 +88,11 @@ export function encodeQueryKey (text: string | number): string {
  */
 export function encodePath (text: string | number): string {
   return encode(text)
-    .replace(HASH_RE, '%23')
-    .replace(IM_RE, '%3F')
-    .replace(ENC_ENC_SLASH_RE, '%2F')
-    .replace(AMPERSAND_RE, '%26')
-    .replace(PLUS_RE, '%2B')
+    .replace(HASH_RE, "%23")
+    .replace(IM_RE, "%3F")
+    .replace(ENC_ENC_SLASH_RE, "%2F")
+    .replace(AMPERSAND_RE, "%26")
+    .replace(PLUS_RE, "%2B");
 }
 
 /**
@@ -104,7 +104,7 @@ export function encodePath (text: string | number): string {
  * @returns encoded string
  */
 export function encodeParam (text: string | number): string {
-  return encodePath(text).replace(SLASH_RE, '%2F')
+  return encodePath(text).replace(SLASH_RE, "%2F");
 }
 
 /**
@@ -114,11 +114,11 @@ export function encodeParam (text: string | number): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decode (text: string | number = ''): string {
+export function decode (text: string | number = ""): string {
   try {
-    return decodeURIComponent('' + text)
-  } catch (_err) {
-    return '' + text
+    return decodeURIComponent("" + text);
+  } catch {
+    return "" + text;
   }
 }
 
@@ -129,7 +129,7 @@ export function decode (text: string | number = ''): string {
  * @returns decoded string
  */
 export function decodePath (text: string): string {
-  return decode(text.replace(ENC_SLASH_RE, '%252F'))
+  return decode(text.replace(ENC_SLASH_RE, "%252F"));
 }
 
 /**
@@ -139,9 +139,9 @@ export function decodePath (text: string): string {
  * @returns decoded string
  */
 export function decodeQueryValue (text: string): string {
-  return decode(text.replace(PLUS_RE, ' '))
+  return decode(text.replace(PLUS_RE, " "));
 }
 
-export function encodeHost (name: string = '') {
-  return toASCII(name)
+export function encodeHost (name: string = "") {
+  return toASCII(name);
 }

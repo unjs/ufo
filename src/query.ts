@@ -3,52 +3,52 @@ import {
   decodeQueryValue,
   encodeQueryKey,
   encodeQueryValue
-} from './encoding'
+} from "./encoding";
 
-export type QueryValue = string | string[] | undefined
+export type QueryValue = string | string[] | undefined | null
 export type QueryObject = Record<string, QueryValue>
 
-export function parseQuery (paramsStr: string = ''): QueryObject {
-  const obj: QueryObject = {}
-  if (paramsStr[0] === '?') {
-    paramsStr = paramsStr.substr(1)
+export function parseQuery (parametersString: string = ""): QueryObject {
+  const object: QueryObject = {};
+  if (parametersString[0] === "?") {
+    parametersString = parametersString.slice(1);
   }
-  for (const param of paramsStr.split('&')) {
-    const s = (param.match(/([^=]+)=?(.*)/) || [])
-    if (s.length < 2) { continue }
-    const key = decode(s[1])
-    if (key === '__proto__' || key === 'constructor') {
-      continue
+  for (const parameter of parametersString.split("&")) {
+    const s = (parameter.match(/([^=]+)=?(.*)/) || []);
+    if (s.length < 2) { continue; }
+    const key = decode(s[1]);
+    if (key === "__proto__" || key === "constructor") {
+      continue;
     }
-    const value = decodeQueryValue(s[2] || '')
-    if (obj[key]) {
-      if (Array.isArray(obj[key])) {
-        (obj[key] as string[]).push(value)
+    const value = decodeQueryValue(s[2] || "");
+    if (object[key]) {
+      if (Array.isArray(object[key])) {
+        (object[key] as string[]).push(value);
       } else {
-        obj[key] = [obj[key] as string, value]
+        object[key] = [object[key] as string, value];
       }
     } else {
-      obj[key] = value
+      object[key] = value;
     }
   }
-  return obj
+  return object;
 }
 
-export function encodeQueryItem (key: string, val: QueryValue): string {
-  if (typeof val === 'number' || typeof val === 'boolean') {
-    val = String(val)
+export function encodeQueryItem (key: string, value: QueryValue): string {
+  if (typeof value === "number" || typeof value === "boolean") {
+    value = String(value);
   }
-  if (!val) {
-    return encodeQueryKey(key)
-  }
-
-  if (Array.isArray(val)) {
-    return val.map(_val => `${encodeQueryKey(key)}=${encodeQueryValue(_val)}`).join('&')
+  if (!value) {
+    return encodeQueryKey(key);
   }
 
-  return `${encodeQueryKey(key)}=${encodeQueryValue(val)}`
+  if (Array.isArray(value)) {
+    return value.map(_value => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`).join("&");
+  }
+
+  return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
 }
 
 export function stringifyQuery (query: QueryObject) {
-  return Object.keys(query).map(k => encodeQueryItem(k, query[k])).join('&')
+  return Object.keys(query).filter(k => query[k] !== undefined).map(k => encodeQueryItem(k, query[k])).join("&");
 }
