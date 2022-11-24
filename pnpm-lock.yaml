@@ -5,6 +5,7 @@ specifiers:
   '@vitest/coverage-c8': ^0.25.3
   eslint: ^8.28.0
   eslint-config-unjs: ^0.0.2
+  radix3: 1.0.0
   standard-version: ^9.5.0
   typescript: ^4.9.3
   unbuild: ^0.9.4
@@ -15,6 +16,7 @@ devDependencies:
   '@vitest/coverage-c8': 0.25.3
   eslint: 8.28.0
   eslint-config-unjs: 0.0.2_hsf322ms6xhhd4b5ne6lb74y4a
+  radix3: 1.0.0
   standard-version: 9.5.0
   typescript: 4.9.3
   unbuild: 0.9.4
@@ -3311,6 +3313,10 @@ packages:
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
+    dev: true
+
+  /radix3/1.0.0:
+    resolution: {integrity: sha512-6n3AEXth91ASapMVKiEh2wrbFJmI+NBilrWE0AbiGgfm0xet0QXC8+a3K19r1UVYjUjctUgB053c3V/J6V0kCQ==}
     dev: true
 
   /read-pkg-up/3.0.0:
