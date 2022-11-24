@@ -36,10 +36,11 @@ describe("createFilter", () => {
   }
 
   const includeFilter = createFilter({
-    include: ["/admin/**", "/admin", /^\/regex\/.*/]
+    include: ["/admin/**", "/admin", /^\/regex\/.*/],
+    exclude: ["/admin/login"]
   });
 
-  for (const t of valid) {
+  for (const t of [...valid, "/admin/login"]) {
     test(`includeFilter: ${t} invalid`, () => {
       expect(includeFilter(t)).toBeFalsy();
     });
