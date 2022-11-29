@@ -27,7 +27,9 @@ describe("withQuery", () => {
       out: "/?str=%26&str2=%2526"
     },
     { input: "/?x=1,2,3", query: { y: "1,2,3" }, out: "/?x=1,2,3&y=1,2,3" },
-    { input: "http://a.com?v=1", query: { x: 2 }, out: "http://a.com?v=1&x=2" }
+    { input: "http://a.com?v=1", query: { x: 2 }, out: "http://a.com?v=1&x=2" },
+    { input: "/", query: { param: ["3", ""] }, out: "/?param=3&param=" },
+    { input: "/", query: { param: ["", "3"] }, out: "/?param=&param=3" }
   ];
 
   for (const t of tests) {
@@ -39,7 +41,9 @@ describe("withQuery", () => {
 
 describe("getQuery", () => {
   const tests = {
-    "http://foo.com/foo?test=123&unicode=%E5%A5%BD": { test: "123", unicode: "好" }
+    "http://foo.com/foo?test=123&unicode=%E5%A5%BD": { test: "123", unicode: "好" },
+    "http://foo.com/?param=3&param=": { param: ["3", ""] },
+    "http://foo.com/?param=&param=3": { param: ["", "3"] }
   };
 
   for (const t in tests) {
