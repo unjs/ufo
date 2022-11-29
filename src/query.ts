@@ -21,7 +21,7 @@ export function parseQuery (parametersString: string = ""): QueryObject {
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (object[key]) {
+    if (typeof object[key] !== "undefined") {
       if (Array.isArray(object[key])) {
         (object[key] as string[]).push(value);
       } else {
