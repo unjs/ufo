@@ -19,6 +19,7 @@ describe("hasProtocol", () => {
     { input: "https://", out: [true, true] },
     { input: "https://test.com", out: [true, true] },
     { input: "/test", out: [false, false] },
+    { input: "C:/test", out: [false, false] },
     { input: "file:///home/user", out: [true, true] },
     { input: "tel:", out: [true, true] },
     { input: "tel:123456", out: [true, true] },
