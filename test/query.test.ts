@@ -28,7 +28,7 @@ describe("withQuery", () => {
     },
     { input: "/?x=1,2,3", query: { y: "1,2,3" }, out: "/?x=1,2,3&y=1,2,3" },
     { input: "http://a.com?v=1", query: { x: 2 }, out: "http://a.com?v=1&x=2" },
-    { input: "/", query: { json: "{\"test\":[\"content\"]}" }, out: "/?json=%7B%22test%22%3A%5B%22content%22%5D%7D" }
+    { input: "/", query: { json: "{\"test\":[\"content\"]}" }, out: "/?json=%7B%22test%22:%5B%22content%22%5D%7D" }
   ];
 
   for (const t of tests) {
