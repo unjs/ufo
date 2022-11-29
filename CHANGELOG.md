@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/unjs/ufo/compare/v1.0.0...v1.0.1) (2022-11-29)
+
+
+### Bug Fixes
+
+* fix `QueryValue` type to be array only as `QueryObject` values ([#101](https://github.com/unjs/ufo/issues/101)) ([3fbad8c](https://github.com/unjs/ufo/commit/3fbad8c04bb9a2e3438d5000de0c49ddc469536a))
+* **hasProtocol:** do not treat windows drive letter as protocol ([#106](https://github.com/unjs/ufo/issues/106)) ([67c3dab](https://github.com/unjs/ufo/commit/67c3dab271f46abfa82a492ddb7e1e099f994203))
+* **query:** uniform handling of empty array values ([#103](https://github.com/unjs/ufo/issues/103)) ([0b1007d](https://github.com/unjs/ufo/commit/0b1007dc58d9955dc24bab3312173b7a929387cb))
+
 ## [1.0.0](https://github.com/unjs/ufo/compare/v0.8.6...v1.0.0) (2022-11-14)
 
 
