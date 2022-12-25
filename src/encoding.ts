@@ -31,9 +31,7 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  */
 export function encode (text: string | number): string {
   return encodeURI("" + text)
-    .replace(ENC_PIPE_RE, "|")
-    .replace(ENC_BRACKET_OPEN_RE, "[")
-    .replace(ENC_BRACKET_CLOSE_RE, "]");
+    .replace(ENC_PIPE_RE, "|");
 }
 
 /**
@@ -65,8 +63,6 @@ export function encodeQueryValue (text: string | number): string {
       .replace(HASH_RE, "%23")
       .replace(AMPERSAND_RE, "%26")
       .replace(ENC_BACKTICK_RE, "`")
-      .replace(ENC_CURLY_OPEN_RE, "{")
-      .replace(ENC_CURLY_CLOSE_RE, "}")
       .replace(ENC_CARET_RE, "^")
   );
 }
