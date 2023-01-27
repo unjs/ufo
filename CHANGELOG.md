@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/unjs/ufo/compare/v1.0.0...v1.0.1) (2022-11-29)
+
+
+### Bug Fixes
+
+* fix `QueryValue` type to be array only as `QueryObject` values ([#101](https://github.com/unjs/ufo/issues/101)) ([3fbad8c](https://github.com/unjs/ufo/commit/3fbad8c04bb9a2e3438d5000de0c49ddc469536a))
+* **hasProtocol:** do not treat windows drive letter as protocol ([#106](https://github.com/unjs/ufo/issues/106)) ([67c3dab](https://github.com/unjs/ufo/commit/67c3dab271f46abfa82a492ddb7e1e099f994203))
+* **query:** uniform handling of empty array values ([#103](https://github.com/unjs/ufo/issues/103)) ([0b1007d](https://github.com/unjs/ufo/commit/0b1007dc58d9955dc24bab3312173b7a929387cb))
+
+## [1.0.0](https://github.com/unjs/ufo/compare/v0.8.6...v1.0.0) (2022-11-14)
+
+
+### Features
+
+* remove undefined from withQuery ([#71](https://github.com/unjs/ufo/issues/71)) ([f8900d5](https://github.com/unjs/ufo/commit/f8900d5c1d6f8f2c34f6dda82aafc5d9521aba4e))
+
+
+### Bug Fixes
+
+* remove leading slash when parsing windows file urls ([#87](https://github.com/unjs/ufo/issues/87)) ([187afb0](https://github.com/unjs/ufo/commit/187afb0f954256eb953c1ef447fccf65e6ef5dff))
+
+### [0.8.6](https://github.com/unjs/ufo/compare/v0.8.5...v0.8.6) (2022-10-15)
+
+
+### Bug Fixes
+
+* ensure `withBase` does not prefix URLs with protocol ([#68](https://github.com/unjs/ufo/issues/68)) ([b520298](https://github.com/unjs/ufo/commit/b520298a4c6979cffe452000039ff5ca41f287b1))
+
 ### [0.8.5](https://github.com/unjs/ufo/compare/v0.8.4...v0.8.5) (2022-07-07)
 
 
