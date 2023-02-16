@@ -15,7 +15,7 @@ const PROTOCOL_RELATIVE_REGEX = /^[/\\]{2}[^/\\]+/;
  * @deprecated
  * Same as { hasProtocol(inputString, { acceptRelative: true })
  */
-export type HasProtocolLegacyOptioon = boolean;
+export type HasProtocolLegacyOption = boolean;
 export type HasProtocolOptions = {
   acceptRelative?: boolean;
   strict?: boolean;
@@ -23,7 +23,7 @@ export type HasProtocolOptions = {
 
 export function hasProtocol(
   inputString: string,
-  opts: HasProtocolLegacyOptioon | HasProtocolOptions = {}
+  opts: HasProtocolLegacyOption | HasProtocolOptions = {}
 ): boolean {
   if (typeof opts === "boolean") {
     opts = { acceptRelative: opts };
