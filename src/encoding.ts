@@ -1,4 +1,3 @@
-// @ts-ignore
 import { toASCII } from "./punycode";
 import { QueryValue } from "./query";
 
