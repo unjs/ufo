@@ -92,7 +92,7 @@ describe("parseURL", () => {
 
 describe("parseHost", () => {
   const tests = [
-    { input: "localhost:3000", out: { hostname: "localhost", port: "3000" } },
+    { input: "localhost:3000", out: { hostname: "localhost", port: 3000 } },
     { input: "google.com", out: { hostname: "google.com", port: undefined } },
   ];
 
