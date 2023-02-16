@@ -18,7 +18,7 @@ export interface HasProtocolOptions {
 export function hasProtocol(
   inputString: string,
   opts?: HasProtocolOptions
-): boolean
+): boolean;
 /**
  * @deprecated
  * Same as { hasProtocol(inputString, { acceptRelative: true })
@@ -26,7 +26,7 @@ export function hasProtocol(
 export function hasProtocol(
   inputString: string,
   acceptRelative: boolean
-): boolean
+): boolean;
 export function hasProtocol(
   inputString: string,
   opts: boolean | HasProtocolOptions = {}
