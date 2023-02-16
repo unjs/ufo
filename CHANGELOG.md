@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.1.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.0.1...v1.1.0)
+
+
+### 🚀 Enhancements
+
+  - **hasProtocol:** Strict mode support ([#124](https://github.com/unjs/ufo/pull/124))
+  - Stringify query values ([#123](https://github.com/unjs/ufo/pull/123))
+
+### 🩹 Fixes
+
+  - **parseHost:** Correctly parse hostnames with and without port ([#120](https://github.com/unjs/ufo/pull/120))
+  - Port should be string ([75a280c](https://github.com/unjs/ufo/commit/75a280c))
+  - Encode `[]` and `{}` in query values to increase compatibility ([#118](https://github.com/unjs/ufo/pull/118))
+  - **hasProtocol:** Accept backslash too ([#122](https://github.com/unjs/ufo/pull/122))
+
+### 🏡 Chore
+
+  - Lint ([09ea077](https://github.com/unjs/ufo/commit/09ea077))
+  - Use changelogen for release ([74626fb](https://github.com/unjs/ufo/commit/74626fb))
+
+### 🎨 Styles
+
+  - Lint with prettier ([80cd389](https://github.com/unjs/ufo/commit/80cd389))
+
+### ❤️  Contributors
+
+- Pooya Parsa <pooya@pi0.io>
+- Divine 
+- Smeng9
+
 ### [1.0.1](https://github.com/unjs/ufo/compare/v1.0.0...v1.0.1) (2022-11-29)
 
 
