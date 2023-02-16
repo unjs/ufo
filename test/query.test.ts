@@ -42,11 +42,17 @@ describe("withQuery", () => {
     {
       input: "/",
       query: { param: { a: { nested: { object: 123 } } } },
-      out:
-        "/?param=" +
-        encodeURIComponent(
-          JSON.stringify({ a: { nested: { object: 123 } } })
-        ).replace(/%3A/g, ":"),
+      out: "/?param=%7B%22a%22:%7B%22nested%22:%7B%22object%22:123%7D%7D%7D",
+    },
+    {
+      input: "/",
+      query: { param: { a: [{ obj: 1 }, { obj: 2 }] } },
+      out: "/?param=%7B%22a%22:%5B%7B%22obj%22:1%7D,%7B%22obj%22:2%7D%5D%7D", // {"a":[{"obj":1},{"obj":2}]}
+    },
+    {
+      input: "/",
+      query: { param: { a: [{ obj: [1, 2, 3] }] } },
+      out: "/?param=%7B%22a%22:%5B%7B%22obj%22:%5B1,2,3%5D%7D%5D%7D", // {"a":[{"obj":[1,2,3]}]}
     },
   ];
 
