@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseURL } from "../src";
+import { parseURL, parseHost } from "../src";
 
 describe("parseURL", () => {
   const tests = [
@@ -86,6 +86,19 @@ describe("parseURL", () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(parseURL(t.input)).toEqual(t.out);
+    });
+  }
+});
+
+describe("parseHost", () => {
+  const tests = [
+    { input: "localhost:3000", out: { hostname: "localhost", port: 3000 } },
+    { input: "google.com", out: { hostname: "google.com", port: undefined } },
+  ];
+
+  for (const t of tests) {
+    test(t.input, () => {
+      expect(parseHost(t.input)).toStrictEqual(t.out);
     });
   }
 });

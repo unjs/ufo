@@ -16,7 +16,7 @@ export interface ParsedAuth {
 
 export interface ParsedHost {
   hostname: string;
-  port: string;
+  port: number;
 }
 
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
@@ -65,10 +65,10 @@ export function parseAuth(input = ""): ParsedAuth {
 }
 
 export function parseHost(input = ""): ParsedHost {
-  const [hostname, port] = (input.match(/([^/]*)(:0-9+)?/) || []).splice(1);
+  const [hostname, port] = (input.match(/([^/:]*):?(\d+)?/) || []).splice(1);
   return {
     hostname: decode(hostname),
-    port,
+    port: port ? Number.parseInt(port) : undefined,
   };
 }
 
