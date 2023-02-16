@@ -10,8 +10,6 @@ const EQUAL_RE = /=/g; // %3D
 const IM_RE = /\?/g; // %3F
 const PLUS_RE = /\+/g; // %2B
 
-const ENC_BRACKET_OPEN_RE = /%5b/gi; // [
-const ENC_BRACKET_CLOSE_RE = /%5d/gi; // ]
 const ENC_CARET_RE = /%5e/gi; // ^
 const ENC_BACKTICK_RE = /%60/gi; // `
 const ENC_CURLY_OPEN_RE = /%7b/gi; // {
@@ -31,9 +29,7 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  */
 export function encode(text: string | number): string {
   return encodeURI("" + text)
-    .replace(ENC_PIPE_RE, "|")
-    .replace(ENC_BRACKET_OPEN_RE, "[")
-    .replace(ENC_BRACKET_CLOSE_RE, "]");
+    .replace(ENC_PIPE_RE, "|");
 }
 
 /**
@@ -65,8 +61,6 @@ export function encodeQueryValue(text: string | number): string {
       .replace(HASH_RE, "%23")
       .replace(AMPERSAND_RE, "%26")
       .replace(ENC_BACKTICK_RE, "`")
-      .replace(ENC_CURLY_OPEN_RE, "{")
-      .replace(ENC_CURLY_CLOSE_RE, "}")
       .replace(ENC_CARET_RE, "^")
   );
 }
