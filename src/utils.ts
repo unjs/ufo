@@ -3,27 +3,36 @@ import { parseURL, stringifyParsedURL } from "./parse";
 import { QueryObject, parseQuery, stringifyQuery } from "./query";
 import { decode } from "./encoding";
 
-export function isRelative (inputString: string) {
-  return ["./", "../"].some(string_ => inputString.startsWith(string_));
+export function isRelative(inputString: string) {
+  return ["./", "../"].some((string_) => inputString.startsWith(string_));
 }
 
 const PROTOCOL_REGEX = /^\w{2,}:(\/\/)?/;
 const PROTOCOL_RELATIVE_REGEX = /^\/\/[^/]+/;
 
-export function hasProtocol (inputString: string, acceptProtocolRelative = false): boolean {
-  return PROTOCOL_REGEX.test(inputString) || (acceptProtocolRelative && PROTOCOL_RELATIVE_REGEX.test(inputString));
+export function hasProtocol(
+  inputString: string,
+  acceptProtocolRelative = false
+): boolean {
+  return (
+    PROTOCOL_REGEX.test(inputString) ||
+    (acceptProtocolRelative && PROTOCOL_RELATIVE_REGEX.test(inputString))
+  );
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?/;
 
-export function hasTrailingSlash (input: string = "", queryParameters: boolean = false): boolean {
+export function hasTrailingSlash(input = "", queryParameters = false): boolean {
   if (!queryParameters) {
     return input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
 }
 
-export function withoutTrailingSlash (input: string = "", queryParameters: boolean = false): string {
+export function withoutTrailingSlash(
+  input = "",
+  queryParameters = false
+): string {
   if (!queryParameters) {
     return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
   }
@@ -34,9 +43,9 @@ export function withoutTrailingSlash (input: string = "", queryParameters: boole
   return (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "");
 }
 
-export function withTrailingSlash (input: string = "", queryParameters: boolean = false): string {
+export function withTrailingSlash(input = "", queryParameters = false): string {
   if (!queryParameters) {
-    return input.endsWith("/") ? input : (input + "/");
+    return input.endsWith("/") ? input : input + "/";
   }
   if (hasTrailingSlash(input, true)) {
     return input || "/";
@@ -45,23 +54,26 @@ export function withTrailingSlash (input: string = "", queryParameters: boolean 
   return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "");
 }
 
-export function hasLeadingSlash (input: string = ""): boolean {
+export function hasLeadingSlash(input = ""): boolean {
   return input.startsWith("/");
 }
 
-export function withoutLeadingSlash (input: string = ""): string {
+export function withoutLeadingSlash(input = ""): string {
   return (hasLeadingSlash(input) ? input.slice(1) : input) || "/";
 }
 
-export function withLeadingSlash (input: string = ""): string {
-  return hasLeadingSlash(input) ? input : ("/" + input);
+export function withLeadingSlash(input = ""): string {
+  return hasLeadingSlash(input) ? input : "/" + input;
 }
 
-export function cleanDoubleSlashes (input: string = ""): string {
-  return input.split("://").map(string_ => string_.replace(/\/{2,}/g, "/")).join("://");
+export function cleanDoubleSlashes(input = ""): string {
+  return input
+    .split("://")
+    .map((string_) => string_.replace(/\/{2,}/g, "/"))
+    .join("://");
 }
 
-export function withBase (input: string, base: string) {
+export function withBase(input: string, base: string) {
   if (isEmptyURL(base) || hasProtocol(input)) {
     return input;
   }
@@ -72,7 +84,7 @@ export function withBase (input: string, base: string) {
   return joinURL(_base, input);
 }
 
-export function withoutBase (input: string, base: string) {
+export function withoutBase(input: string, base: string) {
   if (isEmptyURL(base)) {
     return input;
   }
@@ -81,51 +93,51 @@ export function withoutBase (input: string, base: string) {
     return input;
   }
   const trimmed = input.slice(_base.length);
-  return trimmed[0] === "/" ? trimmed : ("/" + trimmed);
+  return trimmed[0] === "/" ? trimmed : "/" + trimmed;
 }
 
-export function withQuery (input: string, query: QueryObject): string {
+export function withQuery(input: string, query: QueryObject): string {
   const parsed = parseURL(input);
   const mergedQuery = { ...parseQuery(parsed.search), ...query };
   parsed.search = stringifyQuery(mergedQuery);
   return stringifyParsedURL(parsed);
 }
 
-export function getQuery (input: string): QueryObject {
+export function getQuery(input: string): QueryObject {
   return parseQuery(parseURL(input).search);
 }
 
-export function isEmptyURL (url: string) {
+export function isEmptyURL(url: string) {
   return !url || url === "/";
 }
 
-export function isNonEmptyURL (url: string) {
+export function isNonEmptyURL(url: string) {
   return url && url !== "/";
 }
 
-export function joinURL (base: string, ...input: string[]): string {
+export function joinURL(base: string, ...input: string[]): string {
   let url = base || "";
 
-  for (const index of input.filter(url => isNonEmptyURL(url))) {
+  for (const index of input.filter((url) => isNonEmptyURL(url))) {
     url = url ? withTrailingSlash(url) + withoutLeadingSlash(index) : index;
   }
 
   return url;
 }
 
-export function withHttp (input: string): string {
+export function withHttp(input: string): string {
   return withProtocol(input, "http://");
 }
 
-export function withHttps (input: string): string {
+export function withHttps(input: string): string {
   return withProtocol(input, "https://");
 }
 
-export function withoutProtocol (input: string): string {
+export function withoutProtocol(input: string): string {
   return withProtocol(input, "");
 }
 
-export function withProtocol (input: string, protocol: string): string {
+export function withProtocol(input: string, protocol: string): string {
   const match = input.match(PROTOCOL_REGEX);
   if (!match) {
     return protocol + input;
@@ -135,35 +147,35 @@ export function withProtocol (input: string, protocol: string): string {
 
 // $URL based utils
 
-export function createURL (input: string): $URL {
+export function createURL(input: string): $URL {
   return new $URL(input);
 }
 
-export function normalizeURL (input: string): string {
+export function normalizeURL(input: string): string {
   return createURL(input).toString();
 }
 
-export function resolveURL (base: string, ...input: string[]): string {
+export function resolveURL(base: string, ...input: string[]): string {
   const url = createURL(base);
 
-  for (const index of input.filter(url => isNonEmptyURL(url))) {
+  for (const index of input.filter((url) => isNonEmptyURL(url))) {
     url.append(createURL(index));
   }
 
   return url.toString();
 }
 
-export function isSamePath (p1: string, p2: string) {
+export function isSamePath(p1: string, p2: string) {
   return decode(withoutTrailingSlash(p1)) === decode(withoutTrailingSlash(p2));
 }
 
 interface CompareURLOptions {
-  trailingSlash?: boolean
-  leadingSlash?: boolean
-  encoding?: boolean
+  trailingSlash?: boolean;
+  leadingSlash?: boolean;
+  encoding?: boolean;
 }
 
-export function isEqual (a: string, b: string, options: CompareURLOptions = {}) {
+export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
   if (!options.trailingSlash) {
     a = withTrailingSlash(a);
     b = withTrailingSlash(b);

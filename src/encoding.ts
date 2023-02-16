@@ -29,7 +29,7 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  * @param text - string to encode
  * @returns encoded string
  */
-export function encode (text: string | number): string {
+export function encode(text: string | number): string {
   return encodeURI("" + text)
     .replace(ENC_PIPE_RE, "|")
     .replace(ENC_BRACKET_OPEN_RE, "[")
@@ -42,7 +42,7 @@ export function encode (text: string | number): string {
  * @param text - string to encode
  * @returns encoded string
  */
-export function encodeHash (text: string): string {
+export function encodeHash(text: string): string {
   return encode(text)
     .replace(ENC_CURLY_OPEN_RE, "{")
     .replace(ENC_CURLY_CLOSE_RE, "}")
@@ -56,7 +56,7 @@ export function encodeHash (text: string): string {
  * @param text - string to encode
  * @returns encoded string
  */
-export function encodeQueryValue (text: string | number): string {
+export function encodeQueryValue(text: string | number): string {
   return (
     encode(text)
       // Encode the space as +, encode the + to differentiate it from the space
@@ -76,7 +76,7 @@ export function encodeQueryValue (text: string | number): string {
  *
  * @param text - string to encode
  */
-export function encodeQueryKey (text: string | number): string {
+export function encodeQueryKey(text: string | number): string {
   return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
 }
 
@@ -86,7 +86,7 @@ export function encodeQueryKey (text: string | number): string {
  * @param text - string to encode
  * @returns encoded string
  */
-export function encodePath (text: string | number): string {
+export function encodePath(text: string | number): string {
   return encode(text)
     .replace(HASH_RE, "%23")
     .replace(IM_RE, "%3F")
@@ -103,7 +103,7 @@ export function encodePath (text: string | number): string {
  * @param text - string to encode
  * @returns encoded string
  */
-export function encodeParam (text: string | number): string {
+export function encodeParam(text: string | number): string {
   return encodePath(text).replace(SLASH_RE, "%2F");
 }
 
@@ -114,7 +114,7 @@ export function encodeParam (text: string | number): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decode (text: string | number = ""): string {
+export function decode(text: string | number = ""): string {
   try {
     return decodeURIComponent("" + text);
   } catch {
@@ -128,7 +128,7 @@ export function decode (text: string | number = ""): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decodePath (text: string): string {
+export function decodePath(text: string): string {
   return decode(text.replace(ENC_SLASH_RE, "%252F"));
 }
 
@@ -138,10 +138,10 @@ export function decodePath (text: string): string {
  * @param text - string to decode
  * @returns decoded string
  */
-export function decodeQueryValue (text: string): string {
+export function decodeQueryValue(text: string): string {
   return decode(text.replace(PLUS_RE, " "));
 }
 
-export function encodeHost (name: string = "") {
+export function encodeHost(name = "") {
   return toASCII(name);
 }

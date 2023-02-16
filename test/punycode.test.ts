@@ -5,8 +5,9 @@ import toAsciiTests from "./fixture/toascii.json";
 const ignoredTests = new Set(["a­b", "a%C2%ADb"]);
 
 describe("punycode (toASCII)", () => {
-  const tests = toAsciiTests.splice(1)
-    .filter(t => t.output && !ignoredTests.has(t.input));
+  const tests = toAsciiTests
+    .splice(1)
+    .filter((t) => t.output && !ignoredTests.has(t.input));
 
   for (const t of tests) {
     test(t.input + (t.comment ? ": " + t.comment : ""), () => {

@@ -2,20 +2,22 @@ import {
   decode,
   decodeQueryValue,
   encodeQueryKey,
-  encodeQueryValue
+  encodeQueryValue,
 } from "./encoding";
 
-export type QueryValue = string | undefined | null
-export type QueryObject = Record<string, QueryValue | QueryValue[]>
+export type QueryValue = string | undefined | null;
+export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
-export function parseQuery (parametersString: string = ""): QueryObject {
+export function parseQuery(parametersString = ""): QueryObject {
   const object: QueryObject = {};
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
   for (const parameter of parametersString.split("&")) {
-    const s = (parameter.match(/([^=]+)=?(.*)/) || []);
-    if (s.length < 2) { continue; }
+    const s = parameter.match(/([^=]+)=?(.*)/) || [];
+    if (s.length < 2) {
+      continue;
+    }
     const key = decode(s[1]);
     if (key === "__proto__" || key === "constructor") {
       continue;
@@ -34,7 +36,10 @@ export function parseQuery (parametersString: string = ""): QueryObject {
   return object;
 }
 
-export function encodeQueryItem (key: string, value: QueryValue | QueryValue[]): string {
+export function encodeQueryItem(
+  key: string,
+  value: QueryValue | QueryValue[]
+): string {
   if (typeof value === "number" || typeof value === "boolean") {
     value = String(value);
   }
@@ -43,12 +48,17 @@ export function encodeQueryItem (key: string, value: QueryValue | QueryValue[]):
   }
 
   if (Array.isArray(value)) {
-    return value.map(_value => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`).join("&");
+    return value
+      .map((_value) => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`)
+      .join("&");
   }
 
   return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
 }
 
-export function stringifyQuery (query: QueryObject) {
-  return Object.keys(query).filter(k => query[k] !== undefined).map(k => encodeQueryItem(k, query[k])).join("&");
+export function stringifyQuery(query: QueryObject) {
+  return Object.keys(query)
+    .filter((k) => query[k] !== undefined)
+    .map((k) => encodeQueryItem(k, query[k]))
+    .join("&");
 }
