@@ -13,26 +13,38 @@ import {
 
 describe("hasProtocol", () => {
   const tests = [
-    { input: "//", out: [false, false] },
-    { input: "///", out: [false, false] },
-    { input: "//test.com", out: [true, false] },
-    { input: "https://", out: [true, true] },
-    { input: "https://test.com", out: [true, true] },
-    { input: "/test", out: [false, false] },
-    { input: "C:/test", out: [false, false] },
-    { input: "file:///home/user", out: [true, true] },
-    { input: "tel:", out: [true, true] },
-    { input: "tel:123456", out: [true, true] },
-    { input: "mailto:support@example.com", out: [true, true] },
-    { input: "/\\localhost//", out: [true, false] },
-    { input: "https:\\/foo.com", out: [true, true] },
+    // No protocol
+    { input: "//", out: [false, false, false] },
+    { input: "///", out: [false, false, false] },
+    { input: "C:/test", out: [false, false, false] },
+    { input: "/test", out: [false, false, false] },
+
+    // Has protocol (strict)
+    { input: "custom:/", out: [true, true, true] },
+    { input: "https://", out: [true, true, true] },
+    { input: "https://test.com", out: [true, true, true] },
+    { input: "file:///home/user", out: [true, true, true] },
+    { input: "https:\\/foo.com", out: [true, true, true] },
+
+    // Has protocol (non strict)
+    { input: "tel:", out: [true, false, true] },
+    { input: "tel:123456", out: [true, false, true] },
+    { input: "mailto:support@example.com", out: [true, false, true] },
+
+    // Relative
+    { input: "//test.com", out: [false, false, true] },
+    { input: "/\\localhost//", out: [false, false, true] },
   ];
 
   for (const t of tests) {
     test(t.input.toString(), () => {
-      const [withAcceptRelative, withoutAcceptRelative] = t.out;
+      const [withDefault, withStrict, withAcceptRelative] = t.out;
+      expect(hasProtocol(t.input)).toBe(withDefault);
+      expect(hasProtocol(t.input, { strict: true })).toBe(withStrict);
+      expect(hasProtocol(t.input, { acceptRelative: true })).toBe(
+        withAcceptRelative
+      );
       expect(hasProtocol(t.input, true)).toBe(withAcceptRelative);
-      expect(hasProtocol(t.input)).toBe(withoutAcceptRelative);
     });
   }
 });
