@@ -22,17 +22,25 @@ describe("normalizeURL", () => {
     "/test%2Bfile.txt": "/test%2Bfile.txt",
     "http://foo.com/test?query=123#hash": "http://foo.com/test?query=123#hash",
     "http://localhost:3000": "http://localhost:3000",
-    "http://my_email%40gmail.com:password@www.my_site.com": "http://my_email%40gmail.com:password@www.my_site.com",
+    "http://my_email%40gmail.com:password@www.my_site.com":
+      "http://my_email%40gmail.com:password@www.my_site.com",
     "/test?query=123,123#hash, test": "/test?query=123,123#hash,%20test",
-    "http://test.com/%C3%B6?foo=تست": "http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA",
+    "http://test.com/%C3%B6?foo=تست":
+      "http://test.com/%C3%B6?foo=%D8%AA%D8%B3%D8%AA",
     "/http:/": "/http:/",
-    "http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/": "http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/",
-    "http://localhost/?redirect=http://google.com?q=test": "http://localhost/?redirect=http://google.com?q=test",
-    "http://localhost/?email=some+v1@email.com": "http://localhost/?email=some+v1@email.com",
-    "http://localhost/?email=some%2Bv1%40email.com": "http://localhost/?email=some%2Bv1@email.com",
-    "http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com": "http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com",
-    "http://localhost/abc/deg%2f%3f%26?email=some+v1@email.com&foo=bar": "http://localhost/abc/deg%2F%3F%26?email=some+v1@email.com&foo=bar",
-    "http://example.com/foo\\bar": "http://example.com/foo/bar"
+    "http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/":
+      "http://[2001:db8:85a3:8d3:1319:8a2e:370:7348]/",
+    "http://localhost/?redirect=http://google.com?q=test":
+      "http://localhost/?redirect=http://google.com?q=test",
+    "http://localhost/?email=some+v1@email.com":
+      "http://localhost/?email=some+v1@email.com",
+    "http://localhost/?email=some%2Bv1%40email.com":
+      "http://localhost/?email=some%2Bv1@email.com",
+    "http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com":
+      "http://localhost/abc/deg%2F%2Ftest?email=some+v1@email.com",
+    "http://localhost/abc/deg%2f%3f%26?email=some+v1@email.com&foo=bar":
+      "http://localhost/abc/deg%2F%3F%26?email=some+v1@email.com&foo=bar",
+    "http://example.com/foo\\bar": "http://example.com/foo/bar",
   };
 
   const validURLS = [
@@ -71,7 +79,7 @@ describe("normalizeURL", () => {
     // 'http://-.~_!$&\'() * +,;=:% 40: 80 % 2f:::::: @example.com',
     "http://1337.net",
     "http://a.b-c.de",
-    "http://223.255.255.254"
+    "http://223.255.255.254",
   ];
 
   for (const input in tests) {
@@ -82,8 +90,9 @@ describe("normalizeURL", () => {
 
   for (const input of validURLS) {
     test(input, () => {
-      expect(withoutTrailingSlash(normalizeURL(input)))
-        .toBe(withoutTrailingSlash(new URL(input).href));
+      expect(withoutTrailingSlash(normalizeURL(input))).toBe(
+        withoutTrailingSlash(new URL(input).href)
+      );
     });
   }
 });

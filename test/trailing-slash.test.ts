@@ -7,7 +7,7 @@ describe("withTrailingSlash, queryParams: false", () => {
     bar: "bar/",
     "bar/": "bar/",
     "foo?123": "foo?123/",
-    "foo/?123": "foo/?123/"
+    "foo/?123": "foo/?123/",
   };
 
   for (const input in tests) {
@@ -27,7 +27,7 @@ describe("withTrailingSlash, queryParams: true", () => {
     bar: "bar/",
     "bar/": "bar/",
     "foo?123": "foo/?123",
-    "foo/?123": "foo/?123"
+    "foo/?123": "foo/?123",
   };
 
   for (const input in tests) {
@@ -48,7 +48,7 @@ describe("withoutTrailingSlash, queryParams: false", () => {
     bar: "bar",
     "bar/": "bar",
     "foo?123": "foo?123",
-    "foo/?123": "foo/?123"
+    "foo/?123": "foo/?123",
   };
 
   for (const input in tests) {
@@ -69,7 +69,7 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     bar: "bar",
     "bar/": "bar",
     "foo?123": "foo?123",
-    "foo/?123": "foo?123"
+    "foo/?123": "foo?123",
   };
 
   for (const input in tests) {
