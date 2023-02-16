@@ -7,16 +7,33 @@ export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
 }
 
+const PROTOCOL_STRICT_REGEX = /^\w{2,}:([/\\]{2})/;
 const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^[/\\]{2}[^/\\]+/;
 
+/**
+ * @deprecated
+ * Same as { hasProtocol(inputString, { acceptProtocolRelative: true })
+ */
+export type HasProtocolLegacyOptioon = boolean;
+export type HasProtocolOptions = {
+  acceptRelative?: boolean;
+  strict?: boolean;
+};
+
 export function hasProtocol(
   inputString: string,
-  acceptProtocolRelative = false
+  opts: HasProtocolLegacyOptioon | HasProtocolOptions = {}
 ): boolean {
+  if (typeof opts === "boolean") {
+    opts = { acceptRelative: opts };
+  }
+  if (opts.strict) {
+    return PROTOCOL_STRICT_REGEX.test(inputString);
+  }
   return (
     PROTOCOL_REGEX.test(inputString) ||
-    (acceptProtocolRelative && PROTOCOL_RELATIVE_REGEX.test(inputString))
+    (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false)
   );
 }
 
