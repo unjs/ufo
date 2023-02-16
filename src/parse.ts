@@ -20,7 +20,7 @@ export interface ParsedHost {
 }
 
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
-  if (!hasProtocol(input, true)) {
+  if (!hasProtocol(input, { acceptRelative: true })) {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
 
