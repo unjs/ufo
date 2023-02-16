@@ -72,7 +72,10 @@ export class $URL implements URL {
           p.append(name, v);
         }
       } else {
-        p.append(name, value || "");
+        p.append(
+          name,
+          typeof value === "string" ? value : JSON.stringify(value)
+        );
       }
     }
     return p;
