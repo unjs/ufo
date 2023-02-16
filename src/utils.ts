@@ -7,8 +7,8 @@ export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
 }
 
-const PROTOCOL_REGEX = /^\w{2,}:(\/\/)?/;
-const PROTOCOL_RELATIVE_REGEX = /^\/\/[^/]+/;
+const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
+const PROTOCOL_RELATIVE_REGEX = /^[/\\]{2}[^/\\]+/;
 
 export function hasProtocol(
   inputString: string,

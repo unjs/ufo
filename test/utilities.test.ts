@@ -24,6 +24,8 @@ describe("hasProtocol", () => {
     { input: "tel:", out: [true, true] },
     { input: "tel:123456", out: [true, true] },
     { input: "mailto:support@example.com", out: [true, true] },
+    { input: "/\\localhost//", out: [true, false] },
+    { input: "https:\\/foo.com", out: [true, true] },
   ];
 
   for (const t of tests) {
