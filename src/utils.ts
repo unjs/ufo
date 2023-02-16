@@ -13,7 +13,7 @@ const PROTOCOL_RELATIVE_REGEX = /^[/\\]{2}[^/\\]+/;
 
 /**
  * @deprecated
- * Same as { hasProtocol(inputString, { acceptProtocolRelative: true })
+ * Same as { hasProtocol(inputString, { acceptRelative: true })
  */
 export type HasProtocolLegacyOptioon = boolean;
 export type HasProtocolOptions = {
