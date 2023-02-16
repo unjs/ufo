@@ -59,6 +59,7 @@ export function encodeQueryValue(input: QueryValue): string {
       .replace(ENC_SPACE_RE, "+")
       .replace(HASH_RE, "%23")
       .replace(AMPERSAND_RE, "%26")
+      .replace(IM_RE, "%3F")
       .replace(ENC_BACKTICK_RE, "`")
       .replace(ENC_CARET_RE, "^")
   );
