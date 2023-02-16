@@ -1,5 +1,6 @@
 // @ts-ignore
 import { toASCII } from "./punycode";
+import { QueryValue } from "./query";
 
 // Utils used from https://github.com/vuejs/vue-router-next/blob/master/src/encoding.ts (Author @posva)
 
@@ -28,8 +29,7 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  * @returns encoded string
  */
 export function encode(text: string | number): string {
-  return encodeURI("" + text)
-    .replace(ENC_PIPE_RE, "|");
+  return encodeURI("" + text).replace(ENC_PIPE_RE, "|");
 }
 
 /**
@@ -49,12 +49,12 @@ export function encodeHash(text: string): string {
  * Encode characters that need to be encoded query values on the query
  * section of the URL.
  *
- * @param text - string to encode
+ * @param input - string to encode
  * @returns encoded string
  */
-export function encodeQueryValue(text: string | number): string {
+export function encodeQueryValue(input: QueryValue): string {
   return (
-    encode(text)
+    encode(typeof input === "string" ? input : JSON.stringify(input))
       // Encode the space as +, encode the + to differentiate it from the space
       .replace(PLUS_RE, "%2B")
       .replace(ENC_SPACE_RE, "+")

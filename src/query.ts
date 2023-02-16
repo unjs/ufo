@@ -5,7 +5,12 @@ import {
   encodeQueryValue,
 } from "./encoding";
 
-export type QueryValue = string | undefined | null;
+export type QueryValue =
+  | string
+  | number
+  | undefined
+  | null
+  | Record<string, any>;
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export function parseQuery(parametersString = ""): QueryObject {
