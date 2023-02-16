@@ -20,6 +20,7 @@ describe("hasProtocol", () => {
     { input: "/test", out: [false, false, false] },
 
     // Has protocol (strict)
+    { input: "custom:/", out: [true, true, true] },
     { input: "https://", out: [true, true, true] },
     { input: "https://test.com", out: [true, true, true] },
     { input: "file:///home/user", out: [true, true, true] },
