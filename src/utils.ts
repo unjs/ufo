@@ -9,7 +9,7 @@ export function isRelative(inputString: string) {
 
 const PROTOCOL_STRICT_REGEX = /^\w{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
-const PROTOCOL_RELATIVE_REGEX = /^[/\\]{2,}[^/\\]/;
+const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 
 export interface HasProtocolOptions {
   acceptRelative?: boolean;

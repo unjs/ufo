@@ -34,6 +34,7 @@ describe("hasProtocol", () => {
     // Relative
     { input: "//test.com", out: [false, false, true] },
     { input: "///test.com", out: [false, false, true] },
+    { input: "/\t//test.com", out: [false, false, true] },
     { input: "/\\/test.com", out: [false, false, true] },
     { input: "/\\localhost//", out: [false, false, true] },
   ];
