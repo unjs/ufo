@@ -1,5 +1,13 @@
 import { describe, expect, test } from "vitest";
-import { encode, encodeHash, encodeQueryValue } from "../src/";
+import {
+  encode,
+  encodeHash,
+  encodeQueryValue,
+  encodeQueryKey,
+  encodePath,
+  encodeParam,
+  decode,
+} from "../src/";
 
 describe("encode", () => {
   const tests = [
@@ -93,6 +101,91 @@ describe("encodeQueryValue", () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(encodeQueryValue(t.input.toString())).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("encodeQueryKey", () => {
+  const tests = [
+    { input: "key", out: "key" },
+    { input: "key=value", out: "key%3Dvalue" },
+    { input: 123, out: "123" },
+    { input: "=value", out: "%3Dvalue" },
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(encodeQueryKey(t.input.toString())).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("encodePath", () => {
+  const tests = [
+    { input: "path/to/resource", out: "path/to/resource" },
+    { input: "/path/to/resource", out: "/path/to/resource" },
+    { input: "path?query=value", out: "path%3Fquery=value" },
+    { input: "path#hash", out: "path%23hash" },
+    { input: "path&param=value", out: "path%26param=value" },
+    { input: "path+to+resource", out: "path%2Bto%2Bresource" },
+    { input: "path/to/resource/", out: "path/to/resource/" },
+    { input: "path/to/re source", out: "path/to/re%20source" },
+    { input: "p@th", out: "p@th" },
+    { input: "path/to/resource/file.txt", out: "path/to/resource/file.txt" },
+  ];
+
+  for (const t of tests) {
+    test(t.input, () => {
+      expect(encodePath(t.input)).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("encodeParam", () => {
+  const tests = [
+    { input: "hello world", out: "hello%20world" },
+    { input: "a/b", out: "a%2Fb" },
+    { input: "1+2=3", out: "1%2B2=3" },
+    { input: "áéíóú", out: "%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA" },
+    {
+      input: "!@#$%^&*()_-+=[]{}\\|;:'\",.<>/?",
+      out: "!@%23$%25%5E%26*()_-%2B=%5B%5D%7B%7D%5C|;:'%22,.%3C%3E%2F%3F",
+    },
+    { input: 123, out: "123" },
+    { input: true, out: "true" },
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(encodeParam(t.input.toString())).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("decode", () => {
+  const tests = [
+    { input: "%7B%7D%5E", out: "{}^" },
+    { input: "%2B%3D%26", out: "+=&" },
+    {
+      input:
+        "!%40%23%24%25%26%2A%28%29-_%3D%2B%5B%5D%7B%7D%3B%3A%27%22%2C.%3C%3E%2F%3F%60%7C%5C%22",
+      out: '!@#$%&*()-_=+[]{};:\'",.<>/?`|\\"',
+    },
+    { input: "hello%20world", out: "hello world" },
+    {
+      input: "%3Fkey%3Dvalue%26anotherKey%3DanotherValue",
+      out: "?key=value&anotherKey=anotherValue",
+    },
+    {
+      input: "http%3A%2F%2Fexample.com%2Fpage%3Fid%3D123%23details",
+      out: "http://example.com/page?id=123#details",
+    },
+    { input: "foo%2Bbar%2Bbaz", out: "foo+bar+baz" },
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(decode(t.input.toString())).toStrictEqual(t.out);
     });
   }
 });
