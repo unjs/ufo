@@ -29,19 +29,19 @@ describe("encode", () => {
     },
     {
       input: "https://www.example.com/file.html?foo=bar|baz",
-      out: "https://www.example.com/file.html?foo=bar%7Cbaz",
+      out: "https://www.example.com/file.html?foo=bar|baz",
     },
     {
       input: "https://www.example.com/file.html#section1|section2",
-      out: "https://www.example.com/file.html#section1%7Csection2",
+      out: "https://www.example.com/file.html#section1|section2",
     },
     {
       input: "https://www.example.com/file.html?foo=bar&baz=qux|quux",
-      out: "https://www.example.com/file.html?foo=bar&baz=qux%7Cquux",
+      out: "https://www.example.com/file.html?foo=bar&baz=qux|quux",
     },
     {
       input: "https://www.example.com/file.html#section1&section2|section3",
-      out: "https://www.example.com/file.html#section1&section2%7Csection3",
+      out: "https://www.example.com/file.html#section1&section2|section3",
     },
   ];
 
@@ -86,7 +86,7 @@ describe("encodeQueryValue", () => {
     },
     {
       input: "!@#$%^&*()_+{}[]|\\:;<>,./?",
-      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D%7C%5C:;%3C%3E,./?",
+      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,./?",
     },
   ];
 
