@@ -116,7 +116,7 @@ export function decode(text: string | number = ""): string {
 }
 
 /**
- * Decode path section of URL (consitant with encodePath for slash encoding).
+ * Decode path section of URL (consistent with encodePath for slash encoding).
  *
  * @param text - string to decode
  * @returns decoded string
@@ -126,7 +126,7 @@ export function decodePath(text: string): string {
 }
 
 /**
- * Decode query value (consitant with encodeQueryValue for plus encoding).
+ * Decode query value (consistent with encodeQueryValue for plus encoding).
  *
  * @param text - string to decode
  * @returns decoded string
