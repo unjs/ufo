@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.1.1
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.1.0...v1.1.1)
+
+
+### 🩹 Fixes
+
+  - **hasProtocol:** Expand protocol relative url regexp ([#126](https://github.com/unjs/ufo/pull/126))
+
+### ✅ Tests
+
+  - Add more tests for full coverage ([#127](https://github.com/unjs/ufo/pull/127))
+
+### ❤️  Contributors
+
+- Divine 
+- Daniel Roe <daniel@roe.dev>
+
 ## v1.1.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.0.1...v1.1.0)
