@@ -1,6 +1,11 @@
 import { $URL } from "./url";
 import { parseURL, stringifyParsedURL } from "./parse";
-import { QueryObject, parseQuery, stringifyQuery } from "./query";
+import {
+  QueryObject,
+  parseQuery,
+  stringifyQuery,
+  ParsedQueryObject,
+} from "./query";
 import { decode } from "./encoding";
 
 export function isRelative(inputString: string) {
@@ -126,7 +131,9 @@ export function withQuery(input: string, query: QueryObject): string {
   return stringifyParsedURL(parsed);
 }
 
-export function getQuery<T extends QueryObject = QueryObject>(input: string): T {
+export function getQuery<T extends ParsedQueryObject = ParsedQueryObject>(
+  input: string
+): T {
   return parseQuery<T>(parseURL(input).search);
 }
 

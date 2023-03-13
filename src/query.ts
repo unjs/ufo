@@ -11,11 +11,16 @@ export type QueryValue =
   | undefined
   | null
   | boolean
+  | Array<QueryValue>
   | Record<string, any>;
+export type ParsedQueryValue = string | Array<ParsedQueryValue>;
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
+export type ParsedQueryObject = Record<string, ParsedQueryValue>;
 
-export function parseQuery<T extends QueryObject = QueryObject>(parametersString = ""): T {
-  const object = {} as T;
+export function parseQuery<T extends ParsedQueryObject = ParsedQueryObject>(
+  parametersString = ""
+): T {
+  const object = {} as ParsedQueryObject;
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
@@ -24,7 +29,7 @@ export function parseQuery<T extends QueryObject = QueryObject>(parametersString
     if (s.length < 2) {
       continue;
     }
-    const key = decode(s[1]);
+    const key: keyof ParsedQueryObject = decode(s[1]);
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
@@ -39,7 +44,7 @@ export function parseQuery<T extends QueryObject = QueryObject>(parametersString
       object[key] = value;
     }
   }
-  return object;
+  return object as T;
 }
 
 export function encodeQueryItem(
