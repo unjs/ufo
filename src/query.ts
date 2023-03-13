@@ -14,7 +14,7 @@ export type QueryValue =
   | Record<string, any>;
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
-export function parseQuery<T = QueryObject>(parametersString = ""): T {
+export function parseQuery<T extends QueryObject = QueryObject>(parametersString = ""): T {
   const object = {} as T;
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
