@@ -54,7 +54,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
 /**
  * It splits the input string into three parts, and returns an object with those three parts
  * @param [input] - The URL to parse.
- * @returns An object with three properties: pathname, search, and hash.
+ * @returns An object with three properties: `pathname`, `search`, and `hash`.
  */
 export function parsePath(input = ""): ParsedURL {
   const [pathname = "", search = "", hash = ""] = (
