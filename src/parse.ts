@@ -19,6 +19,13 @@ export interface ParsedHost {
   port: string;
 }
 
+/**
+ * It takes a URL string and returns an object with the URL's protocol, auth, host, pathname, search,
+ * and hash
+ * @param [input] - The URL to parse.
+ * @param [defaultProto] - The default protocol to use if the input doesn't have one.
+ * @returns A parsed URL object.
+ */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
   if (!hasProtocol(input, { acceptRelative: true })) {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
@@ -44,6 +51,11 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   };
 }
 
+/**
+ * It splits the input string into three parts, and returns an object with those three parts
+ * @param [input] - The URL to parse.
+ * @returns An object with three properties: pathname, search, and hash.
+ */
 export function parsePath(input = ""): ParsedURL {
   const [pathname = "", search = "", hash = ""] = (
     input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []
@@ -56,6 +68,12 @@ export function parsePath(input = ""): ParsedURL {
   };
 }
 
+/**
+ * It takes a string of the form `username:password` and returns an object with the username and
+ * password decoded
+ * @param [input] - The URL to parse.
+ * @returns An object with two properties: username and password.
+ */
 export function parseAuth(input = ""): ParsedAuth {
   const [username, password] = input.split(":");
   return {
@@ -64,6 +82,12 @@ export function parseAuth(input = ""): ParsedAuth {
   };
 }
 
+/**
+ * It takes a string, and returns an object with two properties: hostname and port
+ * @param [input] - The URL to parse.
+ * @returns A function that takes a string and returns an object with two properties: hostname and
+ * port.
+ */
 export function parseHost(input = ""): ParsedHost {
   const [hostname, port] = (input.match(/([^/:]*):?(\d+)?/) || []).splice(1);
   return {
@@ -72,7 +96,12 @@ export function parseHost(input = ""): ParsedHost {
   };
 }
 
-export function stringifyParsedURL(parsed: ParsedURL) {
+/**
+ * It takes a `ParsedURL` object and returns the stringified URL
+ * @param [parsed] - The parsed URL
+ * @returns A stringified URL.
+ */
+export function stringifyParsedURL(parsed: ParsedURL): string {
   const fullpath =
     parsed.pathname +
     (parsed.search
