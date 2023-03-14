@@ -85,8 +85,8 @@ export function parseAuth(input = ""): ParsedAuth {
 /**
  * It takes a string, and returns an object with two properties: `hostname` and `port`
  * @param [input] - The URL to parse.
- * @returns A function that takes a string and returns an object with two properties: hostname and
- * port.
+ * @returns A function that takes a string and returns an object with two properties: `hostname` and
+ * `port`.
  */
 export function parseHost(input = ""): ParsedHost {
   const [hostname, port] = (input.match(/([^/:]*):?(\d+)?/) || []).splice(1);
