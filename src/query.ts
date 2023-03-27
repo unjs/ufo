@@ -13,8 +13,8 @@ export type QueryValue =
   | Record<string, any>;
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
-export function parseQuery(parametersString = ""): QueryObject {
-  const object: QueryObject = {};
+export function parseQuery(parametersString = "") {
+  const object: Record<string, string | string[]> = {};
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }

@@ -126,7 +126,7 @@ export function withQuery(input: string, query: QueryObject): string {
   return stringifyParsedURL(parsed);
 }
 
-export function getQuery(input: string): QueryObject {
+export function getQuery(input: string) {
   return parseQuery(parseURL(input).search);
 }
 
