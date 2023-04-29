@@ -75,6 +75,16 @@ parseURL('foo.com/foo?test=123#token', 'https://')
 // { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
 ```
 
+### `stringifyParsedURL`
+
+```ts
+const obj = parseURL('http://foo.com/foo?test=123#token')
+obj.host = 'bar.com'
+
+stringifyParsedURL(obj)
+// http://bar.com/foo?test=123#token
+```
+
 ### `withQuery`
 
 ```ts
