@@ -76,6 +76,7 @@ parseURL('foo.com/foo?test=123#token', 'https://')
 ```
 
 ### `stringifyParsedURL`
+
 ```ts
 const obj = parseURL('http://foo.com/foo?test=123#token')
 obj.host = 'bar.com'
