@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.1.2
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.1.1...v1.1.2)
+
+
+### 🩹 Fixes
+
+  - Provide node16 style types field ([#133](https://github.com/unjs/ufo/pull/133))
+
+### 📖 Documentation
+
+  - Add jsdocs for parse utils ([#134](https://github.com/unjs/ufo/pull/134))
+  - Add `stringifyParsedURL` ([81e92b2](https://github.com/unjs/ufo/commit/81e92b2))
+
+### 🏡 Chore
+
+  - **readme:** Improvements ([e38bdf6](https://github.com/unjs/ufo/commit/e38bdf6))
+  - Update lockfile ([29fd478](https://github.com/unjs/ufo/commit/29fd478))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Nozomu Ikuta 
+- Sébastien Chopin <seb@nuxtjs.com>
+- Daniel Roe <daniel@roe.dev>
+
 ## v1.1.1
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.1.0...v1.1.1)
