@@ -26,7 +26,7 @@
     "lint:fix": "eslint --fix --ext .ts . && prettier -w src test",
     "prepack": "pnpm build",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
-    "test": "pnpm lint && vitest run && vitest typecheck"
+    "test": "pnpm lint && vitest run && vitest --run typecheck"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
