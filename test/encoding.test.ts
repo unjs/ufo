@@ -7,6 +7,7 @@ import {
   encodePath,
   encodeParam,
   decode,
+  decodeQueryKey,
 } from "../src/";
 
 describe("encode", () => {
@@ -186,6 +187,23 @@ describe("decode", () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(decode(t.input.toString())).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("decodeQueryKey", () => {
+  const tests = [
+    { input: "key", out: "key" },
+    { input: "key%3Dvalue", out: "key=value" },
+    { input: "123", out: "123" },
+    { input: "%3Dvalue", out: "=value" },
+    { input: "key+with+space", out: "key with space" },
+    { input: "key%2bwith%2bplus", out: "key+with+plus" },
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(decodeQueryKey(t.input.toString())).toStrictEqual(t.out);
     });
   }
 });

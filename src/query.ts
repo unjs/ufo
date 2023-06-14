@@ -1,5 +1,5 @@
 import {
-  decode,
+  decodeQueryKey,
   decodeQueryValue,
   encodeQueryKey,
   encodeQueryValue,
@@ -23,7 +23,7 @@ export function parseQuery(parametersString = ""): QueryObject {
     if (s.length < 2) {
       continue;
     }
-    const key = decode(s[1]);
+    const key = decodeQueryKey(s[1]);
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
