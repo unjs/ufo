@@ -12,6 +12,7 @@ describe("joinURL", () => {
     { input: ["/", "/b"], out: "/b" },
     { input: ["a", "b/", "c"], out: "a/b/c" },
     { input: ["a", "b/", "/c"], out: "a/b/c" },
+    { input: ["/", "./"], out: "/" },
   ];
 
   for (const t of tests) {

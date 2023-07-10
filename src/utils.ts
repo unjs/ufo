@@ -1,7 +1,7 @@
-import { $URL } from "./url";
+import { decode } from "./encoding";
 import { parseURL, stringifyParsedURL } from "./parse";
 import { QueryObject, parseQuery, stringifyQuery } from "./query";
-import { decode } from "./encoding";
+import { $URL } from "./url";
 
 export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
@@ -141,8 +141,23 @@ export function isNonEmptyURL(url: string) {
 export function joinURL(base: string, ...input: string[]): string {
   let url = base || "";
 
-  for (const index of input.filter((url) => isNonEmptyURL(url))) {
-    url = url ? withTrailingSlash(url) + withoutLeadingSlash(index) : index;
+  const normalizedInput: string[] = [];
+
+  for (let index = 0; index < input.length; index++) {
+    const previousElement = input[index - 1] || url;
+    let currentElement = input[index];
+
+    if (previousElement) {
+      currentElement = currentElement.replace("./", "");
+    }
+
+    if (isNonEmptyURL(currentElement)) {
+      normalizedInput.push(currentElement);
+    }
+  }
+
+  for (const item of normalizedInput) {
+    url = url ? withTrailingSlash(url) + withoutLeadingSlash(item) : item;
   }
 
   return url;
