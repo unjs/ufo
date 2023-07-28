@@ -12,10 +12,14 @@ describe("joinURL", () => {
     { input: ["/", "/b"], out: "/b" },
     { input: ["a", "b/", "c"], out: "a/b/c" },
     { input: ["a", "b/", "/c"], out: "a/b/c" },
+    { input: ["/", "./"], out: "/" },
+    { input: ["/", "./foo"], out: "/foo" },
+    { input: ["/", "./foo/"], out: "/foo/" },
+    { input: ["/", "./foo", "bar"], out: "/foo/bar" },
   ];
 
   for (const t of tests) {
-    test(t.input.toString(), () => {
+    test(JSON.stringify(t.input), () => {
       expect(joinURL(...t.input)).toBe(t.out);
     });
   }
