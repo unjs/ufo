@@ -126,6 +126,16 @@ export function decodePath(text: string): string {
 }
 
 /**
+ * Decode query key (consistent with encodeQueryKey for plus encoding).
+ * Created different method for decoding key to avoid future changes on value encode/decode.
+ * @param text - string to decode
+ * @returns decoded string
+ */
+export function decodeQueryKey(text: string): string {
+  return decode(text.replace(PLUS_RE, " "));
+}
+
+/**
  * Decode query value (consistent with encodeQueryValue for plus encoding).
  *
  * @param text - string to decode

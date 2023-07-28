@@ -27,6 +27,11 @@ describe("withQuery", () => {
     },
     {
       input: "/",
+      query: { "key with space": "spaced value" },
+      out: "/?key+with+space=spaced+value",
+    },
+    {
+      input: "/",
       query: { str: "&", str2: "%26" },
       out: "/?str=%26&str2=%2526",
     },

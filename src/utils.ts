@@ -1,11 +1,6 @@
 import { $URL } from "./url";
 import { parseURL, stringifyParsedURL } from "./parse";
-import {
-  QueryObject,
-  parseQuery,
-  stringifyQuery,
-  ParsedQueryObject,
-} from "./query";
+import { QueryObject, parseQuery, stringifyQuery, ParsedQuery } from "./query";
 import { decode } from "./encoding";
 
 export function isRelative(inputString: string) {
@@ -46,6 +41,12 @@ export function hasProtocol(
     PROTOCOL_REGEX.test(inputString) ||
     (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false)
   );
+}
+
+const PROTOCOL_SCRIPT_RE = /^(blob|data|javascript|vbscript):$/;
+
+export function isScriptProtocol(protocol?: string) {
+  return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?/;
@@ -131,7 +132,7 @@ export function withQuery(input: string, query: QueryObject): string {
   return stringifyParsedURL(parsed);
 }
 
-export function getQuery<T extends ParsedQueryObject = ParsedQueryObject>(
+export function getQuery<T extends ParsedQuery = ParsedQuery>(
   input: string
 ): T {
   return parseQuery<T>(parseURL(input).search);
