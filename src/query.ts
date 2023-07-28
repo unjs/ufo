@@ -10,12 +10,17 @@ export type QueryValue =
   | number
   | undefined
   | null
+  | boolean
+  | Array<QueryValue>
   | Record<string, any>;
 
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
+
 export type ParsedQuery = Record<string, string | string[]>;
 
-export function parseQuery(parametersString = ""): ParsedQuery {
+export function parseQuery<T extends ParsedQuery = ParsedQuery>(
+  parametersString = ""
+): T {
   const object: ParsedQuery = {};
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
@@ -38,7 +43,7 @@ export function parseQuery(parametersString = ""): ParsedQuery {
       object[key] = [object[key] as string, value];
     }
   }
-  return object;
+  return object as T;
 }
 
 export function encodeQueryItem(
