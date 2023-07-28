@@ -99,6 +99,16 @@ getQuery('http://foo.com/foo?test=123&unicode=%E5%A5%BD')
 // { test: '123', unicode: '好' }
 ```
 
+### `parseFilename`
+
+```ts
+// Result: filename.ext
+parseFilename('http://example.com/path/to/filename.ext')
+
+// Result: undefined
+parseFilename('/path/to/.hidden-file', { strict: true })
+```
+
 ### `$URL`
 
 Implementing URL interface with improvements:
