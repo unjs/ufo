@@ -10,13 +10,10 @@ export function isRelative(inputString: string) {
 const PROTOCOL_STRICT_REGEX = /^\w{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
-const PROTOCOL_SCRIPT_RE = /^(data|javascript|vbscript):$/;
 
 export interface HasProtocolOptions {
   acceptRelative?: boolean;
   strict?: boolean;
-  /** Set to false to return false for script protocols (data:, javascript:, and vbscript:) */
-  script?: boolean;
 }
 export function hasProtocol(
   inputString: string,
@@ -37,9 +34,6 @@ export function hasProtocol(
   if (typeof opts === "boolean") {
     opts = { acceptRelative: opts };
   }
-  if (opts.script === false && PROTOCOL_SCRIPT_RE.test(inputString)) {
-    return false;
-  }
   if (opts.strict) {
     return PROTOCOL_STRICT_REGEX.test(inputString);
   }
@@ -47,6 +41,11 @@ export function hasProtocol(
     PROTOCOL_REGEX.test(inputString) ||
     (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false)
   );
+}
+
+const PROTOCOL_SCRIPT_RE = /^(data|javascript|vbscript):$/;
+export function isScriptProtocol(protocol?: string) {
+  return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?/;
