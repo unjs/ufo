@@ -10,10 +10,12 @@ export function isRelative(inputString: string) {
 const PROTOCOL_STRICT_REGEX = /^\w{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
+const PROTOCOL_SCRIPT_RE = /^(data|javascript|vbscript):$/;
 
 export interface HasProtocolOptions {
   acceptRelative?: boolean;
   strict?: boolean;
+  script?: boolean
 }
 export function hasProtocol(
   inputString: string,
@@ -33,6 +35,9 @@ export function hasProtocol(
 ): boolean {
   if (typeof opts === "boolean") {
     opts = { acceptRelative: opts };
+  }
+  if (opts.script === false && PROTOCOL_SCRIPT_RE.test(inputString)) {
+    return false;
   }
   if (opts.strict) {
     return PROTOCOL_STRICT_REGEX.test(inputString);
