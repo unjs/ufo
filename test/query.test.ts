@@ -59,6 +59,11 @@ describe("withQuery", () => {
       query: { param: { a: [{ obj: [1, 2, 3] }] } },
       out: "/?param=%7B%22a%22:%5B%7B%22obj%22:%5B1,2,3%5D%7D%5D%7D", // {"a":[{"obj":[1,2,3]}]}
     },
+    {
+      input: "/",
+      query: { 'a': 'X', 'b[]': [], c: "Y" },
+      out: "/?a=X&c=Y",
+    },
   ];
 
   for (const t of tests) {

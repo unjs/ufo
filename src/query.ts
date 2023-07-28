@@ -70,5 +70,6 @@ export function stringifyQuery(query: QueryObject) {
   return Object.keys(query)
     .filter((k) => query[k] !== undefined)
     .map((k) => encodeQueryItem(k, query[k]))
+    .filter(Boolean)
     .join("&");
 }
