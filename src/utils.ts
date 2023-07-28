@@ -44,6 +44,7 @@ export function hasProtocol(
 }
 
 const PROTOCOL_SCRIPT_RE = /^(blob|data|javascript|vbscript):$/;
+
 export function isScriptProtocol(protocol?: string) {
   return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
 }
