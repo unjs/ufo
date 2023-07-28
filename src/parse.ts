@@ -119,3 +119,14 @@ export function stringifyParsedURL(parsed: ParsedURL): string {
     fullpath
   );
 }
+
+const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
+const FILENAME_REGEX = /\/([^/]+)$/;
+
+export function parseFilename(input = "", { strict }): string | undefined {
+  const { pathname } = parseURL(input);
+  const matches = strict
+    ? pathname.match(FILENAME_STRICT_REGEX)
+    : pathname.match(FILENAME_REGEX);
+  return matches ? matches[1] : undefined;
+}
