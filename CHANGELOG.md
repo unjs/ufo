@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.2.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.1.2...v1.2.0)
+
+### 🚀 Enhancements
+
+- Add `isScriptProtocol` util ([#156](https://github.com/unjs/ufo/pull/156))
+- Generic types for `getQuery` and `parseQuery` ([#131](https://github.com/unjs/ufo/pull/131))
+- Add `parseFilename` utility ([#125](https://github.com/unjs/ufo/pull/125))
+
+### 🩹 Fixes
+
+- **parseQuery:** Decode space in query keys ([#150](https://github.com/unjs/ufo/pull/150))
+- Parsed query types should be string only ([#139](https://github.com/unjs/ufo/pull/139))
+- **stringifyQuery:** Filter out empty values ([#148](https://github.com/unjs/ufo/pull/148))
+- **joinURL:** Handle leading dot ([#35](https://github.com/unjs/ufo/pull/35))
+
+### 🏡 Chore
+
+- **release:** V1.1.2 ([8f36c4f](https://github.com/unjs/ufo/commit/8f36c4f))
+- Lint test file ([7fa45a0](https://github.com/unjs/ufo/commit/7fa45a0))
+- Update dependencies ([b9b3b6c](https://github.com/unjs/ufo/commit/b9b3b6c))
+- Lint ([17c0ad6](https://github.com/unjs/ufo/commit/17c0ad6))
+- Add autofix ci ([5bb737f](https://github.com/unjs/ufo/commit/5bb737f))
+- Move autofix ci to `.github/workflows` dir ([f1b3d5c](https://github.com/unjs/ufo/commit/f1b3d5c))
+- Fix autofix ci ([a6fcce3](https://github.com/unjs/ufo/commit/a6fcce3))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Divine 
+- Oleg Khalin 
+- Daniel Roe <daniel@roe.dev>
+- Raj Kadhi <raj.kadhi10@gmail.com>
+
 ## v1.1.2
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.1.1...v1.1.2)
