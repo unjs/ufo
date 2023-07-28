@@ -152,12 +152,12 @@ export function joinURL(base: string, ...input: string[]): string {
   let url = base || "";
 
   for (const segment of input.filter((url) => isNonEmptyURL(url))) {
-    if (!url) {
-      url = segment;
-    } else {
+    if (url) {
       // TODO: Handle .. when joining
       const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
       url = withTrailingSlash(url) + _segment;
+    } else {
+      url = segment;
     }
   }
 
