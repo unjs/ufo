@@ -11,10 +11,12 @@ export type QueryValue =
   | undefined
   | null
   | Record<string, any>;
-export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
-export function parseQuery(parametersString = ""): QueryObject {
-  const object: QueryObject = {};
+export type QueryObject = Record<string, QueryValue | QueryValue[]>;
+export type ParsedQuery = Record<string, string | string[]>;
+
+export function parseQuery(parametersString = ""): ParsedQuery {
+  const object: ParsedQuery = {};
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
