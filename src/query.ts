@@ -28,14 +28,12 @@ export function parseQuery(parametersString = ""): QueryObject {
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (typeof object[key] !== "undefined") {
-      if (Array.isArray(object[key])) {
-        (object[key] as string[]).push(value);
-      } else {
-        object[key] = [object[key] as string, value];
-      }
-    } else {
+    if (object[key] === undefined) {
       object[key] = value;
+    } else if (Array.isArray(object[key])) {
+      (object[key] as string[]).push(value);
+    } else {
+      object[key] = [object[key] as string, value];
     }
   }
   return object;
