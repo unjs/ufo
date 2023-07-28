@@ -61,7 +61,7 @@ describe("withQuery", () => {
     },
     {
       input: "/",
-      query: { 'a': 'X', 'b[]': [], c: "Y" },
+      query: { a: "X", "b[]": [], c: "Y" },
       out: "/?a=X&c=Y",
     },
   ];
