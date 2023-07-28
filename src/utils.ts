@@ -15,7 +15,8 @@ const PROTOCOL_SCRIPT_RE = /^(data|javascript|vbscript):$/;
 export interface HasProtocolOptions {
   acceptRelative?: boolean;
   strict?: boolean;
-  script?: boolean
+  /** Set to false to return false for script protocols (data:, javascript:, and vbscript:) */
+  script?: boolean;
 }
 export function hasProtocol(
   inputString: string,
