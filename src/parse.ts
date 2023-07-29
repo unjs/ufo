@@ -4,6 +4,7 @@ export interface ParsedURL {
   protocol?: string;
   host?: string;
   auth?: string;
+  href?: string;
   pathname: string;
   hash: string;
   search: string;
@@ -27,6 +28,20 @@ export interface ParsedHost {
  * @returns A parsed URL object.
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
+  const dataMatch = input.match(/^(data|blob):/);
+  if (dataMatch) {
+    const proto = dataMatch[1];
+    return {
+      protocol: proto + ":",
+      pathname: input.slice(proto.length + 1),
+      href: input,
+      auth: "",
+      host: "",
+      search: "",
+      hash: "",
+    };
+  }
+
   if (!hasProtocol(input, { acceptRelative: true })) {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
