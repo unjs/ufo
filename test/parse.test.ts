@@ -81,6 +81,30 @@ describe("parseURL", () => {
         hash: "#owo",
       },
     },
+    {
+      input: "data:image/png;base64,aaa//bbbbbb/ccc",
+      out: {
+        protocol: "data:",
+        auth: "",
+        host: "",
+        href: "data:image/png;base64,aaa//bbbbbb/ccc",
+        pathname: "image/png;base64,aaa//bbbbbb/ccc",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "blob:https://video_url",
+      out: {
+        protocol: "blob:",
+        auth: "",
+        host: "",
+        href: "blob:https://video_url",
+        pathname: "https://video_url",
+        search: "",
+        hash: "",
+      },
+    },
   ];
 
   for (const t of tests) {
