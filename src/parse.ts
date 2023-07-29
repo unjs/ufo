@@ -28,12 +28,12 @@ export interface ParsedHost {
  * @returns A parsed URL object.
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
-  const dataMatch = input.match(/^(data|blob):/);
+  const dataMatch = input.match(/^(data:|blob:)/);
   if (dataMatch) {
     const proto = dataMatch[1];
     return {
-      protocol: proto + ":",
-      pathname: input.slice(proto.length + 1),
+      protocol: proto,
+      pathname: input.slice(proto.length),
       href: input,
       auth: "",
       host: "",
