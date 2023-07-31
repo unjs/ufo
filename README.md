@@ -172,7 +172,7 @@ cleanDoubleSlashes('http://example.com/analyze//http://localhost:3000//')
 
 ### `isSamePath`
 
-Check two paths are equal or not. Trailing slash and encoding are normalized before comparation.
+Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
 
 ```ts
 isSamePath('/foo', '/foo/')
@@ -249,7 +249,7 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 
 [MIT](./LICENSE)
 
-Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) for [encoding utlities](https://github.com/vuejs/vue-router-next/blob/v4.0.1/src/encoding.ts)
+Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) for [encoding utilities](https://github.com/vuejs/vue-router-next/blob/v4.0.1/src/encoding.ts)
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/ufo?style=flat&colorA=18181B&colorB=F0DB4F
