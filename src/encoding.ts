@@ -32,6 +32,17 @@ export function encode(text: string | number): string {
 }
 
 /**
+ * Encodes more characters, including those that are part of the URI syntax
+ *
+ * @internal
+ * @param text - string to encode
+ * @returns encoded string
+ */
+export function encodeComponent(text: string | number): string {
+  return encodeURIComponent("" + text);
+}
+
+/**
  * Encode characters that need to be encoded on the hash section of the URL.
  *
  * @param text - string to encode
@@ -53,14 +64,7 @@ export function encodeHash(text: string): string {
  */
 export function encodeQueryValue(input: QueryValue): string {
   return (
-    encode(typeof input === "string" ? input : JSON.stringify(input))
-      // Encode the space as +, encode the + to differentiate it from the space
-      .replace(PLUS_RE, "%2B")
-      .replace(ENC_SPACE_RE, "+")
-      .replace(HASH_RE, "%23")
-      .replace(AMPERSAND_RE, "%26")
-      .replace(ENC_BACKTICK_RE, "`")
-      .replace(ENC_CARET_RE, "^")
+    encodeComponent(typeof input === "string" ? input : JSON.stringify(input))
   );
 }
 
