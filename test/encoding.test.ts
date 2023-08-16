@@ -85,10 +85,10 @@ describe("encodeQueryValue", () => {
   const tests = [
     { input: "hello world", out: "hello+world" },
     { input: "hello+world", out: "hello%2Bworld" },
-    { input: "key=value", out: "key=value" },
+    { input: "key=value", out: "key%3Dvalue" },
     { input: true, out: "true" },
     { input: 42, out: "42" },
-    { input: "a=1&b=2", out: "a=1%26b=2" },
+    { input: "a=1&b=2", out: "a%3D1%26b%3D2" },
     {
       input: ["apple", "banana", "cherry"],
       out: "apple,banana,cherry",

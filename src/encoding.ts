@@ -61,16 +61,17 @@ export function encodeQueryValue(input: QueryValue): string {
       .replace(AMPERSAND_RE, "%26")
       .replace(ENC_BACKTICK_RE, "`")
       .replace(ENC_CARET_RE, "^")
+      .replace(EQUAL_RE, "%3D")
   );
 }
 
 /**
- * Like `encodeQueryValue` but also encodes the `=` character.
+ * Same as `encodeQueryValue`
  *
  * @param text - string to encode
  */
 export function encodeQueryKey(text: string | number): string {
-  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
+  return encodeQueryValue(text);
 }
 
 /**
