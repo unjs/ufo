@@ -128,6 +128,18 @@ describe("parseURL", () => {
         hash: "",
       },
     },
+    {
+      input: "\0javascript:alert('hello')",
+      out: {
+        protocol: "javascript:",
+        auth: "",
+        host: "",
+        href: "javascript:alert('hello')",
+        pathname: "alert('hello')",
+        search: "",
+        hash: "",
+      },
+    },
   ];
 
   for (const t of tests) {
