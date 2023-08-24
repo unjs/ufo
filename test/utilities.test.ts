@@ -9,6 +9,7 @@ import {
   withHttps,
   withoutProtocol,
   withProtocol,
+  isScriptProtocol,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -52,6 +53,21 @@ describe("hasProtocol", () => {
         withAcceptRelative
       );
       expect(hasProtocol(t.input, true)).toBe(withAcceptRelative);
+    });
+  }
+});
+
+describe("isScriptProtocol", () => {
+  const tests = [
+    { input: "blob:", out: true },
+    { input: "data:", out: true },
+    { input: "javascript:", out: true },
+    { input: "vbscript:", out: true },
+    { input: "\0vbscript:", out: true },
+  ];
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(isScriptProtocol(t.input)).toBe(t.out);
     });
   }
 });
