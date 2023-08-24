@@ -71,6 +71,18 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "javascript:alert('hello')",
+      out: {
+        protocol: "javascript:",
+        auth: "",
+        host: "",
+        href: "javascript:alert('hello')",
+        pathname: "alert('hello')",
+        search: "",
+        hash: "",
+      },
+    },
+    {
       input: "https://domain.test:3000#owo",
       out: {
         protocol: "https:",
