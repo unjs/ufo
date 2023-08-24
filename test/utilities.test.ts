@@ -31,6 +31,7 @@ describe("hasProtocol", () => {
     { input: "javascript:alert(true)", out: [true, false, true] },
     { input: " javascript:alert(true)", out: [true, false, true] },
     { input: "\0javascript:alert(true)", out: [true, false, true] },
+    { input: "\0https://", out: [true, true, true] },
     { input: "tel:123456", out: [true, false, true] },
     { input: "mailto:support@example.com", out: [true, false, true] },
 
