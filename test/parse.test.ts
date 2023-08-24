@@ -117,6 +117,17 @@ describe("parseURL", () => {
         hash: "",
       },
     },
+    {
+      input: "\0https://domain.test:3000#owo",
+      out: {
+        protocol: "https:",
+        auth: "",
+        host: "domain.test:3000",
+        pathname: "",
+        search: "",
+        hash: "#owo",
+      },
+    },
   ];
 
   for (const t of tests) {
