@@ -29,14 +29,14 @@ export interface ParsedHost {
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
   const _specialProtoMatch = input.match(
-    /^(?:blob:|data:|javascript:|vbscript:)/
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/
   );
   if (_specialProtoMatch) {
-    const proto = _specialProtoMatch[0];
+    const [, _proto, _pathname = ""] = _specialProtoMatch;
     return {
-      protocol: proto,
-      pathname: input.slice(proto.length),
-      href: input,
+      protocol: _proto,
+      pathname: _pathname,
+      href: _proto + _pathname,
       auth: "",
       host: "",
       search: "",
