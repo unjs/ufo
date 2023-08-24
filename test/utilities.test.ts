@@ -28,6 +28,9 @@ describe("hasProtocol", () => {
 
     // Has protocol (non strict)
     { input: "tel:", out: [true, false, true] },
+    { input: "javascript:alert(true)", out: [true, false, true] },
+    { input: " javascript:alert(true)", out: [true, false, true] },
+    { input: "\0javascript:alert(true)", out: [true, false, true] },
     { input: "tel:123456", out: [true, false, true] },
     { input: "mailto:support@example.com", out: [true, false, true] },
 
