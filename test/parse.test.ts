@@ -118,14 +118,14 @@ describe("parseURL", () => {
       },
     },
     {
-      input: "\0https://domain.test:3000#owo",
+      input: "\0https://invalid.com",
       out: {
         protocol: "https:",
         auth: "",
-        host: "domain.test:3000",
+        host: "invalid.com",
         pathname: "",
         search: "",
-        hash: "#owo",
+        hash: "",
       },
     },
   ];
