@@ -28,7 +28,9 @@ export interface ParsedHost {
  * @returns A parsed URL object.
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
-  const _specialProtoMatch = input.match(/^(?:blob:|data:|javascript:|vbscript:)/);
+  const _specialProtoMatch = input.match(
+    /^(?:blob:|data:|javascript:|vbscript:)/
+  );
   if (_specialProtoMatch) {
     const proto = _specialProtoMatch[0];
     return {
