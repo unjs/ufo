@@ -47,7 +47,8 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   }
 
   const [protocol = "", auth, hostAndPath = ""] = (
-    input.replace(/\\/g, "/").match(/([\s\w\0+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || []
+    input.replace(/\\/g, "/").match(/([\s\w\0+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) ||
+    []
   ).splice(1);
   const [host = "", path = ""] = (
     hostAndPath.match(/([^#/?]*)(.*)?/) || []
