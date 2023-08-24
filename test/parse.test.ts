@@ -71,6 +71,18 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "javascript:alert('hello')",
+      out: {
+        protocol: "javascript:",
+        auth: "",
+        host: "",
+        href: "javascript:alert('hello')",
+        pathname: "alert('hello')",
+        search: "",
+        hash: "",
+      },
+    },
+    {
       input: "https://domain.test:3000#owo",
       out: {
         protocol: "https:",
@@ -101,6 +113,29 @@ describe("parseURL", () => {
         host: "",
         href: "blob:https://video_url",
         pathname: "https://video_url",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "\0https://invalid.com",
+      out: {
+        protocol: "https:",
+        auth: "",
+        host: "invalid.com",
+        pathname: "",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "\0javascript:alert('hello')",
+      out: {
+        protocol: "javascript:",
+        auth: "",
+        host: "",
+        href: "javascript:alert('hello')",
+        pathname: "alert('hello')",
         search: "",
         hash: "",
       },

@@ -7,8 +7,8 @@ export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
 }
 
-const PROTOCOL_STRICT_REGEX = /^\w{2,}:([/\\]{1,2})/;
-const PROTOCOL_REGEX = /^\w{2,}:([/\\]{2})?/;
+const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
+const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 
 export interface HasProtocolOptions {
@@ -43,7 +43,7 @@ export function hasProtocol(
   );
 }
 
-const PROTOCOL_SCRIPT_RE = /^(blob|data|javascript|vbscript):$/;
+const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/;
 
 export function isScriptProtocol(protocol?: string) {
   return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);

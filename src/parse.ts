@@ -28,13 +28,15 @@ export interface ParsedHost {
  * @returns A parsed URL object.
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
-  const dataMatch = input.match(/^(data:|blob:)/);
-  if (dataMatch) {
-    const proto = dataMatch[1];
+  const _specialProtoMatch = input.match(
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/
+  );
+  if (_specialProtoMatch) {
+    const [, _proto, _pathname = ""] = _specialProtoMatch;
     return {
-      protocol: proto,
-      pathname: input.slice(proto.length),
-      href: input,
+      protocol: _proto,
+      pathname: _pathname,
+      href: _proto + _pathname,
       auth: "",
       host: "",
       search: "",
@@ -46,12 +48,11 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
 
-  const [protocol = "", auth, hostAndPath = ""] = (
-    input.replace(/\\/g, "/").match(/([^/:]+:)?\/\/([^/@]+@)?(.*)/) || []
-  ).splice(1);
-  const [host = "", path = ""] = (
-    hostAndPath.match(/([^#/?]*)(.*)?/) || []
-  ).splice(1);
+  const [, protocol = "", auth, hostAndPath = ""] =
+    input
+      .replace(/\\/g, "/")
+      .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
+  const [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
   const { pathname, search, hash } = parsePath(
     path.replace(/\/(?=[A-Za-z]:)/, "")
   );
