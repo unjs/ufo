@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.3.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.2.0...v1.3.0)
+
+### 🚀 Enhancements
+
+- **stringifyParsedURL:** Support partial url inputs ([#166](https://github.com/unjs/ufo/pull/166))
+
+### 🩹 Fixes
+
+- **parseURL:** Handle `data:` and `blob` protocols ([#159](https://github.com/unjs/ufo/pull/159))
+- **parseURL, hasProtocol, isScriptProtocol:** Ignore leading whitespaces ([#170](https://github.com/unjs/ufo/pull/170))
+
+### 🏡 Chore
+
+- **release:** V1.2.0 ([eee29ee](https://github.com/unjs/ufo/commit/eee29ee))
+- Correct typos in readme ([#160](https://github.com/unjs/ufo/pull/160))
+- Update depnednecie ([b6f6cee](https://github.com/unjs/ufo/commit/b6f6cee))
+- Add `security.md` ([e600fc0](https://github.com/unjs/ufo/commit/e600fc0))
+
+### 🤖 CI
+
+- Use conventional commit message ([#157](https://github.com/unjs/ufo/pull/157))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Daniel Roe <daniel@roe.dev>
+- Felix Yan ([@felixonmars](http://github.com/felixonmars))
+
 ## v1.2.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.1.2...v1.2.0)
