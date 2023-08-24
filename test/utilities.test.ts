@@ -109,11 +109,23 @@ describe("stringifyParsedURL", () => {
       input: "/test?query=123,123#hash, test",
       out: "/test?query=123,123#hash, test",
     },
+    {
+      input: { host: "google.com" },
+      out: "google.com",
+    },
+    {
+      input: { protocol: "https:", host: "google.com" },
+      out: "https://google.com",
+    },
   ];
 
   for (const t of tests) {
     test(t.input.toString(), () => {
-      expect(stringifyParsedURL(parsePath(t.input))).toBe(t.out);
+      expect(
+        stringifyParsedURL(
+          typeof t.input === "string" ? parsePath(t.input) : t.input
+        )
+      ).toBe(t.out);
     });
   }
 });

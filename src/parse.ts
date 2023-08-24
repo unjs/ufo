@@ -117,23 +117,16 @@ export function parseHost(input = ""): ParsedHost {
  * @param [parsed] - The parsed URL
  * @returns A stringified URL.
  */
-export function stringifyParsedURL(parsed: ParsedURL): string {
-  const fullpath =
-    parsed.pathname +
-    (parsed.search
-      ? (parsed.search.startsWith("?") ? "" : "?") + parsed.search
-      : "") +
-    parsed.hash;
-  if (!parsed.protocol) {
-    return fullpath;
-  }
-  return (
-    parsed.protocol +
-    "//" +
-    (parsed.auth ? parsed.auth + "@" : "") +
-    parsed.host +
-    fullpath
-  );
+export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
+  const pathname = parsed.pathname || "";
+  const search = parsed.search
+    ? (parsed.search.startsWith("?") ? "" : "?") + parsed.search
+    : "";
+  const hash = parsed.hash || "";
+  const auth = parsed.auth ? parsed.auth + "@" : "";
+  const host = parsed.host || "";
+  const proto = parsed.protocol ? parsed.protocol + "//" : "";
+  return proto + auth + host + pathname + search + hash;
 }
 
 const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
