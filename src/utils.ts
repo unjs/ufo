@@ -52,35 +52,41 @@ export function isScriptProtocol(protocol?: string) {
 const TRAILING_SLASH_RE = /\/$|\/\?/;
 
 export function hasTrailingSlash(input = "", queryParameters = false): boolean {
+  const [urlWithoutFragment] = input.split("#");
   if (!queryParameters) {
-    return input.endsWith("/");
+    return urlWithoutFragment.endsWith("/");
   }
-  return TRAILING_SLASH_RE.test(input);
+  return TRAILING_SLASH_RE.test(urlWithoutFragment);
 }
 
 export function withoutTrailingSlash(
   input = "",
   queryParameters = false
 ): string {
+  const [inputWithoutFragment, fragment] = input.split("#");
+  const fragmentSuffix = fragment ? `#${fragment}` : "";
   if (!queryParameters) {
-    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
+    const url = (hasTrailingSlash(input) ? inputWithoutFragment.slice(0, -1) : inputWithoutFragment) + fragmentSuffix
+    return url || '/'
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
   }
-  const [s0, ...s] = input.split("?");
-  return (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "");
+  const [s0, ...s] = inputWithoutFragment.split("?");
+  return (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragmentSuffix;
 }
 
 export function withTrailingSlash(input = "", queryParameters = false): string {
+  const [inputWithoutFragment, fragment] = input.split("#");
+  const fragmentSuffix = fragment ? `#${fragment}` : "";
   if (!queryParameters) {
-    return input.endsWith("/") ? input : input + "/";
+    return inputWithoutFragment.endsWith("/") ? input : `${inputWithoutFragment}/${fragmentSuffix}`;
   }
   if (hasTrailingSlash(input, true)) {
     return input || "/";
   }
-  const [s0, ...s] = input.split("?");
-  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "");
+  const [s0, ...s] = inputWithoutFragment.split("?");
+  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragmentSuffix;
 }
 
 export function hasLeadingSlash(input = ""): boolean {
