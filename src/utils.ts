@@ -49,32 +49,28 @@ export function isScriptProtocol(protocol?: string) {
   return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
 }
 
-const TRAILING_SLASH_RE = /\/$|\/\?/;
+const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 
 export function hasTrailingSlash(input = "", queryParameters = false): boolean {
-  const [urlWithoutFragment] = input.split("#");
   if (!queryParameters) {
-    return urlWithoutFragment.endsWith("/");
+    return input.endsWith("/");
   }
-  return TRAILING_SLASH_RE.test(urlWithoutFragment);
+  return TRAILING_SLASH_RE.test(input);
 }
 
 export function withoutTrailingSlash(
   input = "",
   queryParameters = false
 ): string {
-  const [inputWithoutFragment, fragment] = input.split("#");
-  const fragmentSuffix = fragment ? `#${fragment}` : "";
   if (!queryParameters) {
-    const url =
-      (hasTrailingSlash(input)
-        ? inputWithoutFragment.slice(0, -1)
-        : inputWithoutFragment) + fragmentSuffix;
+    const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
     return url || "/";
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
   }
+  const [inputWithoutFragment, fragment] = input.split("#");
+  const fragmentSuffix = fragment ? `#${fragment}` : "";
   const [s0, ...s] = inputWithoutFragment.split("?");
   return (
     (s0.slice(0, -1) || "/") +
@@ -84,16 +80,15 @@ export function withoutTrailingSlash(
 }
 
 export function withTrailingSlash(input = "", queryParameters = false): string {
-  const [inputWithoutFragment, fragment] = input.split("#");
-  const fragmentSuffix = fragment ? `#${fragment}` : "";
   if (!queryParameters) {
-    return inputWithoutFragment.endsWith("/")
-      ? input
-      : `${inputWithoutFragment}/${fragmentSuffix}`;
+    return input.endsWith("/") ? input : input + "/";
   }
   if (hasTrailingSlash(input, true)) {
     return input || "/";
   }
+
+  const [inputWithoutFragment, fragment] = input.split("#");
+  const fragmentSuffix = fragment ? `#${fragment}` : "";
   const [s0, ...s] = inputWithoutFragment.split("?");
   return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragmentSuffix;
 }
