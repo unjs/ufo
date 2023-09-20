@@ -75,14 +75,29 @@ export function withoutTrailingSlash(
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
   }
-  const [inputWithoutFragment, fragment] = input.split("#");
-  const fragmentSuffix = fragment ? `#${fragment}` : "";
-  const [s0, ...s] = inputWithoutFragment.split("?");
+
+  let inputToProcess = input;
+  let suffix = '';
+
+  if(hasFragment(input)) {
+    const [inputWithoutFragment, fragment] = input.split("#");
+    inputToProcess = inputWithoutFragment;
+    suffix =  `#${fragment}`;
+  }
+
+  const [s0, ...s] = inputToProcess.split("?");
+
   return (
     (s0.slice(0, -1) || "/") +
     (s.length > 0 ? `?${s.join("?")}` : "") +
-    fragmentSuffix
+    suffix
   );
+}
+
+const FRAGMENT_RE = /#/;
+
+export function hasFragment(input = ""): boolean {
+  return FRAGMENT_RE.test(input);
 }
 
 export function withTrailingSlash(input = "", queryParameters = false): string {
@@ -98,10 +113,18 @@ export function withTrailingSlash(input = "", queryParameters = false): string {
     return input || "/";
   }
 
-  const [inputWithoutFragment, fragment] = input.split("#");
-  const fragmentSuffix = fragment ? `#${fragment}` : "";
-  const [s0, ...s] = inputWithoutFragment.split("?");
-  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragmentSuffix;
+  let inputToProcess = input;
+  let suffix = '';
+
+  if(hasFragment(input)) {
+    const [inputWithoutFragment, fragment] = input.split("#");
+    inputToProcess = inputWithoutFragment;
+    suffix =  `#${fragment}`;
+  }
+
+  const [s0, ...s] = inputToProcess.split("?");
+
+  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + suffix;
 }
 
 export function hasLeadingSlash(input = ""): boolean {
