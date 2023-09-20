@@ -9,7 +9,7 @@ describe("withTrailingSlash, queryParams: false", () => {
     "bar/": "bar/",
     "foo?123": "foo?123/",
     "foo/?123": "foo/?123/",
-    "foo/?123#abc": "foo/?123#abc/"
+    "foo/?123#abc": "foo/?123#abc/",
   };
 
   for (const input in tests) {
@@ -42,7 +42,7 @@ describe("withTrailingSlash, queryParams: true", () => {
     "bar/": "bar/",
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
-    "foo?123#abc": "foo/?123#abc"
+    "foo?123#abc": "foo/?123#abc",
   };
 
   for (const input in tests) {
@@ -106,7 +106,6 @@ describe("withoutTrailingSlash, queryParams: true", () => {
 describe("withTrailingSlash, protocol: true", () => {
   const tests = {
     "scheme://host:port/path/": "scheme://host:port/path/",
-
   };
 
   for (const input in tests) {
