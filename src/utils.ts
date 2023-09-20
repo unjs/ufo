@@ -50,7 +50,7 @@ export function isScriptProtocol(protocol?: string) {
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
-const HTTP_PROTOCO_RE = /^https?:\/\//;
+const HTTP_PROTOCOL_RE = /^https?:\/\//;
 
 export function hasTrailingSlash(input = "", queryParameters = false): boolean {
   if (!queryParameters) {
@@ -61,12 +61,15 @@ export function hasTrailingSlash(input = "", queryParameters = false): boolean {
 
 export function withoutTrailingSlash(
   input = "",
-  queryParameters = false
+  queryParameters = false,
+  protocol = false
 ): string {
-  const hasProtocolDifferentThanHttp =
-    hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
-  if (hasProtocolDifferentThanHttp) {
-    return input;
+  if (protocol) {
+    const hasProtocolDifferentThanHttp =
+      hasProtocol(input) && !HTTP_PROTOCOL_RE.test(input);
+    if (hasProtocolDifferentThanHttp) {
+      return input;
+    }
   }
   if (!queryParameters) {
     const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
@@ -80,9 +83,9 @@ export function withoutTrailingSlash(
   let suffix = "";
 
   if (hasFragment(input)) {
-    const [inputWithoutFragment, fragment] = input.split("#");
-    inputToProcess = inputWithoutFragment;
-    suffix = `#${fragment}`;
+    const fragmentIndex = input.indexOf("#");
+    inputToProcess = input.slice(0, fragmentIndex);
+    suffix = input.slice(fragmentIndex);
   }
 
   const [s0, ...s] = inputToProcess.split("?");
@@ -98,11 +101,17 @@ export function hasFragment(input = ""): boolean {
   return FRAGMENT_RE.test(input);
 }
 
-export function withTrailingSlash(input = "", queryParameters = false): string {
-  const hasProtocolDifferentThanHttp =
-    hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
-  if (hasProtocolDifferentThanHttp) {
-    return input;
+export function withTrailingSlash(
+  input = "",
+  queryParameters = false,
+  protocol = false
+): string {
+  if (protocol) {
+    const hasProtocolDifferentThanHttp =
+      hasProtocol(input) && !HTTP_PROTOCOL_RE.test(input);
+    if (hasProtocolDifferentThanHttp) {
+      return input;
+    }
   }
   if (!queryParameters) {
     return input.endsWith("/") ? input : input + "/";
@@ -115,9 +124,9 @@ export function withTrailingSlash(input = "", queryParameters = false): string {
   let suffix = "";
 
   if (hasFragment(input)) {
-    const [inputWithoutFragment, fragment] = input.split("#");
-    inputToProcess = inputWithoutFragment;
-    suffix = `#${fragment}`;
+    const fragmentIndex = input.indexOf("#");
+    inputToProcess = input.slice(0, fragmentIndex);
+    suffix = input.slice(fragmentIndex);
   }
 
   const [s0, ...s] = inputToProcess.split("?");

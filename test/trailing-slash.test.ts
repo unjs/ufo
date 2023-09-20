@@ -9,8 +9,7 @@ describe("withTrailingSlash, queryParams: false", () => {
     "bar/": "bar/",
     "foo?123": "foo?123/",
     "foo/?123": "foo/?123/",
-    "foo/?123#abc": "foo/?123#abc/",
-    "mailto:example@example.com": "mailto:example@example.com",
+    "foo/?123#abc": "foo/?123#abc/"
   };
 
   for (const input in tests) {
@@ -24,6 +23,18 @@ describe("withTrailingSlash, queryParams: false", () => {
   });
 });
 
+describe("withTrailingSlash, protocol: true", () => {
+  const tests = {
+    "mailto:example@example.com": "mailto:example@example.com",
+  };
+
+  for (const input in tests) {
+    test(input, () => {
+      expect(withTrailingSlash(input, false, true)).toBe(tests[input]);
+    });
+  }
+});
+
 describe("withTrailingSlash, queryParams: true", () => {
   const tests = {
     "": "/",
@@ -31,8 +42,7 @@ describe("withTrailingSlash, queryParams: true", () => {
     "bar/": "bar/",
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
-    "foo?123#abc": "foo/?123#abc",
-    "mailto:example@example.com": "mailto:example@example.com",
+    "foo?123#abc": "foo/?123#abc"
   };
 
   for (const input in tests) {
@@ -56,7 +66,6 @@ describe("withoutTrailingSlash, queryParams: false", () => {
     "foo?123": "foo?123",
     "foo/?123": "foo/?123",
     "foo/?123#abc": "foo/?123#abc",
-    "scheme://host:port/path/": "scheme://host:port/path/",
   };
 
   for (const input in tests) {
@@ -81,7 +90,6 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo?123": "foo?123",
     "foo/?123": "foo?123",
     "foo/?123#abc": "foo?123#abc",
-    "scheme://host:port/path/": "scheme://host:port/path/",
   };
 
   for (const input in tests) {
@@ -93,4 +101,17 @@ describe("withoutTrailingSlash, queryParams: true", () => {
   test("falsy value", () => {
     expect(withoutTrailingSlash()).toBe("/");
   });
+});
+
+describe("withTrailingSlash, protocol: true", () => {
+  const tests = {
+    "scheme://host:port/path/": "scheme://host:port/path/",
+
+  };
+
+  for (const input in tests) {
+    test(input, () => {
+      expect(withoutTrailingSlash(input, false, true)).toBe(tests[input]);
+    });
+  }
 });
