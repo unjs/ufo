@@ -77,20 +77,18 @@ export function withoutTrailingSlash(
   }
 
   let inputToProcess = input;
-  let suffix = '';
+  let suffix = "";
 
-  if(hasFragment(input)) {
+  if (hasFragment(input)) {
     const [inputWithoutFragment, fragment] = input.split("#");
     inputToProcess = inputWithoutFragment;
-    suffix =  `#${fragment}`;
+    suffix = `#${fragment}`;
   }
 
   const [s0, ...s] = inputToProcess.split("?");
 
   return (
-    (s0.slice(0, -1) || "/") +
-    (s.length > 0 ? `?${s.join("?")}` : "") +
-    suffix
+    (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + suffix
   );
 }
 
@@ -114,12 +112,12 @@ export function withTrailingSlash(input = "", queryParameters = false): string {
   }
 
   let inputToProcess = input;
-  let suffix = '';
+  let suffix = "";
 
-  if(hasFragment(input)) {
+  if (hasFragment(input)) {
     const [inputWithoutFragment, fragment] = input.split("#");
     inputToProcess = inputWithoutFragment;
-    suffix =  `#${fragment}`;
+    suffix = `#${fragment}`;
   }
 
   const [s0, ...s] = inputToProcess.split("?");
