@@ -50,6 +50,7 @@ export function isScriptProtocol(protocol?: string) {
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
+const HTTP_PROTOCO_RE = /^https?:\/\//;
 
 export function hasTrailingSlash(input = "", queryParameters = false): boolean {
   if (!queryParameters) {
@@ -62,6 +63,10 @@ export function withoutTrailingSlash(
   input = "",
   queryParameters = false
 ): string {
+  const hasProtocolDifferentThanHttp = hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
+  if(hasProtocolDifferentThanHttp) {
+    return input;
+  }
   if (!queryParameters) {
     const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
     return url || "/";
@@ -80,6 +85,10 @@ export function withoutTrailingSlash(
 }
 
 export function withTrailingSlash(input = "", queryParameters = false): string {
+  const hasProtocolDifferentThanHttp = hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
+  if(hasProtocolDifferentThanHttp) {
+    return input;
+  }
   if (!queryParameters) {
     return input.endsWith("/") ? input : input + "/";
   }
