@@ -56,7 +56,7 @@ describe("withoutTrailingSlash, queryParams: false", () => {
     "foo?123": "foo?123",
     "foo/?123": "foo/?123",
     "foo/?123#abc": "foo/?123#abc",
-    'scheme://host:port/path/': 'scheme://host:port/path/',
+    "scheme://host:port/path/": "scheme://host:port/path/",
   };
 
   for (const input in tests) {
@@ -81,7 +81,7 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo?123": "foo?123",
     "foo/?123": "foo?123",
     "foo/?123#abc": "foo?123#abc",
-    'scheme://host:port/path/': 'scheme://host:port/path/',
+    "scheme://host:port/path/": "scheme://host:port/path/",
   };
 
   for (const input in tests) {

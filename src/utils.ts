@@ -63,8 +63,9 @@ export function withoutTrailingSlash(
   input = "",
   queryParameters = false
 ): string {
-  const hasProtocolDifferentThanHttp = hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
-  if(hasProtocolDifferentThanHttp) {
+  const hasProtocolDifferentThanHttp =
+    hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
+  if (hasProtocolDifferentThanHttp) {
     return input;
   }
   if (!queryParameters) {
@@ -85,8 +86,9 @@ export function withoutTrailingSlash(
 }
 
 export function withTrailingSlash(input = "", queryParameters = false): string {
-  const hasProtocolDifferentThanHttp = hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
-  if(hasProtocolDifferentThanHttp) {
+  const hasProtocolDifferentThanHttp =
+    hasProtocol(input) && !HTTP_PROTOCO_RE.test(input);
+  if (hasProtocolDifferentThanHttp) {
     return input;
   }
   if (!queryParameters) {
