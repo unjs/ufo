@@ -43,6 +43,8 @@ describe("withTrailingSlash, queryParams: true", () => {
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
     "foo?123#abc": "foo/?123#abc",
+    // Only fragment should stay as is (without trailing slash)
+    "#abc": "#abc",
   };
 
   for (const input in tests) {
@@ -90,6 +92,9 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo?123": "foo?123",
     "foo/?123": "foo?123",
     "foo/?123#abc": "foo?123#abc",
+    "/a/#abc": "/a#abc",
+    // Only fragment should stay as is (with trailing slash)
+    "/#abc": "/#abc",
   };
 
   for (const input in tests) {

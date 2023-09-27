@@ -127,6 +127,9 @@ export function withTrailingSlash(
     const fragmentIndex = input.indexOf("#");
     inputToProcess = input.slice(0, fragmentIndex);
     suffix = input.slice(fragmentIndex);
+    if(!inputToProcess) {
+      return suffix
+    }
   }
 
   const [s0, ...s] = inputToProcess.split("?");
