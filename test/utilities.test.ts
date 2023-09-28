@@ -62,6 +62,7 @@ describe("isScriptProtocol", () => {
     { input: "blob:", out: true },
     { input: "data:", out: true },
     { input: "javascript:", out: true },
+    { input: "javaScript:", out: true },
     { input: "vbscript:", out: true },
     { input: "\0vbscript:", out: true },
   ];
