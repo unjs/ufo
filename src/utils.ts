@@ -194,14 +194,33 @@ export function normalizeURL(input: string): string {
   return createURL(input).toString();
 }
 
-export function resolveURL(base: string, ...input: string[]): string {
-  const url = createURL(base);
+export function resolveURL(base = "", ...inputs: string[]): string {
+  if (typeof base !== "string") {
+    throw new TypeError(
+      `URL input should be string received ${typeof base} (${base})`
+    );
+  }
+  const url = parseURL(base);
+  const urlQuery = parseQuery(url.search);
 
-  for (const index of input.filter((url) => isNonEmptyURL(url))) {
-    url.append(createURL(index));
+  for (const input of inputs.filter((input) => isNonEmptyURL(input))) {
+    const mergableUrl = parseURL(input);
+    const mergableQuery = parseQuery(mergableUrl.search);
+
+    if (mergableUrl.pathname) {
+      url.pathname =
+        withTrailingSlash(url.pathname) +
+        withoutLeadingSlash(mergableUrl.pathname);
+    }
+
+    url.hash ||= mergableUrl.hash;
+
+    const queries = stringifyQuery(Object.assign(urlQuery, mergableQuery));
+
+    url.search = queries.length > 0 ? "?" + queries : "";
   }
 
-  return url.toString();
+  return stringifyParsedURL(url);
 }
 
 export function isSamePath(p1: string, p2: string) {
