@@ -49,10 +49,13 @@ export function isScriptProtocol(protocol?: string) {
   return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
 }
 
-const TRAILING_SLASH_RE = /\/$|\/\?/;
+const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 
-export function hasTrailingSlash(input = "", queryParameters = false): boolean {
-  if (!queryParameters) {
+export function hasTrailingSlash(
+  input = "",
+  respectQueryAndFragment?: boolean
+): boolean {
+  if (!respectQueryAndFragment) {
     return input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
@@ -60,27 +63,51 @@ export function hasTrailingSlash(input = "", queryParameters = false): boolean {
 
 export function withoutTrailingSlash(
   input = "",
-  queryParameters = false
+  respectQueryAndFragment?: boolean
 ): string {
-  if (!queryParameters) {
+  if (!respectQueryAndFragment) {
     return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
   }
-  const [s0, ...s] = input.split("?");
-  return (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "");
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex >= 0) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
+  }
+  const [s0, ...s] = path.split("?");
+  return (
+    (s0.slice(0, -1) || "/") +
+    (s.length > 0 ? `?${s.join("?")}` : "") +
+    fragment
+  );
 }
 
-export function withTrailingSlash(input = "", queryParameters = false): string {
-  if (!queryParameters) {
+export function withTrailingSlash(
+  input = "",
+  respectQueryAndFragment?: boolean
+): string {
+  if (!respectQueryAndFragment) {
     return input.endsWith("/") ? input : input + "/";
   }
   if (hasTrailingSlash(input, true)) {
     return input || "/";
   }
-  const [s0, ...s] = input.split("?");
-  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "");
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex >= 0) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
+    if (!path) {
+      return fragment;
+    }
+  }
+  const [s0, ...s] = path.split("?");
+  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
 }
 
 export function hasLeadingSlash(input = ""): boolean {

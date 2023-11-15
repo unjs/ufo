@@ -5,9 +5,11 @@ describe("withTrailingSlash, queryParams: false", () => {
   const tests = {
     "": "/",
     bar: "bar/",
+    "bar#abc": "bar#abc/",
     "bar/": "bar/",
     "foo?123": "foo?123/",
     "foo/?123": "foo/?123/",
+    "foo/?123#abc": "foo/?123#abc/",
   };
 
   for (const input in tests) {
@@ -28,6 +30,10 @@ describe("withTrailingSlash, queryParams: true", () => {
     "bar/": "bar/",
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
+    "foo?123#abc": "foo/?123#abc",
+    "/#abc": "/#abc",
+    "#abc": "#abc",
+    "#": "#",
   };
 
   for (const input in tests) {
@@ -46,9 +52,11 @@ describe("withoutTrailingSlash, queryParams: false", () => {
     "": "/",
     "/": "/",
     bar: "bar",
-    "bar/": "bar",
+    "bar#abc": "bar#abc",
+    "bar/#abc": "bar/#abc",
     "foo?123": "foo?123",
     "foo/?123": "foo/?123",
+    "foo/?123#abc": "foo/?123#abc",
   };
 
   for (const input in tests) {
@@ -68,8 +76,13 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "/": "/",
     bar: "bar",
     "bar/": "bar",
+    "bar#abc": "bar#abc",
+    "bar/#abc": "bar#abc",
     "foo?123": "foo?123",
     "foo/?123": "foo?123",
+    "foo/?123#abc": "foo?123#abc",
+    "/a/#abc": "/a#abc",
+    "/#abc": "/#abc",
   };
 
   for (const input in tests) {
