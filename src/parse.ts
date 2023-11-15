@@ -34,7 +34,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   if (_specialProtoMatch) {
     const [, _proto, _pathname = ""] = _specialProtoMatch;
     return {
-      protocol: _proto,
+      protocol: _proto.toLowerCase(),
       pathname: _pathname,
       href: _proto + _pathname,
       auth: "",

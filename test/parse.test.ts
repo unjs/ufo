@@ -85,7 +85,7 @@ describe("parseURL", () => {
     {
       input: "\0javascrIpt:alert('hello')",
       out: {
-        protocol: "javascrIpt:",
+        protocol: "javascript:",
         auth: "",
         host: "",
         href: "javascrIpt:alert('hello')",
