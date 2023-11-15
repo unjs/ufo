@@ -83,6 +83,18 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "\0javascrIpt:alert('hello')",
+      out: {
+        protocol: "javascrIpt:",
+        auth: "",
+        host: "",
+        href: "javascrIpt:alert('hello')",
+        pathname: "alert('hello')",
+        search: "",
+        hash: "",
+      },
+    },
+    {
       input: "https://domain.test:3000#owo",
       out: {
         protocol: "https:",
