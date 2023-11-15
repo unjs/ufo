@@ -51,14 +51,20 @@ export function isScriptProtocol(protocol?: string) {
 
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 
-export function hasTrailingSlash(input = "", respectQueryAndFragment?: boolean): boolean {
+export function hasTrailingSlash(
+  input = "",
+  respectQueryAndFragment?: boolean
+): boolean {
   if (!respectQueryAndFragment) {
     return input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
 }
 
-export function withoutTrailingSlash(input = "", respectQueryAndFragment?: boolean): string {
+export function withoutTrailingSlash(
+  input = "",
+  respectQueryAndFragment?: boolean
+): string {
   if (!respectQueryAndFragment) {
     const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
     return url || "/";
@@ -69,17 +75,22 @@ export function withoutTrailingSlash(input = "", respectQueryAndFragment?: boole
   let path = input;
   let fragment = "";
   const fragmentIndex = input.indexOf("#");
-  if (fragmentIndex>=0) {
+  if (fragmentIndex >= 0) {
     path = input.slice(0, fragmentIndex);
     fragment = input.slice(fragmentIndex);
   }
   const [s0, ...s] = path.split("?");
   return (
-    (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment
+    (s0.slice(0, -1) || "/") +
+    (s.length > 0 ? `?${s.join("?")}` : "") +
+    fragment
   );
 }
 
-export function withTrailingSlash(input = "", respectQueryAndFragment?: boolean): string {
+export function withTrailingSlash(
+  input = "",
+  respectQueryAndFragment?: boolean
+): string {
   if (!respectQueryAndFragment) {
     return input.endsWith("/") ? input : input + "/";
   }
