@@ -50,91 +50,54 @@ export function isScriptProtocol(protocol?: string) {
 }
 
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
-const HTTP_PROTOCOL_RE = /^https?:\/\//;
 
-export function hasTrailingSlash(input = "", queryParameters = false): boolean {
-  if (!queryParameters) {
+export function hasTrailingSlash(input = "", respectQueryAndFragment?: boolean): boolean {
+  if (!respectQueryAndFragment) {
     return input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
 }
 
-export function withoutTrailingSlash(
-  input = "",
-  queryParameters = false,
-  protocol = false
-): string {
-  if (protocol) {
-    const hasProtocolDifferentThanHttp =
-      hasProtocol(input) && !HTTP_PROTOCOL_RE.test(input);
-    if (hasProtocolDifferentThanHttp) {
-      return input;
-    }
-  }
-  if (!queryParameters) {
+export function withoutTrailingSlash(input = "", respectQueryAndFragment?: boolean): string {
+  if (!respectQueryAndFragment) {
     const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
     return url || "/";
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
   }
-
-  let inputToProcess = input;
-  let suffix = "";
-
-  if (hasFragment(input)) {
-    const fragmentIndex = input.indexOf("#");
-    inputToProcess = input.slice(0, fragmentIndex);
-    suffix = input.slice(fragmentIndex);
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex>=0) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
   }
-
-  const [s0, ...s] = inputToProcess.split("?");
-
+  const [s0, ...s] = path.split("?");
   return (
-    (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + suffix
+    (s0.slice(0, -1) || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment
   );
 }
 
-const FRAGMENT_RE = /#/;
-
-export function hasFragment(input = ""): boolean {
-  return FRAGMENT_RE.test(input);
-}
-
-export function withTrailingSlash(
-  input = "",
-  queryParameters = false,
-  protocol = false
-): string {
-  if (protocol) {
-    const hasProtocolDifferentThanHttp =
-      hasProtocol(input) && !HTTP_PROTOCOL_RE.test(input);
-    if (hasProtocolDifferentThanHttp) {
-      return input;
-    }
-  }
-  if (!queryParameters) {
+export function withTrailingSlash(input = "", respectQueryAndFragment?: boolean): string {
+  if (!respectQueryAndFragment) {
     return input.endsWith("/") ? input : input + "/";
   }
   if (hasTrailingSlash(input, true)) {
     return input || "/";
   }
-
-  let inputToProcess = input;
-  let suffix = "";
-
-  if (hasFragment(input)) {
-    const fragmentIndex = input.indexOf("#");
-    inputToProcess = input.slice(0, fragmentIndex);
-    suffix = input.slice(fragmentIndex);
-    if (!inputToProcess) {
-      return suffix;
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex >= 0) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
+    if (!path) {
+      return fragment;
     }
   }
-
-  const [s0, ...s] = inputToProcess.split("?");
-
-  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + suffix;
+  const [s0, ...s] = path.split("?");
+  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
 }
 
 export function hasLeadingSlash(input = ""): boolean {

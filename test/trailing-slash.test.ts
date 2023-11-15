@@ -23,18 +23,6 @@ describe("withTrailingSlash, queryParams: false", () => {
   });
 });
 
-describe("withTrailingSlash, protocol: true", () => {
-  const tests = {
-    "mailto:example@example.com": "mailto:example@example.com",
-  };
-
-  for (const input in tests) {
-    test(input, () => {
-      expect(withTrailingSlash(input, false, true)).toBe(tests[input]);
-    });
-  }
-});
-
 describe("withTrailingSlash, queryParams: true", () => {
   const tests = {
     "": "/",
@@ -43,8 +31,9 @@ describe("withTrailingSlash, queryParams: true", () => {
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
     "foo?123#abc": "foo/?123#abc",
-    // Only fragment should stay as is (without trailing slash)
+    '/#abc': '/#abc',
     "#abc": "#abc",
+    '#': '#',
   };
 
   for (const input in tests) {
@@ -93,7 +82,6 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo/?123": "foo?123",
     "foo/?123#abc": "foo?123#abc",
     "/a/#abc": "/a#abc",
-    // Only fragment should stay as is (with trailing slash)
     "/#abc": "/#abc",
   };
 
@@ -106,16 +94,4 @@ describe("withoutTrailingSlash, queryParams: true", () => {
   test("falsy value", () => {
     expect(withoutTrailingSlash()).toBe("/");
   });
-});
-
-describe("withTrailingSlash, protocol: true", () => {
-  const tests = {
-    "scheme://host:port/path/": "scheme://host:port/path/",
-  };
-
-  for (const input in tests) {
-    test(input, () => {
-      expect(withoutTrailingSlash(input, false, true)).toBe(tests[input]);
-    });
-  }
 });
