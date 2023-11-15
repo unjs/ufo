@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.3.1
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.3.0...v1.3.1)
+
+### 🩹 Fixes
+
+- Test script protocols insensitively ([#180](https://github.com/unjs/ufo/pull/180))
+
+### 🏡 Chore
+
+- Update dependencies ([20e99e7](https://github.com/unjs/ufo/commit/20e99e7))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Daniel Roe <daniel@roe.dev>
+
 ## v1.3.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.2.0...v1.3.0)
