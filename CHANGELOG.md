@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.3.2
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.3.1...v1.3.2)
+
+### 🩹 Fixes
+
+- **parseURL:** Parse protocol case-insensitively ([#188](https://github.com/unjs/ufo/pull/188))
+- Respect fragment in trailing slash utils ([#175](https://github.com/unjs/ufo/pull/175))
+
+### 🏡 Chore
+
+- **release:** V1.3.1 ([5da74c4](https://github.com/unjs/ufo/commit/5da74c4))
+- Update lockfile ([11f161e](https://github.com/unjs/ufo/commit/11f161e))
+
+### ❤️ Contributors
+
+- Alexander Lichter ([@manniL](http://github.com/manniL))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v1.3.1
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.3.0...v1.3.1)
