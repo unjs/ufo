@@ -58,7 +58,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   );
 
   return {
-    protocol,
+    protocol: protocol.toLowerCase(),
     auth: auth ? auth.slice(0, Math.max(0, auth.length - 1)) : "",
     host,
     pathname,

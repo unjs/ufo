@@ -106,6 +106,17 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "Https://domain.test:3000#owo",
+      out: {
+        protocol: "https:",
+        auth: "",
+        host: "domain.test:3000",
+        pathname: "",
+        search: "",
+        hash: "#owo",
+      },
+    },
+    {
       input: "data:image/png;base64,aaa//bbbbbb/ccc",
       out: {
         protocol: "data:",
