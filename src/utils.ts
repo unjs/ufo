@@ -66,7 +66,7 @@ export function withoutTrailingSlash(
   respectQueryAndFragment?: boolean
 ): string {
   if (!respectQueryAndFragment) {
-    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/"
+    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
