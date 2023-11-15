@@ -66,8 +66,7 @@ export function withoutTrailingSlash(
   respectQueryAndFragment?: boolean
 ): string {
   if (!respectQueryAndFragment) {
-    const url = hasTrailingSlash(input) ? input.slice(0, -1) : input;
-    return url || "/";
+    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/"
   }
   if (!hasTrailingSlash(input, true)) {
     return input || "/";
