@@ -262,36 +262,36 @@ describe("withFragment", () => {
   const tests = [
     {
       input: "https://example.com",
-      hash: "foo",
+      fragment: "foo",
       out: "https://example.com#foo",
     },
     {
       input: "https://example.com#bar",
-      hash: "foo",
+      fragment: "foo",
       out: "https://example.com#foo",
     },
-    { input: "https://example.com", hash: "", out: "https://example.com" },
-    { input: "https://example.com#bar", hash: "", out: "https://example.com" },
+    { input: "https://example.com", fragment: "", out: "https://example.com" },
+    { input: "https://example.com#bar", fragment: "", out: "https://example.com" },
     {
       input: "https://example.com#bar",
-      hash: "0",
+      fragment: "0",
       out: "https://example.com#0",
     },
     {
       input: "https://example.com#bar",
-      hash: "foo bar",
+      fragment: "foo bar",
       out: "https://example.com#foo%20bar",
     },
     {
       input: "https://example.com?foo=bar",
-      hash: "baz",
+      fragment: "baz",
       out: "https://example.com?foo=bar#baz",
     },
   ];
 
   for (const t of tests) {
-    test(`${t.input} + ${t.hash}`, () => {
-      expect(withFragment(t.input, t.hash)).toBe(t.out);
+    test(`${t.input} + ${t.fragment}`, () => {
+      expect(withFragment(t.input, t.fragment)).toBe(t.out);
     });
   }
 });
