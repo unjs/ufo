@@ -247,7 +247,7 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 
 ### `withFragment`
 
-Add a hash to a URL
+Add a fragment (or hash) to a URL:
 
 ```ts
 withFragment('/foo', 'bar')
