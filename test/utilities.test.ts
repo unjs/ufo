@@ -10,6 +10,7 @@ import {
   withoutProtocol,
   withProtocol,
   isScriptProtocol,
+  withHash,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -256,3 +257,20 @@ describe("isEqual", () => {
     });
   }
 });
+
+describe('withHash', () => {
+  const tests = [
+    { input: 'https://example.com', hash: 'foo', out: 'https://example.com#foo' },
+    { input: 'https://example.com#bar', hash: 'foo', out: 'https://example.com#foo' },
+    { input: 'https://example.com#bar', hash: '', out: 'https://example.com' },
+    { input: 'https://example.com#bar', hash: '0', out: 'https://example.com#0' },
+    { input: 'https://example.com#bar', hash: 'foo bar', out: 'https://example.com#foo%20bar' },
+    { input: 'https://example.com?foo=bar', hash: 'baz', out: 'https://example.com?foo=bar#baz' },
+  ];
+
+  for (const t of tests) {
+    test(`${t.input} + ${t.hash}`, () => {
+      expect(withHash(t.input, t.hash)).toBe(t.out);
+    });
+  }
+})
