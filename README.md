@@ -245,6 +245,19 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 // false
 ```
 
+### `withHash`
+
+Add a hash to a URL
+
+```ts
+withHash('/foo', 'bar')
+// /foo#bar
+withHash('/foo#bar', 'baz')
+// /foo#baz
+withHash('/foo#bar', '')
+// /foo
+```
+
 ## License
 
 [MIT](./LICENSE)
