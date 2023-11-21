@@ -257,7 +257,7 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
   return a === b;
 }
 
-export function withHash(input: string, hash: string): string {
+export function withFragment(input: string, hash: string): string {
   const parsed = parseURL(input);
   parsed.hash = hash === "" ? "" : "#" + encodeURIComponent(hash);
   return stringifyParsedURL(parsed);

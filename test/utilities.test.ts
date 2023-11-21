@@ -10,7 +10,7 @@ import {
   withoutProtocol,
   withProtocol,
   isScriptProtocol,
-  withHash,
+  withFragment,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -258,7 +258,7 @@ describe("isEqual", () => {
   }
 });
 
-describe("withHash", () => {
+describe("withFragment", () => {
   const tests = [
     {
       input: "https://example.com",
@@ -290,7 +290,7 @@ describe("withHash", () => {
 
   for (const t of tests) {
     test(`${t.input} + ${t.hash}`, () => {
-      expect(withHash(t.input, t.hash)).toBe(t.out);
+      expect(withFragment(t.input, t.hash)).toBe(t.out);
     });
   }
 });

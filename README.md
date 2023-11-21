@@ -245,16 +245,16 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 // false
 ```
 
-### `withHash`
+### `withFragment`
 
 Add a hash to a URL
 
 ```ts
-withHash('/foo', 'bar')
+withFragment('/foo', 'bar')
 // /foo#bar
-withHash('/foo#bar', 'baz')
+withFragment('/foo#bar', 'baz')
 // /foo#baz
-withHash('/foo#bar', '')
+withFragment('/foo#bar', '')
 // /foo
 ```
 
