@@ -259,6 +259,6 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
 
 export function withHash(input: string, hash: string): string {
   const parsed = parseURL(input);
-  parsed.hash = hash === '' ? '' : '#' + encodeURIComponent(hash);
+  parsed.hash = hash === "" ? "" : "#" + encodeURIComponent(hash);
   return stringifyParsedURL(parsed);
 }
