@@ -270,6 +270,7 @@ describe("withFragment", () => {
       hash: "foo",
       out: "https://example.com#foo",
     },
+    { input: "https://example.com", hash: "", out: "https://example.com" },
     { input: "https://example.com#bar", hash: "", out: "https://example.com" },
     {
       input: "https://example.com#bar",
