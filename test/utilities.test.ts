@@ -271,7 +271,11 @@ describe("withFragment", () => {
       out: "https://example.com#foo",
     },
     { input: "https://example.com", fragment: "", out: "https://example.com" },
-    { input: "https://example.com#bar", fragment: "", out: "https://example.com" },
+    {
+      input: "https://example.com#bar",
+      fragment: "",
+      out: "https://example.com",
+    },
     {
       input: "https://example.com#bar",
       fragment: "0",
