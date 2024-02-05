@@ -7,3 +7,4 @@ coverage
 dist
 types
 .conf*
+*vitest-temp*
