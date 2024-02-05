@@ -228,13 +228,15 @@ export function resolveURL(base = "", ...inputs: string[]): string {
     );
   }
 
-  if (inputs.length === 0) {
+  const filteredInputs = inputs.filter((input) => isNonEmptyURL(input));
+
+  if (filteredInputs.length === 0) {
     return base;
   }
 
   const url = parseURL(base);
 
-  for (const inputSegment of inputs.filter((input) => isNonEmptyURL(input))) {
+  for (const inputSegment of filteredInputs) {
     const urlSegment = parseURL(inputSegment);
 
     // Append path
