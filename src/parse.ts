@@ -1,5 +1,6 @@
 import { decode } from "./encoding";
 import { hasProtocol } from "./utils";
+const protocolRelative = Symbol.for("ufo:protocolRelative");
 export interface ParsedURL {
   protocol?: string;
   host?: string;
@@ -8,6 +9,7 @@ export interface ParsedURL {
   pathname: string;
   hash: string;
   search: string;
+  [protocolRelative]?: boolean;
 }
 
 export interface ParsedAuth {
@@ -29,12 +31,12 @@ export interface ParsedHost {
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
   const _specialProtoMatch = input.match(
-    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i
   );
   if (_specialProtoMatch) {
     const [, _proto, _pathname = ""] = _specialProtoMatch;
     return {
-      protocol: _proto,
+      protocol: _proto.toLowerCase(),
       pathname: _pathname,
       href: _proto + _pathname,
       auth: "",
@@ -58,12 +60,13 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   );
 
   return {
-    protocol,
+    protocol: protocol.toLowerCase(),
     auth: auth ? auth.slice(0, Math.max(0, auth.length - 1)) : "",
     host,
     pathname,
     search,
     hash,
+    [protocolRelative]: !protocol,
   };
 }
 
@@ -125,7 +128,10 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const hash = parsed.hash || "";
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
-  const proto = parsed.protocol ? parsed.protocol + "//" : "";
+  const proto =
+    parsed.protocol || parsed[protocolRelative]
+      ? (parsed.protocol || "") + "//"
+      : "";
   return proto + auth + host + pathname + search + hash;
 }
 
