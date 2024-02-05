@@ -306,5 +306,5 @@ export function withFragment(input: string, hash: string): string {
 }
 
 export function withoutFragment(input: string): string {
-  return withFragment(input, "");
+  return stringifyParsedURL({ ...parseURL(input), hash: "" });
 }
