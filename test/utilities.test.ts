@@ -113,7 +113,7 @@ describe("stringifyParsedURL", () => {
     },
     {
       input: { host: "google.com" },
-      out: "//google.com",
+      out: "google.com",
     },
     {
       input: { protocol: "https:", host: "google.com" },

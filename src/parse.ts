@@ -1,5 +1,6 @@
 import { decode } from "./encoding";
 import { hasProtocol } from "./utils";
+const protocolRelative = Symbol.for("ufo:protocolRelative");
 export interface ParsedURL {
   protocol?: string;
   host?: string;
@@ -8,6 +9,7 @@ export interface ParsedURL {
   pathname: string;
   hash: string;
   search: string;
+  [protocolRelative]?: boolean;
 }
 
 export interface ParsedAuth {
@@ -64,6 +66,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     pathname,
     search,
     hash,
+    [protocolRelative]: !protocol,
   };
 }
 
@@ -125,7 +128,7 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const hash = parsed.hash || "";
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
-  const proto = parsed.protocol || host ? (parsed.protocol || "") + "//" : "";
+  const proto = parsed.protocol || parsed[protocolRelative] ? (parsed.protocol || "") + "//" : "";
   return proto + auth + host + pathname + search + hash;
 }
 
