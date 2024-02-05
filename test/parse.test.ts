@@ -167,7 +167,7 @@ describe("parseURL", () => {
 
   for (const t of tests) {
     test(t.input.toString(), () => {
-      expect(parseURL(t.input)).toEqual(t.out);
+      expect(JSON.parse(JSON.stringify(parseURL(t.input)))).toEqual(t.out);
     });
   }
 });

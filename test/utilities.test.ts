@@ -97,6 +97,7 @@ describe("stringifyParsedURL", () => {
     { input: "test?query=123#hash", out: "test?query=123#hash" },
     { input: "/%c", out: "/%c" },
     { input: "/%", out: "/%" },
+    { input: "//test.com", out: "//test.com" },
     {
       input: "http://foo.com/test?query=123#hash",
       out: "http://foo.com/test?query=123#hash",
