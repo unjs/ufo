@@ -42,12 +42,11 @@ const { normalizeURL, joinURL } = require("ufo");
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-## Utils
+# Utils
 
 <!-- AUTOMD_START generator="jsdocs" headingLevel="2" -->
 
 ### `hasProtocol(inputString, opts)`
-
 
 ### `withoutProtocol(input)`
 
@@ -359,7 +358,7 @@ Removes the fragment section from the URL.
 **Example:**
 
 ```js
-withoutFragment("http://example.com/foo?q=123#bar") // "http://example.com/foo?q=123"
+withoutFragment("http://example.com/foo?q=123#bar"); // "http://example.com/foo?q=123"
 ```
 
 ### `withoutLeadingSlash(input)`
@@ -377,7 +376,8 @@ If second argument is is true, it will only remove the trailing slash if it's no
 ```js
 withoutTrailingSlash("/foo/"); // "/foo"
 
-withoutTrailingSlash("/path/?query=true", true); "/path?query=true"
+withoutTrailingSlash("/path/?query=true", true);
+("/path?query=true");
 ```
 
 ### `withProtocol(input, protocol)`
@@ -411,9 +411,9 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 ```js
 withTrailingSlash("/foo"); // "/foo/"
 
-withTrailingSlash("/path?query=true", true); "/path/?query=true"
+withTrailingSlash("/path?query=true", true);
+("/path/?query=true");
 ```
-
 
 <!-- AUTOMD_END -->
 
