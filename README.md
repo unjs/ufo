@@ -45,7 +45,7 @@ normalizeURL("test?query=123 123#hash, test");
 // test?query=123%20123#hash,%20test
 
 normalizeURL("http://localhost:3000");
-// http://localhost:3000/
+// http://localhost:3000
 ```
 
 ### `joinURL`
