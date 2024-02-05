@@ -10,6 +10,7 @@ import {
   withoutProtocol,
   withProtocol,
   isScriptProtocol,
+  withFragment,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -254,6 +255,53 @@ describe("isEqual", () => {
       t.input[2] ? JSON.stringify(t.input[2]) : ""
     }`, () => {
       expect(isEqual(t.input[0], t.input[1], t.input[2])).toBe(t.out);
+    });
+  }
+});
+
+describe("withFragment", () => {
+  const tests = [
+    {
+      input: "https://example.com",
+      fragment: "foo",
+      out: "https://example.com#foo",
+    },
+    {
+      input: "https://example.com#bar",
+      fragment: "foo",
+      out: "https://example.com#foo",
+    },
+    { input: "https://example.com", fragment: "", out: "https://example.com" },
+    {
+      input: "https://example.com#bar",
+      fragment: "",
+      out: "https://example.com",
+    },
+    {
+      input: "https://example.com#bar",
+      fragment: "0",
+      out: "https://example.com#0",
+    },
+    {
+      input: "https://example.com#bar",
+      fragment: "foo bar",
+      out: "https://example.com#foo%20bar",
+    },
+    {
+      input: "https://example.com#bar",
+      fragment: "foo/bar",
+      out: "https://example.com#foo/bar",
+    },
+    {
+      input: "https://example.com?foo=bar",
+      fragment: "baz",
+      out: "https://example.com?foo=bar#baz",
+    },
+  ];
+
+  for (const t of tests) {
+    test(`${t.input} + ${t.fragment}`, () => {
+      expect(withFragment(t.input, t.fragment)).toBe(t.out);
     });
   }
 });

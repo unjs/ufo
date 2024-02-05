@@ -245,6 +245,19 @@ isEqual('/foo bar', '/foo%20bar', { encoding: true })
 // false
 ```
 
+### `withFragment`
+
+Add a fragment (or hash) to a URL:
+
+```ts
+withFragment('/foo', 'bar')
+// /foo#bar
+withFragment('/foo#bar', 'baz')
+// /foo#baz
+withFragment('/foo#bar', '')
+// /foo
+```
+
 ## License
 
 [MIT](./LICENSE)
