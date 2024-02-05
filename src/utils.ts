@@ -16,7 +16,12 @@ const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 const JOIN_LEADING_SLASH_RE = /^\.?\//;
 
 /**
- * Checks if the input is a relative URL starting with `./` or `../`
+ * Check if a path starts with `./` or `../`.
+ *
+ * @example
+ * ```js
+ * isRelative("./foo"); // true
+ * ```
  */
 export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
@@ -58,7 +63,7 @@ export function hasProtocol(
 }
 
 /**
- * Checks if the input protocol is any of the dangrous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
+ * Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
  */
 export function isScriptProtocol(protocol?: string) {
   return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
@@ -77,7 +82,15 @@ export function hasTrailingSlash(
 /**
  * Removes trailing slash from the URL or pathname.
  *
- * If sercond argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+ * If second argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+ *
+ * @example
+ *
+ * ```js
+ * withoutTrailingSlash("/foo/"); // "/foo"
+ *
+ * withoutTrailingSlash("/path/?query=true", true); "/path?query=true"
+ * ```
  */
 export function withoutTrailingSlash(
   input = "",
@@ -105,9 +118,17 @@ export function withoutTrailingSlash(
 }
 
 /**
- * Ensures the URL or pathname has a trailing slash.
+ * Ensures url ends with a trailing slash.
  *
- * If sercond argument is is true, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+ * If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+ *
+ * @example
+ *
+ * ```js
+ * withTrailingSlash("/foo"); // "/foo/"
+ *
+ * withTrailingSlash("/path?query=true", true); "/path/?query=true"
+ * ```
  */
 export function withTrailingSlash(
   input = "",
@@ -156,6 +177,15 @@ export function withLeadingSlash(input = ""): string {
 
 /**
  * Removes double slashes from the URL.
+ *
+ * @example
+ *
+ * ```js
+ * cleanDoubleSlashes("//foo//bar//"); // "/foo/bar/"
+ *
+ * cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
+ * // Returns "http://example.com/analyze/http://localhost:3000/"
+ * ```
  */
 export function cleanDoubleSlashes(input = ""): string {
   return input
@@ -199,6 +229,12 @@ export function withoutBase(input: string, base: string) {
 
 /**
  * Add/Replace the query section of the URL.
+ *
+ * @example
+ *
+ * ```js
+ * withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
+ * ```
  */
 export function withQuery(input: string, query: QueryObject): string {
   const parsed = parseURL(input);
@@ -208,7 +244,15 @@ export function withQuery(input: string, query: QueryObject): string {
 }
 
 /**
- * Parses the query object of an input URL into an object.
+ * Parses and decods the query object of an input URL into an object.
+ *
+ * @example
+ *
+ * ```js
+ * getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
+ * // { test: "123", unicode: "好" }
+ * ```
+ *
  */
 export function getQuery<T extends ParsedQuery = ParsedQuery>(
   input: string
@@ -217,14 +261,14 @@ export function getQuery<T extends ParsedQuery = ParsedQuery>(
 }
 
 /**
- * Checks if the input URL or pathname is empty or `/`.
+ * Checks if the input url is empty or `/`.
  */
 export function isEmptyURL(url: string) {
   return !url || url === "/";
 }
 
 /**
- * Checks if the input URL or pathname is not empty nor `/`.
+ * Checks if the input url is not empty nor `/`.
  */
 export function isNonEmptyURL(url: string) {
   return url && url !== "/";
@@ -232,6 +276,12 @@ export function isNonEmptyURL(url: string) {
 
 /**
  * Joins multiple URL segments into a single URL.
+ *
+ * @example
+ *
+ * ```js
+ * joinURL("a", "/b", "/c"); // "a/b/c"
+ * ```
  */
 export function joinURL(base: string, ...input: string[]): string {
   let url = base || "";
@@ -250,14 +300,26 @@ export function joinURL(base: string, ...input: string[]): string {
 }
 
 /**
- * Adds `http://` to the input if it doesn't have a protocol.
+ * Adds or replaces url protocol to `http://`.
+ *
+ * @example
+ *
+ * ```js
+ * withHttp("https://example.com"); // http://example.com
+ * ```
  */
 export function withHttp(input: string): string {
   return withProtocol(input, "http://");
 }
 
 /**
- * Adds `https://` to the input if it doesn't have a protocol.
+ * Adds or replaces url protocol to `https://`.
+ *
+ * @example
+ *
+ * ```js
+ * withHttps("http://example.com"); // https://example.com
+ * ```
  */
 export function withHttps(input: string): string {
   return withProtocol(input, "https://");
@@ -265,6 +327,11 @@ export function withHttps(input: string): string {
 
 /**
  * Removes the protocol from the input.
+ *
+ * @example
+ * ```js
+ * withoutProtocol("http://example.com"); // "example.com"
+ * ```
  */
 export function withoutProtocol(input: string): string {
   return withProtocol(input, "");
@@ -272,6 +339,11 @@ export function withoutProtocol(input: string): string {
 
 /**
  * Adds or Replaces protocol of the input URL.
+ *
+ * @example
+ * ```js
+ * withProtocol("http://example.com", "ftp://"); // "ftp://example.com"
+ * ```
  */
 export function withProtocol(input: string, protocol: string): string {
   const match = input.match(PROTOCOL_REGEX);
@@ -282,9 +354,18 @@ export function withProtocol(input: string, protocol: string): string {
 }
 
 /**
- * - Ensures URL is properly encoded
+ * Normlizes inputed url:
+ *
+ * - Ensures url is properly encoded
  * - Ensures pathname starts with slash
  * - Preserves protocol/host if provided
+ *
+ * @example
+ *
+ * ```js
+ * normalizeURL("test?query=123 123#hash, test"); // "test?query=123%20123#hash,%20test"
+ * normalizeURL("http://localhost:3000"); // "http://localhost:3000"
+ * ```
  */
 export function normalizeURL(input: string): string {
   const parsed = parseURL(input);
@@ -297,6 +378,13 @@ export function normalizeURL(input: string): string {
 
 /**
  * Resolves multiple URL segments into a single URL.
+ *
+ * @example
+ *
+ * ```js
+ * resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
+ * // Returns "http://foo.com/foo/bar/baz?test=123#token"
+ * ```
  */
 export function resolveURL(base = "", ...inputs: string[]): string {
   if (typeof base !== "string") {
@@ -346,7 +434,12 @@ export function resolveURL(base = "", ...inputs: string[]): string {
 }
 
 /**
- * Checks if two paths are the same regardless of encoding and trailing slash differences.
+ * Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
+ *
+ * @example
+ * ```js
+ * isSamePath("/foo", "/foo/"); // true
+ * ```
  */
 export function isSamePath(p1: string, p2: string) {
   return decode(withoutTrailingSlash(p1)) === decode(withoutTrailingSlash(p2));
@@ -364,6 +457,20 @@ interface CompareURLOptions {
  * You can make slash check strict by setting `{ trailingSlash: true, leadingSlash: true }` as options.
  *
  * You can make encoding check strict by setting `{ encoding: true }` as options.
+ *
+ * @example
+ *
+ * ```js
+ * isEqual("/foo", "foo"); // true
+ * isEqual("foo/", "foo"); // true
+ * isEqual("/foo bar", "/foo%20bar"); // true
+ *
+ * // Strict compare
+ *
+ * isEqual("/foo", "foo", { leadingSlash: true }); // false
+ * isEqual("foo/", "foo", { trailingSlash: true }); // false
+ * isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
+ * ```
  */
 export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
   if (!options.trailingSlash) {
@@ -399,7 +506,7 @@ export function withFragment(input: string, hash: string): string {
 }
 
 /**
- * Removes the fragment/hash part from the URL.
+ * Removes the fragment section from the URL.
  *
  * @example
  *

@@ -23,7 +23,6 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  * Encode characters that need to be encoded on the path, search and hash
  * sections of the URL.
  *
- * @internal
  * @param text - string to encode
  * @returns encoded string
  */
@@ -66,7 +65,8 @@ export function encodeQueryValue(input: QueryValue): string {
 }
 
 /**
- * Like `encodeQueryValue` but also encodes the `=` character.
+ * Encode characters that need to be encoded query values on the query
+ * section of the URL and also encodes the `=` character.
  *
  * @param text - string to encode
  */
@@ -127,8 +127,8 @@ export function decodePath(text: string): string {
 }
 
 /**
- * Decode query key (consistent with encodeQueryKey for plus encoding).
- * Created different method for decoding key to avoid future changes on value encode/decode.
+ * Decodes query key (consistent with encodeQueryKey for plus encoding).
+ *
  * @param text - string to decode
  * @returns decoded string
  */
