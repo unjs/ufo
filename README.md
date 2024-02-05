@@ -109,23 +109,6 @@ parseFilename("http://example.com/path/to/filename.ext");
 parseFilename("/path/to/.hidden-file", { strict: true });
 ```
 
-### `$URL`
-
-Implementing URL interface with improvements:
-
-- Supporting schemeless and hostless URLs
-- Supporting relative URLs
-- Preserving trailing-slash status
-- Decoded and mutable class properties (`protocol`, `host`, `auth`, `pathname`, `query`, `hash`)
-- Consistent URL parser independent of environment
-- Consistent encoding independent of environment
-- Punycode support for host encoding
-
-```ts
-new $URL("http://localhost:3000/hello?world=true");
-// { protocol: 'http:', host: 'localhost:3000', auth: '', pathname: '/hello', query: { world: 'true' }, hash: '' }
-```
-
 ### `withTrailingSlash`
 
 Ensures url ends with a trailing slash.
