@@ -9,6 +9,9 @@ import {
   encodeHost,
 } from "./encoding";
 
+/**
+ * @deprecated use native URL with `new URL(input)` or `ufo.parseURL(input)`
+ */
 export class $URL implements URL {
   protocol: string;
   host: string;
@@ -135,4 +138,11 @@ export class $URL implements URL {
   toString(): string {
     return this.href;
   }
+}
+
+/**
+ * @deprecated use native URL with `new URL(input)` or `ufo.parseURL(input)`
+ */
+export function createURL(input: string): $URL {
+  return new $URL(input);
 }

@@ -1,4 +1,4 @@
-import { $URL } from "./url";
+import { createURL } from "./url";
 import { parseURL, stringifyParsedURL } from "./parse";
 import { QueryObject, parseQuery, stringifyQuery, ParsedQuery } from "./query";
 import { decode } from "./encoding";
@@ -211,13 +211,8 @@ export function withProtocol(input: string, protocol: string): string {
   return protocol + input.slice(match[0].length);
 }
 
-// $URL based utils
-
-export function createURL(input: string): $URL {
-  return new $URL(input);
-}
-
 export function normalizeURL(input: string): string {
+  // TODO: remove dependecny on createURL
   return createURL(input).toString();
 }
 
