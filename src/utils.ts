@@ -1,7 +1,13 @@
-import { createURL } from "./url";
 import { parseURL, stringifyParsedURL } from "./parse";
 import { QueryObject, parseQuery, stringifyQuery, ParsedQuery } from "./query";
-import { decode } from "./encoding";
+import {
+  decode,
+  decodePath,
+  encodeHash,
+  encodeHost,
+  encodeParam,
+  encodePath,
+} from "./encoding";
 
 export function isRelative(inputString: string) {
   return ["./", "../"].some((string_) => inputString.startsWith(string_));
@@ -212,8 +218,12 @@ export function withProtocol(input: string, protocol: string): string {
 }
 
 export function normalizeURL(input: string): string {
-  // TODO: remove dependecny on createURL
-  return createURL(input).toString();
+  const parsed = parseURL(input);
+  parsed.pathname = encodePath(decodePath(parsed.pathname));
+  parsed.hash = encodeHash(decode(parsed.hash));
+  parsed.host = encodeHost(decode(parsed.host));
+  parsed.search = stringifyQuery(parseQuery(parsed.search));
+  return stringifyParsedURL(parsed);
 }
 
 export function resolveURL(base = "", ...inputs: string[]): string {
