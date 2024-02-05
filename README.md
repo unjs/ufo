@@ -1,4 +1,4 @@
-# 👽 ufo
+# ufo
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -13,242 +13,261 @@ URL utils for humans.
 
 Install using npm or your favourite package manager:
 
-```bash
-npm i ufo
+Install package:
+
+```sh
+# npm
+npm install ufo
+
+# yarn
+yarn add ufo
+
+# pnpm
+pnpm install ufo
+
+# bun
+bun install ufo
 ```
 
-Import:
+Import utils:
 
 ```js
-// CommonJS
-const { normalizeURL, joinURL } = require("ufo");
-
 // ESM
 import { normalizeURL, joinURL } from "ufo";
+
+// CommonJS
+const { normalizeURL, joinURL } = require("ufo");
 
 // Deno
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-**Notice:** You may need to transpile package and add URL polyfill for legacy environments
-
 ## Usage
 
-### `normalizeURL`
+<!-- AUTOMD_START generator="api" src="./src/index.ts" -->
 
-- Ensures URL is properly encoded
-- Ensures pathname starts with slash
-- Preserves protocol/host if provided
+## `decode(text)`
 
-```ts
-normalizeURL("test?query=123 123#hash, test");
-// test?query=123%20123#hash,%20test
+Decode text using `decodeURIComponent`. Returns the original text if it fails.
 
-normalizeURL("http://localhost:3000");
-// http://localhost:3000
-```
+## `decodePath(text)`
 
-### `joinURL`
+Decode path section of URL (consistent with encodePath for slash encoding).
 
-```ts
-joinURL("a", "/b", "/c");
-// a/b/c
-```
+## `decodeQueryKey(text)`
 
-### `resolveURL`
+Decode query key (consistent with encodeQueryKey for plus encoding). Created different method for decoding key to avoid future changes on value encode/decode.
 
-```ts
-resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
-// http://foo.com/foo/bar/baz?test=123#token
-```
+## `decodeQueryValue(text)`
 
-### `parseURL`
+Decode query value (consistent with encodeQueryValue for plus encoding).
 
-```ts
-parseURL("http://foo.com/foo?test=123#token");
-// { protocol: 'http:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
+## `encode(text)`
 
-parseURL("foo.com/foo?test=123#token");
-// { pathname: 'foo.com/foo', search: '?test=123', hash: '#token' }
+Encode characters that need to be encoded on the path, search and hash sections of the URL.
 
-parseURL("foo.com/foo?test=123#token", "https://");
-// { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
-```
+## `encodeHash(text)`
 
-### `stringifyParsedURL`
+Encode characters that need to be encoded on the hash section of the URL.
 
-```ts
-const obj = parseURL("http://foo.com/foo?test=123#token");
-obj.host = "bar.com";
+## `encodeHost(name)`
 
-stringifyParsedURL(obj);
-// http://bar.com/foo?test=123#token
-```
+Encodes hostname with punycode encoding.
 
-### `withQuery`
+## `encodeParam(text)`
 
-```ts
-withQuery("/foo?page=a", { token: "secret" });
-// /foo?page=a&token=secret
-```
+Encode characters that need to be encoded on the path section of the URL as a param. This function encodes everything {@link encodePath} does plus the slash (`/`) character.
 
-### `getQuery`
+## `encodePath(text)`
 
-```ts
-getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
-// { test: '123', unicode: '好' }
-```
+Encode characters that need to be encoded on the path section of the URL.
 
-### `parseFilename`
+## `encodeQueryKey(text)`
 
-```ts
-// Result: filename.ext
-parseFilename("http://example.com/path/to/filename.ext");
+Like `encodeQueryValue` but also encodes the `=` character.
 
-// Result: undefined
-parseFilename("/path/to/.hidden-file", { strict: true });
-```
+## `encodeQueryValue(input)`
 
-### `withTrailingSlash`
+Encode characters that need to be encoded query values on the query section of the URL.
 
-Ensures url ends with a trailing slash.
+## `parseAuth(input)`
 
-```ts
-withTrailingSlash("/foo");
-// /foo/
-```
+It takes a string of the form `username:password` and returns an object with the username and password decoded
 
-Set the second option to `true` to support query parameters:
+## `parseFilename(input)`
 
-```ts
-withTrailingSlash("/path?query=true", true);
-// /path/?query=true
-```
+parses a url and returns last pathname segment as filename.
 
-### `withoutTrailingSlash`
+If `{ strict: true }` is passed as the second argument, it will only return the last segment ending with a file extension.
 
-Ensures url does not ends with a trailing slash.
+## `parseHost(input)`
 
-```ts
-withoutTrailingSlash("/foo/");
-// /foo
-```
+It takes a string, and returns an object with two properties: `hostname` and `port`
 
-Set the second option to `true` to support query parameters:
+## `parsePath(input)`
 
-```ts
-withoutTrailingSlash("/path/?query=true", true);
-// /path?query=true
-```
+It splits the input string into three parts, and returns an object with those three parts
 
-### `cleanDoubleSlashes`
+## `parseURL(input, defaultProto)`
 
-Ensures url does not have double slash (except for protocol).
+It takes a URL string and returns an object with the URL's protocol, auth, host, pathname, search, and hash
 
-```ts
-cleanDoubleSlashes("//foo//bar//");
-// /foo/bar/
+## `stringifyParsedURL(parsed)`
 
-cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
-// http://example.com/analyze/http://localhost:3000/
-```
+It takes a `ParsedURL` object and returns the stringified URL
 
-### `isSamePath`
+## `encodeQueryItem(key, value)`
 
-Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
+Encodes a pair of key and value into a url query string value.
 
-```ts
-isSamePath("/foo", "/foo/");
-// true
-```
+If the value is an array, it will be encoded as multiple key-value pairs with the same key.
 
-### `isRelative`
+## `parseQuery(parametersString)`
 
-Check if a path starts with `./` or `../`.
+parses and decodes a query string into an object.
 
-```ts
-isRelative("./foo");
-// true
-```
+input can be a query string with or without the leading `?`
 
-### `withHttp`
+## `stringifyQuery(query)`
 
-Ensures url protocol is `http`
+Stringfies and encodes a query object into a query string.
 
-```ts
-withHttp("https://example.com");
-// http://example.com
-```
+## `$URL()`
 
-### `withHttps`
 
-Ensures url protocol is `https`
+## `cleanDoubleSlashes(input)`
 
-```ts
-withHttps("http://example.com");
-// https://example.com
-```
+Removes double slashes from the URL.
 
-### `withProtocol`
+## `getQuery(input)`
 
-Changes url protocol passed as second argument
+Parses the query object of an input URL into an object.
 
-```ts
-withProtocol("http://example.com", "ftp://");
-// ftp://example.com
-```
+## `hasLeadingSlash(input)`
 
-### `withoutProtocol`
+Checks if the input has a leading slash. (e.g. `/foo`)
 
-Removes url protocol
+## `hasProtocol(inputString, opts)`
+
+
+## `hasTrailingSlash(input, respectQueryAndFragment)`
+
+
+## `isEmptyURL(url)`
+
+Checks if the input URL or pathname is empty or `/`.
+
+## `isEqual(a, b, options)`
+
+Checks if two paths are equal regardless of encoding, trailing slash, and leading slash differences.
+
+You can make slash check strict by setting `{ trailingSlash: true, leadingSlash: true }` as options.
+You can make encoding check strict by setting `{ encoding: true }` as options.
+
+## `isNonEmptyURL(url)`
+
+Checks if the input URL or pathname is not empty nor `/`.
+
+## `isRelative(inputString)`
+
+Checks if the input is a relative URL starting with `./` or `../`
+
+## `isSamePath(p1, p2)`
+
+Checks if two paths are the same regardless of encoding and trailing slash differences.
+
+## `isScriptProtocol(protocol)`
+
+Checks if the input protocol is any of the dangrous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
+
+## `joinURL(base)`
+
+Joins multiple URL segments into a single URL.
+
+## `normalizeURL(input)`
+
+- Ensures URL is properly encoded - Ensures pathname starts with slash - Preserves protocol/host if provided
+
+## `resolveURL(base)`
+
+Resolves multiple URL segments into a single URL.
+
+## `withBase(input, base)`
+
+Ensures the URL or pathname has a trailing slash.
+
+If input aleady start with base, it will not be added again.
+
+## `withFragment(input, hash)`
+
+Add/Replace the fragment section of the URL.
+
+**Example:**
 
 ```ts
-withoutProtocol("http://example.com");
-// example.com
+withFragment("/foo", "bar"); // "/foo#bar"
+withFragment("/foo#bar", "baz"); // "/foo#baz"
+withFragment("/foo#bar", ""); // "/foo"
 ```
 
-### `isEqual`
+## `withHttp(input)`
 
-Compare two URLs regardless of their slash condition or encoding:
+Adds `http://` to the input if it doesn't have a protocol.
 
-```ts
-isEqual("/foo", "foo");
-// true
-isEqual("foo/", "foo");
-// true
-isEqual("/foo bar", "/foo%20bar");
-// true
+## `withHttps(input)`
 
-// Strict compare
-isEqual("/foo", "foo", { leadingSlash: true });
-// false
-isEqual("foo/", "foo", { trailingSlash: true });
-// false
-isEqual("/foo bar", "/foo%20bar", { encoding: true });
-// false
+Adds `https://` to the input if it doesn't have a protocol.
+
+## `withLeadingSlash(input)`
+
+Ensures the URL or pathname has a leading slash.
+
+## `withProtocol(input, protocol)`
+
+Adds or Replaces protocol of the input URL.
+
+## `withQuery(input, query)`
+
+Add/Replace the query section of the URL.
+
+## `withTrailingSlash(input, respectQueryAndFragment)`
+
+Ensures the URL or pathname has a trailing slash.
+
+If sercond argument is is true, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+
+## `withoutBase(input, base)`
+
+Removes the base from the URL or pathname.
+
+If input does not start with base, it will not be removed.
+
+## `withoutFragment(input)`
+
+Removes the fragment/hash part from the URL.
+
+**Example:**
+
+```js
+withoutFragment("http://example.com/foo?q=123#bar") // "http://example.com/foo?q=123"
 ```
 
-### `withFragment`
+## `withoutLeadingSlash(input)`
 
-Add a fragment (or hash) to a URL:
+Removes leading slash from the URL or pathname.
 
-```ts
-withFragment("/foo", "bar");
-// /foo#bar
-withFragment("/foo#bar", "baz");
-// /foo#baz
-withFragment("/foo#bar", "");
-// /foo
-```
+## `withoutProtocol(input)`
 
-### `withoutFragment`
+Removes the protocol from the input.
 
-Removes the fragment (or hash) part of URL.
+## `withoutTrailingSlash(input, respectQueryAndFragment)`
 
-```ts
-withoutFragment("http://example.com/foo?q=123#bar");
-// 'http://example.com/foo?q=123'
-```
+Removes trailing slash from the URL or pathname.
+
+If sercond argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+
+
+<!-- AUTOMD_END -->
 
 ## License
 

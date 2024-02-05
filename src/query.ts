@@ -18,6 +18,15 @@ export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export type ParsedQuery = Record<string, string | string[]>;
 
+/**
+ * parses and decodes a query string into an object.
+ *
+ * input can be a query string with or without the leading `?`
+ *
+ * @note
+ * The `__proto__` and `constructor` keys are ignored to prevent prototype pollution.
+ *
+ */
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = ""
 ): T {
@@ -46,6 +55,12 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   return object as T;
 }
 
+/**
+ * Encodes a pair of key and value into a url query string value.
+ *
+ * If the value is an array, it will be encoded as multiple key-value pairs with the same key.
+ *
+ */
 export function encodeQueryItem(
   key: string,
   value: QueryValue | QueryValue[]
@@ -66,7 +81,10 @@ export function encodeQueryItem(
   return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
 }
 
-export function stringifyQuery(query: QueryObject) {
+/**
+ * Stringfies and encodes a query object into a query string.
+ */
+export function stringifyQuery(query: QueryObject): string {
   return Object.keys(query)
     .filter((k) => query[k] !== undefined)
     .map((k) => encodeQueryItem(k, query[k]))

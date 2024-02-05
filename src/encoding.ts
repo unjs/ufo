@@ -146,6 +146,9 @@ export function decodeQueryValue(text: string): string {
   return decode(text.replace(PLUS_RE, " "));
 }
 
+/**
+ * Encodes hostname with punycode encoding.
+ */
 export function encodeHost(name = "") {
   return toASCII(name);
 }

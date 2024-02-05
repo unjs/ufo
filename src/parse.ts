@@ -138,6 +138,11 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
 const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
 const FILENAME_REGEX = /\/([^/]+)$/;
 
+/**
+ * parses a url and returns last pathname segment as filename.
+ *
+ * If `{ strict: true }` is passed as the second argument, it will only return the last segment ending with a file extension.
+ */
 export function parseFilename(input = "", { strict }): string | undefined {
   const { pathname } = parseURL(input);
   const matches = strict
