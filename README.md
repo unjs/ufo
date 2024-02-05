@@ -258,6 +258,15 @@ withFragment("/foo#bar", "");
 // /foo
 ```
 
+### `withoutFragment`
+
+Removes the fragment (or hash) part of URL.
+
+```ts
+withoutFragment("http://example.com/foo?q=123#bar");
+// 'http://example.com/foo?q=123'
+```
+
 ## License
 
 [MIT](./LICENSE)

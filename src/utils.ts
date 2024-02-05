@@ -299,3 +299,7 @@ export function withFragment(input: string, hash: string): string {
   parsed.hash = hash === "" ? "" : "#" + encodeURI(hash);
   return stringifyParsedURL(parsed);
 }
+
+export function withoutFragment(input: string): string {
+  return withFragment(input, "");
+}

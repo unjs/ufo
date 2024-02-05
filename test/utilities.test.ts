@@ -11,6 +11,7 @@ import {
   withProtocol,
   isScriptProtocol,
   withFragment,
+  withoutFragment,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -302,6 +303,37 @@ describe("withFragment", () => {
   for (const t of tests) {
     test(`${t.input} + ${t.fragment}`, () => {
       expect(withFragment(t.input, t.fragment)).toBe(t.out);
+    });
+  }
+});
+
+describe("withoutFragment", () => {
+  const tests = [
+    {
+      input: "https://example.com#foo",
+      out: "https://example.com",
+    },
+    {
+      input: "https://example.com",
+      out: "https://example.com",
+    },
+    {
+      input: "/foo#bar",
+      out: "/foo",
+    },
+    {
+      input: "/foo/#bar",
+      out: "/foo/",
+    },
+    {
+      input: "/foo?bar#baz",
+      out: "/foo?bar",
+    },
+  ];
+
+  for (const t of tests) {
+    test(`${t.input}`, () => {
+      expect(withoutFragment(t.input)).toBe(t.out);
     });
   }
 });
