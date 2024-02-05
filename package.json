@@ -26,15 +26,15 @@
     "lint:fix": "eslint --fix --ext .ts . && prettier -w src test",
     "prepack": "pnpm build",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
-    "test": "pnpm lint && vitest --run typecheck && vitest run"
+    "test": "pnpm lint && vitest run --typecheck"
   },
   "devDependencies": {
-    "@types/node": "^20.11.14",
+    "@types/node": "^20.11.16",
     "@vitest/coverage-v8": "^1.2.2",
     "changelogen": "^0.5.5",
     "eslint": "^8.56.0",
     "eslint-config-unjs": "^0.2.1",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.2.2"
