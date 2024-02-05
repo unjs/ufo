@@ -227,24 +227,40 @@ export function resolveURL(base = "", ...inputs: string[]): string {
       `URL input should be string received ${typeof base} (${base})`
     );
   }
+
+  if (inputs.length === 0) {
+    return base;
+  }
+
   const url = parseURL(base);
-  const urlQuery = parseQuery(url.search);
 
-  for (const input of inputs.filter((input) => isNonEmptyURL(input))) {
-    const mergableUrl = parseURL(input);
-    const mergableQuery = parseQuery(mergableUrl.search);
+  for (const inputSegment of inputs.filter((input) => isNonEmptyURL(input))) {
+    const urlSegment = parseURL(inputSegment);
 
-    if (mergableUrl.pathname) {
+    // Append path
+    if (urlSegment.pathname) {
       url.pathname =
         withTrailingSlash(url.pathname) +
-        withoutLeadingSlash(mergableUrl.pathname);
+        withoutLeadingSlash(urlSegment.pathname);
     }
 
-    url.hash ||= mergableUrl.hash;
+    // Override hash
+    if (urlSegment.hash) {
+      url.hash = urlSegment.hash;
+    }
 
-    const queries = stringifyQuery(Object.assign(urlQuery, mergableQuery));
-
-    url.search = queries.length > 0 ? "?" + queries : "";
+    // Append search
+    if (urlSegment.search && urlSegment.search !== "?") {
+      if (url.search && url.search !== "?") {
+        const queryString = stringifyQuery({
+          ...parseQuery(url.search),
+          ...parseQuery(urlSegment.search),
+        });
+        url.search = queryString.length > 0 ? "?" + queryString : "";
+      } else {
+        url.search = urlSegment.search;
+      }
+    }
   }
 
   return stringifyParsedURL(url);
