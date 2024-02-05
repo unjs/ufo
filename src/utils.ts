@@ -245,7 +245,7 @@ export function resolveURL(base = "", ...inputs: string[]): string {
     }
 
     // Override hash
-    if (urlSegment.hash) {
+    if (urlSegment.hash && urlSegment.hash !== "#") {
       url.hash = urlSegment.hash;
     }
 
