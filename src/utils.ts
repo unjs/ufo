@@ -221,14 +221,51 @@ export function normalizeURL(input: string): string {
   return createURL(input).toString();
 }
 
-export function resolveURL(base: string, ...input: string[]): string {
-  const url = createURL(base);
-
-  for (const index of input.filter((url) => isNonEmptyURL(url))) {
-    url.append(createURL(index));
+export function resolveURL(base = "", ...inputs: string[]): string {
+  if (typeof base !== "string") {
+    throw new TypeError(
+      `URL input should be string received ${typeof base} (${base})`
+    );
   }
 
-  return url.toString();
+  const filteredInputs = inputs.filter((input) => isNonEmptyURL(input));
+
+  if (filteredInputs.length === 0) {
+    return base;
+  }
+
+  const url = parseURL(base);
+
+  for (const inputSegment of filteredInputs) {
+    const urlSegment = parseURL(inputSegment);
+
+    // Append path
+    if (urlSegment.pathname) {
+      url.pathname =
+        withTrailingSlash(url.pathname) +
+        withoutLeadingSlash(urlSegment.pathname);
+    }
+
+    // Override hash
+    if (urlSegment.hash && urlSegment.hash !== "#") {
+      url.hash = urlSegment.hash;
+    }
+
+    // Append search
+    if (urlSegment.search && urlSegment.search !== "?") {
+      if (url.search && url.search !== "?") {
+        const queryString = stringifyQuery({
+          ...parseQuery(url.search),
+          ...parseQuery(urlSegment.search),
+        });
+        url.search = queryString.length > 0 ? "?" + queryString : "";
+      } else {
+        url.search = urlSegment.search;
+      }
+    }
+  }
+
+  return stringifyParsedURL(url);
 }
 
 export function isSamePath(p1: string, p2: string) {
