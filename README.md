@@ -40,11 +40,9 @@ const { normalizeURL, joinURL } = require("ufo");
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-# Utils
+<!-- AUTOMD_START generator="jsdocs" defaultGroup="utils" -->
 
-<!-- AUTOMD_START generator="jsdocs" headingLevel="2" -->
-
-## Encoding
+## Encoding Utils
 
 ### `decode(text)`
 
@@ -90,7 +88,7 @@ Encode characters that need to be encoded query values on the query section of t
 
 Encode characters that need to be encoded query values on the query section of the URL.
 
-## Parsing
+## Parsing Utils
 
 ### `parseAuth(input)`
 
@@ -120,7 +118,7 @@ Takes a string, and returns an object with two properties: `hostname` and `port`
 
 Splits the input string into three parts, and returns an object with those three parts.
 
-### `parseURL(input, defaultProto)`
+### `parseURL(input, defaultProto?)`
 
 Takes a URL string and returns an object with the URL's `protocol`, `auth`, `host`, `pathname`, `search`, and `hash`.
 
@@ -150,7 +148,7 @@ obj.host = "bar.com";
 stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 ```
 
-## Qeury
+## Qeury Utils
 
 ### `encodeQueryItem(key, value)`
 
@@ -198,7 +196,10 @@ getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
 
 Checks if the input has a leading slash. (e.g. `/foo`)
 
-### `hasTrailingSlash(input, respectQueryAndFragment)`
+### `hasProtocol(inputString, opts)`
+
+
+### `hasTrailingSlash(input, respectQueryAndFragment?)`
 
 Checks if the input has a trailing slash.
 
@@ -250,7 +251,7 @@ Check two paths are equal or not. Trailing slash and encoding are normalized bef
 isSamePath("/foo", "/foo/"); // true
 ```
 
-### `isScriptProtocol(protocol)`
+### `isScriptProtocol(protocol?)`
 
 Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
 
@@ -354,7 +355,17 @@ withoutFragment("http://example.com/foo?q=123#bar")
 
 Removes leading slash from the URL or pathname.
 
-### `withoutTrailingSlash(input, respectQueryAndFragment)`
+### `withoutProtocol(input)`
+
+Removes the protocol from the input.
+
+**Example:**
+
+```js
+withoutProtocol("http://example.com"); // "example.com"
+```
+
+### `withoutTrailingSlash(input, respectQueryAndFragment?)`
 
 Removes trailing slash from the URL or pathname.
 
@@ -388,7 +399,7 @@ Add/Replace the query section of the URL.
 withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
 ```
 
-### `withTrailingSlash(input, respectQueryAndFragment)`
+### `withTrailingSlash(input, respectQueryAndFragment?)`
 
 Ensures url ends with a trailing slash.
 
@@ -400,19 +411,6 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 withTrailingSlash("/foo"); // "/foo/"
 
 withTrailingSlash("/path?query=true", true); // "/path/?query=true"
-```
-
-### `hasProtocol(inputString, opts)`
-
-
-### `withoutProtocol(input)`
-
-Removes the protocol from the input.
-
-**Example:**
-
-```js
-withoutProtocol("http://example.com"); // "example.com"
 ```
 
 

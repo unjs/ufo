@@ -38,7 +38,7 @@ export interface ParsedHost {
  * // { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
  * ```
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @param [input] - The URL to parse.
  * @param [defaultProto] - The default protocol to use if the input doesn't have one.
@@ -88,7 +88,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
 /**
  * Splits the input string into three parts, and returns an object with those three parts.
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @param [input] - The URL to parse.
  * @returns An object with three properties: `pathname`, `search`, and `hash`.
@@ -109,7 +109,7 @@ export function parsePath(input = ""): ParsedURL {
  * Takes a string of the form `username:password` and returns an object with the username and
  * password decoded.
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @param [input] - The URL to parse.
  * @returns An object with two properties: username and password.
@@ -125,7 +125,7 @@ export function parseAuth(input = ""): ParsedAuth {
 /**
  * Takes a string, and returns an object with two properties: `hostname` and `port`.
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @param [input] - The URL to parse.
  * @returns A function that takes a string and returns an object with two properties: `hostname` and
@@ -142,7 +142,7 @@ export function parseHost(input = ""): ParsedHost {
 /**
  * Takes a `ParsedURL` object and returns the stringified URL.
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @example
  *
@@ -179,7 +179,7 @@ const FILENAME_REGEX = /\/([^/]+)$/;
  *
  * If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
  *
- * @group parsing
+ * @group parsing_utils
  *
  * @example
  *
