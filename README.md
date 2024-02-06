@@ -46,19 +46,7 @@ import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 
 <!-- AUTOMD_START generator="jsdocs" headingLevel="2" -->
 
-### `hasProtocol(inputString, opts)`
-
-### `withoutProtocol(input)`
-
-Removes the protocol from the input.
-
-**Example:**
-
-```js
-withoutProtocol("http://example.com"); // "example.com"
-```
-
-## encoding
+## Encoding
 
 ### `decode(text)`
 
@@ -104,7 +92,7 @@ Encode characters that need to be encoded query values on the query section of t
 
 Encode characters that need to be encoded query values on the query section of the URL.
 
-## parsing
+## Parsing
 
 ### `parseAuth(input)`
 
@@ -164,7 +152,7 @@ obj.host = "bar.com";
 stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 ```
 
-## qeury
+## Qeury
 
 ### `encodeQueryItem(key, value)`
 
@@ -182,7 +170,7 @@ input can be a query string with or without the leading `?`
 
 Stringfies and encodes a query object into a query string.
 
-## utils
+## Utils
 
 ### `cleanDoubleSlashes(input)`
 
@@ -358,7 +346,7 @@ Removes the fragment section from the URL.
 **Example:**
 
 ```js
-withoutFragment("http://example.com/foo?q=123#bar"); // "http://example.com/foo?q=123"
+withoutFragment("http://example.com/foo?q=123#bar") // "http://example.com/foo?q=123"
 ```
 
 ### `withoutLeadingSlash(input)`
@@ -376,8 +364,7 @@ If second argument is is true, it will only remove the trailing slash if it's no
 ```js
 withoutTrailingSlash("/foo/"); // "/foo"
 
-withoutTrailingSlash("/path/?query=true", true);
-("/path?query=true");
+withoutTrailingSlash("/path/?query=true", true); "/path?query=true"
 ```
 
 ### `withProtocol(input, protocol)`
@@ -411,9 +398,22 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 ```js
 withTrailingSlash("/foo"); // "/foo/"
 
-withTrailingSlash("/path?query=true", true);
-("/path/?query=true");
+withTrailingSlash("/path?query=true", true); "/path/?query=true"
 ```
+
+### `hasProtocol(inputString, opts)`
+
+
+### `withoutProtocol(input)`
+
+Removes the protocol from the input.
+
+**Example:**
+
+```js
+withoutProtocol("http://example.com"); // "example.com"
+```
+
 
 <!-- AUTOMD_END -->
 

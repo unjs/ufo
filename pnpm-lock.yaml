@@ -12,8 +12,8 @@ devDependencies:
     specifier: ^1.2.2
     version: 1.2.2(vitest@1.2.2)
   automd:
-    specifier: ^0.1.0
-    version: 0.1.0
+    specifier: ^0.1.1
+    version: 0.1.1
   changelogen:
     specifier: ^0.5.5
     version: 0.5.5
@@ -1168,13 +1168,14 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /automd@0.1.0:
-    resolution: {integrity: sha512-LI5aobiwqMexMkinpkH7vU0YFGwYBaeMLWWOPkxpQqpN9BHrvC8XP4yQuYh0M6v5A2LBu354Jwvc6AzZztQSWQ==}
+  /automd@0.1.1:
+    resolution: {integrity: sha512-t5qeYos5yd46/b7QO9P8eq21IIP0WWTivXIb4yIXMu1o31UZ3QEAJHrciGKa9I2Q27SMfZBRMIHFneiE0e6THw==}
     hasBin: true
     dependencies:
       citty: 0.1.5
       consola: 3.2.3
       magic-string: 0.30.7
+      scule: 1.2.0
       untyped: 1.4.2
     transitivePeerDependencies:
       - supports-color
