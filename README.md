@@ -1,11 +1,9 @@
-# 👽 ufo
+# ufo
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![Codecov][codecov-src]][codecov-href]
-[![License][license-src]][license-href]
-[![JSDocs][jsdocs-src]][jsdocs-href]
 
 URL utils for humans.
 
@@ -13,58 +11,122 @@ URL utils for humans.
 
 Install using npm or your favourite package manager:
 
-```bash
-npm i ufo
+Install package:
+
+```sh
+# npm
+npm install ufo
+
+# yarn
+yarn add ufo
+
+# pnpm
+pnpm install ufo
+
+# bun
+bun install ufo
 ```
 
-Import:
+Import utils:
 
 ```js
-// CommonJS
-const { normalizeURL, joinURL } = require("ufo");
-
 // ESM
 import { normalizeURL, joinURL } from "ufo";
+
+// CommonJS
+const { normalizeURL, joinURL } = require("ufo");
 
 // Deno
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-**Notice:** You may need to transpile package and add URL polyfill for legacy environments
+# Utils
 
-## Usage
+<!-- AUTOMD_START generator="jsdocs" headingLevel="2" -->
 
-### `normalizeURL`
+## Encoding
 
-- Ensures URL is properly encoded
-- Ensures pathname starts with slash
-- Preserves protocol/host if provided
+### `decode(text)`
 
-```ts
-normalizeURL("test?query=123 123#hash, test");
-// test?query=123%20123#hash,%20test
+Decode text using `decodeURIComponent`. Returns the original text if it fails.
 
-normalizeURL("http://localhost:3000");
-// http://localhost:3000
+### `decodePath(text)`
+
+Decode path section of URL (consistent with encodePath for slash encoding).
+
+### `decodeQueryKey(text)`
+
+Decodes query key (consistent with `encodeQueryKey` for plus encoding).
+
+### `decodeQueryValue(text)`
+
+Decode query value (consistent with encodeQueryValue for plus encoding).
+
+### `encode(text)`
+
+Encode characters that need to be encoded on the path, search and hash sections of the URL.
+
+### `encodeHash(text)`
+
+Encode characters that need to be encoded on the hash section of the URL.
+
+### `encodeHost(name)`
+
+Encodes hostname with punycode encoding.
+
+### `encodeParam(text)`
+
+Encode characters that need to be encoded on the path section of the URL as a param. This function encodes everything `encodePath` does plus the slash (`/`) character.
+
+### `encodePath(text)`
+
+Encode characters that need to be encoded on the path section of the URL.
+
+### `encodeQueryKey(text)`
+
+Encode characters that need to be encoded query values on the query section of the URL and also encodes the `=` character.
+
+### `encodeQueryValue(input)`
+
+Encode characters that need to be encoded query values on the query section of the URL.
+
+## Parsing
+
+### `parseAuth(input)`
+
+Takes a string of the form `username:password` and returns an object with the username and password decoded.
+
+### `parseFilename(input)`
+
+Parses a url and returns last segment in path as filename.
+
+If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
+
+**Example:**
+
+```js
+// Result: filename.ext
+parseFilename("http://example.com/path/to/filename.ext");
+
+// Result: undefined
+parseFilename("/path/to/.hidden-file", { strict: true });
 ```
 
-### `joinURL`
+### `parseHost(input)`
 
-```ts
-joinURL("a", "/b", "/c");
-// a/b/c
-```
+Takes a string, and returns an object with two properties: `hostname` and `port`.
 
-### `resolveURL`
+### `parsePath(input)`
 
-```ts
-resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
-// http://foo.com/foo/bar/baz?test=123#token
-```
+Splits the input string into three parts, and returns an object with those three parts.
 
-### `parseURL`
+### `parseURL(input, defaultProto)`
 
-```ts
+Takes a URL string and returns an object with the URL's `protocol`, `auth`, `host`, `pathname`, `search`, and `hash`.
+
+**Example:**
+
+```js
 parseURL("http://foo.com/foo?test=123#token");
 // { protocol: 'http:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
 
@@ -75,180 +137,283 @@ parseURL("foo.com/foo?test=123#token", "https://");
 // { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
 ```
 
-### `stringifyParsedURL`
+### `stringifyParsedURL(parsed)`
 
-```ts
+Takes a `ParsedURL` object and returns the stringified URL.
+
+**Example:**
+
+```js
 const obj = parseURL("http://foo.com/foo?test=123#token");
 obj.host = "bar.com";
 
-stringifyParsedURL(obj);
-// http://bar.com/foo?test=123#token
+stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 ```
 
-### `withQuery`
+## Qeury
 
-```ts
-withQuery("/foo?page=a", { token: "secret" });
-// /foo?page=a&token=secret
-```
+### `encodeQueryItem(key, value)`
 
-### `getQuery`
+Encodes a pair of key and value into a url query string value.
 
-```ts
-getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
-// { test: '123', unicode: '好' }
-```
+If the value is an array, it will be encoded as multiple key-value pairs with the same key.
 
-### `parseFilename`
+### `parseQuery(parametersString)`
 
-```ts
-// Result: filename.ext
-parseFilename("http://example.com/path/to/filename.ext");
+Parses and decodes a query string into an object.
 
-// Result: undefined
-parseFilename("/path/to/.hidden-file", { strict: true });
-```
+input can be a query string with or without the leading `?`
 
-### `withTrailingSlash`
+### `stringifyQuery(query)`
 
-Ensures url ends with a trailing slash.
+Stringfies and encodes a query object into a query string.
 
-```ts
-withTrailingSlash("/foo");
-// /foo/
-```
+## Utils
 
-Set the second option to `true` to support query parameters:
+### `cleanDoubleSlashes(input)`
 
-```ts
-withTrailingSlash("/path?query=true", true);
-// /path/?query=true
-```
+Removes double slashes from the URL.
 
-### `withoutTrailingSlash`
+**Example:**
 
-Ensures url does not ends with a trailing slash.
-
-```ts
-withoutTrailingSlash("/foo/");
-// /foo
-```
-
-Set the second option to `true` to support query parameters:
-
-```ts
-withoutTrailingSlash("/path/?query=true", true);
-// /path?query=true
-```
-
-### `cleanDoubleSlashes`
-
-Ensures url does not have double slash (except for protocol).
-
-```ts
-cleanDoubleSlashes("//foo//bar//");
-// /foo/bar/
+```js
+cleanDoubleSlashes("//foo//bar//"); // "/foo/bar/"
 
 cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
-// http://example.com/analyze/http://localhost:3000/
+// Returns "http://example.com/analyze/http://localhost:3000/"
 ```
 
-### `isSamePath`
+### `getQuery(input)`
 
-Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
+Parses and decods the query object of an input URL into an object.
 
-```ts
-isSamePath("/foo", "/foo/");
-// true
+**Example:**
+
+```js
+getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
+// { test: "123", unicode: "好" }
 ```
 
-### `isRelative`
+### `hasLeadingSlash(input)`
+
+Checks if the input has a leading slash. (e.g. `/foo`)
+
+### `hasTrailingSlash(input, respectQueryAndFragment)`
+
+Checks if the input has a trailing slash.
+
+### `isEmptyURL(url)`
+
+Checks if the input url is empty or `/`.
+
+### `isEqual(a, b, options)`
+
+Checks if two paths are equal regardless of encoding, trailing slash, and leading slash differences.
+
+You can make slash check strict by setting `{ trailingSlash: true, leadingSlash: true }` as options.
+You can make encoding check strict by setting `{ encoding: true }` as options.
+
+**Example:**
+
+```js
+isEqual("/foo", "foo"); // true
+isEqual("foo/", "foo"); // true
+isEqual("/foo bar", "/foo%20bar"); // true
+
+// Strict compare
+
+isEqual("/foo", "foo", { leadingSlash: true }); // false
+isEqual("foo/", "foo", { trailingSlash: true }); // false
+isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
+```
+
+### `isNonEmptyURL(url)`
+
+Checks if the input url is not empty nor `/`.
+
+### `isRelative(inputString)`
 
 Check if a path starts with `./` or `../`.
 
-```ts
-isRelative("./foo");
-// true
+**Example:**
+
+```js
+isRelative("./foo"); // true
 ```
 
-### `withHttp`
+### `isSamePath(p1, p2)`
 
-Ensures url protocol is `http`
+Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
 
-```ts
-withHttp("https://example.com");
-// http://example.com
+**Example:**
+
+```js
+isSamePath("/foo", "/foo/"); // true
 ```
 
-### `withHttps`
+### `isScriptProtocol(protocol)`
 
-Ensures url protocol is `https`
+Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
 
-```ts
-withHttps("http://example.com");
-// https://example.com
+### `joinURL(base)`
+
+Joins multiple URL segments into a single URL.
+
+**Example:**
+
+```js
+joinURL("a", "/b", "/c"); // "a/b/c"
 ```
 
-### `withProtocol`
+### `normalizeURL(input)`
 
-Changes url protocol passed as second argument
+Normlizes inputed url:
 
-```ts
-withProtocol("http://example.com", "ftp://");
-// ftp://example.com
+- Ensures url is properly encoded - Ensures pathname starts with slash - Preserves protocol/host if provided
+
+**Example:**
+
+```js
+normalizeURL("test?query=123 123#hash, test"); // "test?query=123%20123#hash,%20test"
+normalizeURL("http://localhost:3000"); // "http://localhost:3000"
 ```
 
-### `withoutProtocol`
+### `resolveURL(base)`
 
-Removes url protocol
+Resolves multiple URL segments into a single URL.
 
-```ts
-withoutProtocol("http://example.com");
-// example.com
+**Example:**
+
+```js
+resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
+// Returns "http://foo.com/foo/bar/baz?test=123#token"
 ```
 
-### `isEqual`
+### `withBase(input, base)`
 
-Compare two URLs regardless of their slash condition or encoding:
+Ensures the URL or pathname has a trailing slash.
 
-```ts
-isEqual("/foo", "foo");
-// true
-isEqual("foo/", "foo");
-// true
-isEqual("/foo bar", "/foo%20bar");
-// true
+If input aleady start with base, it will not be added again.
 
-// Strict compare
-isEqual("/foo", "foo", { leadingSlash: true });
-// false
-isEqual("foo/", "foo", { trailingSlash: true });
-// false
-isEqual("/foo bar", "/foo%20bar", { encoding: true });
-// false
+### `withFragment(input, hash)`
+
+Add/Replace the fragment section of the URL.
+
+**Example:**
+
+```js
+withFragment("/foo", "bar"); // "/foo#bar"
+withFragment("/foo#bar", "baz"); // "/foo#baz"
+withFragment("/foo#bar", ""); // "/foo"
 ```
 
-### `withFragment`
+### `withHttp(input)`
 
-Add a fragment (or hash) to a URL:
+Adds or replaces url protocol to `http://`.
 
-```ts
-withFragment("/foo", "bar");
-// /foo#bar
-withFragment("/foo#bar", "baz");
-// /foo#baz
-withFragment("/foo#bar", "");
-// /foo
+**Example:**
+
+```js
+withHttp("https://example.com"); // http://example.com
 ```
 
-### `withoutFragment`
+### `withHttps(input)`
 
-Removes the fragment (or hash) part of URL.
+Adds or replaces url protocol to `https://`.
 
-```ts
-withoutFragment("http://example.com/foo?q=123#bar");
-// 'http://example.com/foo?q=123'
+**Example:**
+
+```js
+withHttps("http://example.com"); // https://example.com
 ```
+
+### `withLeadingSlash(input)`
+
+Ensures the URL or pathname has a leading slash.
+
+### `withoutBase(input, base)`
+
+Removes the base from the URL or pathname.
+
+If input does not start with base, it will not be removed.
+
+### `withoutFragment(input)`
+
+Removes the fragment section from the URL.
+
+**Example:**
+
+```js
+withoutFragment("http://example.com/foo?q=123#bar"); // "http://example.com/foo?q=123"
+```
+
+### `withoutLeadingSlash(input)`
+
+Removes leading slash from the URL or pathname.
+
+### `withoutTrailingSlash(input, respectQueryAndFragment)`
+
+Removes trailing slash from the URL or pathname.
+
+If second argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+
+**Example:**
+
+```js
+withoutTrailingSlash("/foo/"); // "/foo"
+
+withoutTrailingSlash("/path/?query=true", true);
+("/path?query=true");
+```
+
+### `withProtocol(input, protocol)`
+
+Adds or Replaces protocol of the input URL.
+
+**Example:**
+
+```js
+withProtocol("http://example.com", "ftp://"); // "ftp://example.com"
+```
+
+### `withQuery(input, query)`
+
+Add/Replace the query section of the URL.
+
+**Example:**
+
+```js
+withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
+```
+
+### `withTrailingSlash(input, respectQueryAndFragment)`
+
+Ensures url ends with a trailing slash.
+
+If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+
+**Example:**
+
+```js
+withTrailingSlash("/foo"); // "/foo/"
+
+withTrailingSlash("/path?query=true", true);
+("/path/?query=true");
+```
+
+### `hasProtocol(inputString, opts)`
+
+### `withoutProtocol(input)`
+
+Removes the protocol from the input.
+
+**Example:**
+
+```js
+withoutProtocol("http://example.com"); // "example.com"
+```
+
+<!-- AUTOMD_END -->
 
 ## License
 
@@ -266,7 +431,3 @@ Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) 
 [codecov-href]: https://codecov.io/gh/unjs/ufo
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/ufo?style=flat&colorA=18181B&colorB=F0DB4F
 [bundle-href]: https://bundlephobia.com/result?p=ufo
-[license-src]: https://img.shields.io/github/license/unjs/ufo.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://github.com/unjs/ufo/blob/main/LICENSE
-[jsdocs-src]: https://img.shields.io/badge/jsDocs.io-reference-18181B?style=flat&colorA=18181B&colorB=F0DB4F
-[jsdocs-href]: https://www.jsdocs.io/package/ufo

@@ -23,8 +23,23 @@ export interface ParsedHost {
 }
 
 /**
- * It takes a URL string and returns an object with the URL's protocol, auth, host, pathname, search,
- * and hash
+ * Takes a URL string and returns an object with the URL's `protocol`, `auth`, `host`, `pathname`, `search`, and `hash`.
+ *
+ * @example
+ *
+ * ```js
+ * parseURL("http://foo.com/foo?test=123#token");
+ * // { protocol: 'http:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
+ *
+ * parseURL("foo.com/foo?test=123#token");
+ * // { pathname: 'foo.com/foo', search: '?test=123', hash: '#token' }
+ *
+ * parseURL("foo.com/foo?test=123#token", "https://");
+ * // { protocol: 'https:', auth: '', host: 'foo.com', pathname: '/foo', search: '?test=123', hash: '#token' }
+ * ```
+ *
+ * @group parsing
+ *
  * @param [input] - The URL to parse.
  * @param [defaultProto] - The default protocol to use if the input doesn't have one.
  * @returns A parsed URL object.
@@ -71,7 +86,10 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
 }
 
 /**
- * It splits the input string into three parts, and returns an object with those three parts
+ * Splits the input string into three parts, and returns an object with those three parts.
+ *
+ * @group parsing
+ *
  * @param [input] - The URL to parse.
  * @returns An object with three properties: `pathname`, `search`, and `hash`.
  */
@@ -88,8 +106,11 @@ export function parsePath(input = ""): ParsedURL {
 }
 
 /**
- * It takes a string of the form `username:password` and returns an object with the username and
- * password decoded
+ * Takes a string of the form `username:password` and returns an object with the username and
+ * password decoded.
+ *
+ * @group parsing
+ *
  * @param [input] - The URL to parse.
  * @returns An object with two properties: username and password.
  */
@@ -102,7 +123,10 @@ export function parseAuth(input = ""): ParsedAuth {
 }
 
 /**
- * It takes a string, and returns an object with two properties: `hostname` and `port`
+ * Takes a string, and returns an object with two properties: `hostname` and `port`.
+ *
+ * @group parsing
+ *
  * @param [input] - The URL to parse.
  * @returns A function that takes a string and returns an object with two properties: `hostname` and
  * `port`.
@@ -116,7 +140,19 @@ export function parseHost(input = ""): ParsedHost {
 }
 
 /**
- * It takes a `ParsedURL` object and returns the stringified URL
+ * Takes a `ParsedURL` object and returns the stringified URL.
+ *
+ * @group parsing
+ *
+ * @example
+ *
+ * ```js
+ * const obj = parseURL("http://foo.com/foo?test=123#token");
+ * obj.host = "bar.com";
+ *
+ * stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
+ * ```
+ *
  * @param [parsed] - The parsed URL
  * @returns A stringified URL.
  */
@@ -138,6 +174,23 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
 const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
 const FILENAME_REGEX = /\/([^/]+)$/;
 
+/**
+ * Parses a url and returns last segment in path as filename.
+ *
+ * If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
+ *
+ * @group parsing
+ *
+ * @example
+ *
+ * ```js
+ * // Result: filename.ext
+ * parseFilename("http://example.com/path/to/filename.ext");
+ *
+ * // Result: undefined
+ * parseFilename("/path/to/.hidden-file", { strict: true });
+ * ```
+ */
 export function parseFilename(input = "", { strict }): string | undefined {
   const { pathname } = parseURL(input);
   const matches = strict

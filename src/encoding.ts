@@ -23,7 +23,8 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  * Encode characters that need to be encoded on the path, search and hash
  * sections of the URL.
  *
- * @internal
+ * @group encoding
+ *
  * @param text - string to encode
  * @returns encoded string
  */
@@ -33,6 +34,8 @@ export function encode(text: string | number): string {
 
 /**
  * Encode characters that need to be encoded on the hash section of the URL.
+ *
+ * @group encoding
  *
  * @param text - string to encode
  * @returns encoded string
@@ -47,6 +50,8 @@ export function encodeHash(text: string): string {
 /**
  * Encode characters that need to be encoded query values on the query
  * section of the URL.
+ *
+ * @group encoding
  *
  * @param input - string to encode
  * @returns encoded string
@@ -66,7 +71,10 @@ export function encodeQueryValue(input: QueryValue): string {
 }
 
 /**
- * Like `encodeQueryValue` but also encodes the `=` character.
+ * Encode characters that need to be encoded query values on the query
+ * section of the URL and also encodes the `=` character.
+ *
+ * @group encoding
  *
  * @param text - string to encode
  */
@@ -76,6 +84,8 @@ export function encodeQueryKey(text: string | number): string {
 
 /**
  * Encode characters that need to be encoded on the path section of the URL.
+ *
+ * @group encoding
  *
  * @param text - string to encode
  * @returns encoded string
@@ -91,8 +101,10 @@ export function encodePath(text: string | number): string {
 
 /**
  * Encode characters that need to be encoded on the path section of the URL as a
- * param. This function encodes everything {@link encodePath} does plus the
+ * param. This function encodes everything `encodePath` does plus the
  * slash (`/`) character.
+ *
+ * @group encoding
  *
  * @param text - string to encode
  * @returns encoded string
@@ -104,6 +116,8 @@ export function encodeParam(text: string | number): string {
 /**
  * Decode text using `decodeURIComponent`. Returns the original text if it
  * fails.
+ *
+ * @group encoding
  *
  * @param text - string to decode
  * @returns decoded string
@@ -119,6 +133,8 @@ export function decode(text: string | number = ""): string {
 /**
  * Decode path section of URL (consistent with encodePath for slash encoding).
  *
+ * @group encoding
+ *
  * @param text - string to decode
  * @returns decoded string
  */
@@ -127,8 +143,10 @@ export function decodePath(text: string): string {
 }
 
 /**
- * Decode query key (consistent with encodeQueryKey for plus encoding).
- * Created different method for decoding key to avoid future changes on value encode/decode.
+ * Decodes query key (consistent with `encodeQueryKey` for plus encoding).
+ *
+ * @group encoding
+ *
  * @param text - string to decode
  * @returns decoded string
  */
@@ -139,6 +157,8 @@ export function decodeQueryKey(text: string): string {
 /**
  * Decode query value (consistent with encodeQueryValue for plus encoding).
  *
+ * @group encoding
+ *
  * @param text - string to decode
  * @returns decoded string
  */
@@ -146,6 +166,11 @@ export function decodeQueryValue(text: string): string {
   return decode(text.replace(PLUS_RE, " "));
 }
 
+/**
+ * Encodes hostname with punycode encoding.
+ *
+ * @group encoding
+ */
 export function encodeHost(name = "") {
   return toASCII(name);
 }
