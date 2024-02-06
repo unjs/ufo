@@ -4,8 +4,6 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![Codecov][codecov-src]][codecov-href]
-[![License][license-src]][license-href]
-[![JSDocs][jsdocs-src]][jsdocs-href]
 
 URL utils for humans.
 
@@ -346,7 +344,7 @@ Removes the fragment section from the URL.
 **Example:**
 
 ```js
-withoutFragment("http://example.com/foo?q=123#bar") // "http://example.com/foo?q=123"
+withoutFragment("http://example.com/foo?q=123#bar"); // "http://example.com/foo?q=123"
 ```
 
 ### `withoutLeadingSlash(input)`
@@ -364,7 +362,8 @@ If second argument is is true, it will only remove the trailing slash if it's no
 ```js
 withoutTrailingSlash("/foo/"); // "/foo"
 
-withoutTrailingSlash("/path/?query=true", true); "/path?query=true"
+withoutTrailingSlash("/path/?query=true", true);
+("/path?query=true");
 ```
 
 ### `withProtocol(input, protocol)`
@@ -398,11 +397,11 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 ```js
 withTrailingSlash("/foo"); // "/foo/"
 
-withTrailingSlash("/path?query=true", true); "/path/?query=true"
+withTrailingSlash("/path?query=true", true);
+("/path/?query=true");
 ```
 
 ### `hasProtocol(inputString, opts)`
-
 
 ### `withoutProtocol(input)`
 
@@ -413,7 +412,6 @@ Removes the protocol from the input.
 ```js
 withoutProtocol("http://example.com"); // "example.com"
 ```
-
 
 <!-- AUTOMD_END -->
 
@@ -433,7 +431,3 @@ Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) 
 [codecov-href]: https://codecov.io/gh/unjs/ufo
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/ufo?style=flat&colorA=18181B&colorB=F0DB4F
 [bundle-href]: https://bundlephobia.com/result?p=ufo
-[license-src]: https://img.shields.io/github/license/unjs/ufo.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://github.com/unjs/ufo/blob/main/LICENSE
-[jsdocs-src]: https://img.shields.io/badge/jsDocs.io-reference-18181B?style=flat&colorA=18181B&colorB=F0DB4F
-[jsdocs-href]: https://www.jsdocs.io/package/ufo
