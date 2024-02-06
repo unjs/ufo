@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.4.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.3.2...v1.4.0)
+
+### 🚀 Enhancements
+
+- Add `withFragment` utility ([#193](https://github.com/unjs/ufo/pull/193))
+- Add `withoutFragment` util ([#199](https://github.com/unjs/ufo/pull/199))
+
+### 🔥 Performance
+
+- **withFragment:** Early return when no hash changes required ([d6ce037](https://github.com/unjs/ufo/commit/d6ce037))
+
+### 🩹 Fixes
+
+- **encodeQueryValue:** Encode the slash character ([#198](https://github.com/unjs/ufo/pull/198))
+- Stringify protocol-relative URLs ([#207](https://github.com/unjs/ufo/pull/207))
+- **withFragment:** Use `encodeHash` for encoding ([48237ab](https://github.com/unjs/ufo/commit/48237ab))
+
+### 💅 Refactors
+
+- **resolveUrl:** Decouple from $URL ([#186](https://github.com/unjs/ufo/pull/186))
+- Deprecate `$URL` and `createURL` ([f1af9b3](https://github.com/unjs/ufo/commit/f1af9b3))
+- **normalizeURL:** Decouple from `$URL` ([9013029](https://github.com/unjs/ufo/commit/9013029))
+- **withoutFragment:** Decouple from `withFragment` ([712b8d5](https://github.com/unjs/ufo/commit/712b8d5))
+
+### 📖 Documentation
+
+- Remove mentioning `$URL` ([65e6be8](https://github.com/unjs/ufo/commit/65e6be8))
+- Update normalizeURL example ([011777a](https://github.com/unjs/ufo/commit/011777a))
+- Use jsdocs and automd ([#209](https://github.com/unjs/ufo/pull/209))
+
+### 🏡 Chore
+
+- Update dependencies and lockfile ([21e644e](https://github.com/unjs/ufo/commit/21e644e))
+- Format readme with prettier ([6b00230](https://github.com/unjs/ufo/commit/6b00230))
+- Gitignore vitest temp files ([89be2d1](https://github.com/unjs/ufo/commit/89be2d1))
+- Update docs ([5ab6d16](https://github.com/unjs/ufo/commit/5ab6d16))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Daniel Acuña 
+- Diptesh Choudhuri <ignisda2001@gmail.com>
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Petr Kolonicz
+
 ## v1.3.2
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.3.1...v1.3.2)
