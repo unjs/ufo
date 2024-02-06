@@ -100,7 +100,7 @@ export function hasTrailingSlash(
  * ```js
  * withoutTrailingSlash("/foo/"); // "/foo"
  *
- * withoutTrailingSlash("/path/?query=true", true); "/path?query=true"
+ * withoutTrailingSlash("/path/?query=true", true); // "/path?query=true"
  * ```
  *
  * @group utils
@@ -140,7 +140,7 @@ export function withoutTrailingSlash(
  * ```js
  * withTrailingSlash("/foo"); // "/foo/"
  *
- * withTrailingSlash("/path?query=true", true); "/path/?query=true"
+ * withTrailingSlash("/path?query=true", true); // "/path/?query=true"
  * ```
  *
  * @group utils
@@ -404,8 +404,11 @@ export function withProtocol(input: string, protocol: string): string {
  * @example
  *
  * ```js
- * normalizeURL("test?query=123 123#hash, test"); // "test?query=123%20123#hash,%20test"
- * normalizeURL("http://localhost:3000"); // "http://localhost:3000"
+ * normalizeURL("test?query=123 123#hash, test");
+ * // Returns "test?query=123%20123#hash,%20test"
+ *
+ * normalizeURL("http://localhost:3000");
+ * // Returns "http://localhost:3000"
  * ```
  *
  * @group utils
@@ -513,7 +516,6 @@ interface CompareURLOptions {
  * isEqual("/foo bar", "/foo%20bar"); // true
  *
  * // Strict compare
- *
  * isEqual("/foo", "foo", { leadingSlash: true }); // false
  * isEqual("foo/", "foo", { trailingSlash: true }); // false
  * isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
@@ -565,7 +567,8 @@ export function withFragment(input: string, hash: string): string {
  * @example
  *
  * ```js
- * withoutFragment("http://example.com/foo?q=123#bar") // "http://example.com/foo?q=123"
+ * withoutFragment("http://example.com/foo?q=123#bar")
+ * // Returns "http://example.com/foo?q=123"
  * ```
  *
  * @group utils

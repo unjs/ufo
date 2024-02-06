@@ -221,7 +221,6 @@ isEqual("foo/", "foo"); // true
 isEqual("/foo bar", "/foo%20bar"); // true
 
 // Strict compare
-
 isEqual("/foo", "foo", { leadingSlash: true }); // false
 isEqual("foo/", "foo", { trailingSlash: true }); // false
 isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
@@ -274,8 +273,11 @@ Normlizes inputed url:
 **Example:**
 
 ```js
-normalizeURL("test?query=123 123#hash, test"); // "test?query=123%20123#hash,%20test"
-normalizeURL("http://localhost:3000"); // "http://localhost:3000"
+normalizeURL("test?query=123 123#hash, test");
+// Returns "test?query=123%20123#hash,%20test"
+
+normalizeURL("http://localhost:3000");
+// Returns "http://localhost:3000"
 ```
 
 ### `resolveURL(base)`
@@ -344,7 +346,8 @@ Removes the fragment section from the URL.
 **Example:**
 
 ```js
-withoutFragment("http://example.com/foo?q=123#bar"); // "http://example.com/foo?q=123"
+withoutFragment("http://example.com/foo?q=123#bar")
+// Returns "http://example.com/foo?q=123"
 ```
 
 ### `withoutLeadingSlash(input)`
@@ -362,8 +365,7 @@ If second argument is is true, it will only remove the trailing slash if it's no
 ```js
 withoutTrailingSlash("/foo/"); // "/foo"
 
-withoutTrailingSlash("/path/?query=true", true);
-("/path?query=true");
+withoutTrailingSlash("/path/?query=true", true); // "/path?query=true"
 ```
 
 ### `withProtocol(input, protocol)`
@@ -397,11 +399,11 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 ```js
 withTrailingSlash("/foo"); // "/foo/"
 
-withTrailingSlash("/path?query=true", true);
-("/path/?query=true");
+withTrailingSlash("/path?query=true", true); // "/path/?query=true"
 ```
 
 ### `hasProtocol(inputString, opts)`
+
 
 ### `withoutProtocol(input)`
 
@@ -412,6 +414,7 @@ Removes the protocol from the input.
 ```js
 withoutProtocol("http://example.com"); // "example.com"
 ```
+
 
 <!-- AUTOMD_END -->
 
