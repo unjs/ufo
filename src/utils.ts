@@ -255,6 +255,15 @@ export function withoutBase(input: string, base: string) {
 }
 
 /**
+ * Removes the host from the URL preserving everything else.
+ * @group utils
+ */
+export function withoutHost(input: string) {
+  const parsed = parseURL(input);
+  return parsed.pathname + parsed.search + parsed.hash;
+}
+
+/**
  * Add/Replace the query section of the URL.
  *
  * @example
