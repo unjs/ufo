@@ -255,15 +255,6 @@ export function withoutBase(input: string, base: string) {
 }
 
 /**
- * Removes the host from the URL preserving everything else.
- * @group utils
- */
-export function withoutHost(input: string) {
-  const parsed = parseURL(input);
-  return parsed.pathname + parsed.search + parsed.hash;
-}
-
-/**
  * Add/Replace the query section of the URL.
  *
  * @example
@@ -584,4 +575,13 @@ export function withFragment(input: string, hash: string): string {
  */
 export function withoutFragment(input: string): string {
   return stringifyParsedURL({ ...parseURL(input), hash: "" });
+}
+
+/**
+ * Removes the host from the URL preserving everything else.
+ * @group utils
+ */
+export function withoutHost(input: string) {
+  const parsed = parseURL(input);
+  return parsed.pathname + parsed.search + parsed.hash;
 }
