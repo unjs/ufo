@@ -579,6 +579,13 @@ export function withoutFragment(input: string): string {
 
 /**
  * Removes the host from the URL preserving everything else.
+ *
+ * @example
+ * ```js
+ * withoutHost("http://example.com/foo?q=123#bar")
+ * // Returns "/foo?q=123#bar"
+ * ```
+ *
  * @group utils
  */
 export function withoutHost(input: string) {
