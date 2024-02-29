@@ -148,7 +148,7 @@ obj.host = "bar.com";
 stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 ```
 
-## Qeury Utils
+## Query Utils
 
 ### `encodeQueryItem(key, value)`
 
