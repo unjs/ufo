@@ -7,6 +7,7 @@ describe("joinURL", () => {
     { input: ["/"], out: "/" },
     // eslint-disable-next-line unicorn/no-null
     { input: [null, "./"], out: "./" },
+    { input: ["./", "a"], out: "./a" },
     { input: ["/a"], out: "/a" },
     { input: ["a", "b"], out: "a/b" },
     { input: ["/", "/b"], out: "/b" },
