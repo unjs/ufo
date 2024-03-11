@@ -14,6 +14,7 @@ const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 const JOIN_LEADING_SLASH_RE = /^\.?\//;
+const JOIN_LAST_SEGMENT_RE = /\/[^/]*\/?$/;
 
 /**
  * Check if a path starts with `./` or `../`.
@@ -323,9 +324,16 @@ export function joinURL(base: string, ...input: string[]): string {
 
   for (const segment of input.filter((url) => isNonEmptyURL(url))) {
     if (url) {
-      // TODO: Handle .. when joining
-      const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
-      url = withTrailingSlash(url) + _segment;
+      let _segment = segment;
+      _segment = _segment.replace(JOIN_LEADING_SLASH_RE, "");
+      while (url.length > 0 && _segment.startsWith("../")) {
+        url = url.replace(JOIN_LAST_SEGMENT_RE, "");
+        _segment = _segment.slice(3).replace(JOIN_LEADING_SLASH_RE, "");
+      }
+      url =
+        !url && _segment.startsWith("../")
+          ? _segment
+          : withTrailingSlash(url) + _segment;
     } else {
       url = segment;
     }
