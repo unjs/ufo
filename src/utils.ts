@@ -13,8 +13,6 @@ const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
-const JOIN_LEADING_SLASH_RE = /^\.?\//;
-const JOIN_LAST_SEGMENT_RE = /(?:^|\/)[^/]*\/?$/;
 
 /**
  * Check if a path starts with `./` or `../`.
@@ -319,25 +317,49 @@ export function isNonEmptyURL(url: string) {
  *
  * @group utils
  */
-export function joinURL(base: string, ...input: string[]): string {
-  let url = base || "";
+export function joinURL(..._input: string[]): string {
+  const input = _input.filter(Boolean);
 
-  for (const segment of input.filter((url) => isNonEmptyURL(url))) {
-    if (url) {
-      const hasAbsoluteBase = url.startsWith("/");
-      let _segment = segment;
-      _segment = _segment.replace(JOIN_LEADING_SLASH_RE, "");
-      while (url.length > 0 && _segment.startsWith("../")) {
-        url = url.replace(JOIN_LAST_SEGMENT_RE, "");
-        _segment = _segment.slice(3).replace(JOIN_LEADING_SLASH_RE, "");
-      }
-      url =
-        !url && (!hasAbsoluteBase || _segment.startsWith("../"))
-          ? _segment
-          : withTrailingSlash(url) + _segment;
-    } else {
-      url = segment;
+  const segments: string[] = [];
+
+  let segmentsDepth = 0;
+
+  for (const i of input) {
+    if (!i || i === "/") {
+      continue;
     }
+    for (const s of i.split("/")) {
+      if (!s || s === ".") {
+        continue;
+      }
+      if (s === "..") {
+        segments.pop();
+        segmentsDepth--;
+        continue;
+      }
+      segments.push(s);
+      segmentsDepth++;
+    }
+  }
+
+  let url = segments.join("/");
+
+  if (segmentsDepth >= 0) {
+    // Preserve leading slash
+    if (input[0]?.startsWith("/") && !url.startsWith("/")) {
+      url = "/" + url;
+    } else if (input[0]?.startsWith("./") && !url.startsWith("./")) {
+      url = "./" + url;
+    }
+  } else {
+    // Add relative prefix
+    url = "../".repeat(-1 * segmentsDepth) + url;
+  }
+
+  // Preserve trailing slash
+  // eslint-disable-next-line unicorn/prefer-at
+  if (input[input.length - 1]?.endsWith("/") && !url.endsWith("/")) {
+    url += "/";
   }
 
   return url;
