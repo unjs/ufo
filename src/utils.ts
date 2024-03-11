@@ -84,7 +84,7 @@ export function hasTrailingSlash(
   respectQueryAndFragment?: boolean
 ): boolean {
   if (!respectQueryAndFragment) {
-    return input.endsWith("/");
+    return !input.includes("?") && input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
 }
@@ -92,7 +92,7 @@ export function hasTrailingSlash(
 /**
  * Removes trailing slash from the URL or pathname.
  *
- * If second argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+ * If second argument is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
  *
  * @example
  *
@@ -122,10 +122,9 @@ export function withoutTrailingSlash(
     fragment = input.slice(fragmentIndex);
   }
   const [s0, ...s] = path.split("?");
+  const cleanPath = s0.endsWith("/") ? s0.slice(0, -1) : s0;
   return (
-    (s0.slice(0, -1) || "/") +
-    (s.length > 0 ? `?${s.join("?")}` : "") +
-    fragment
+    (cleanPath || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment
   );
 }
 
