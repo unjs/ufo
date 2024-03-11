@@ -22,13 +22,13 @@ describe("joinURL", () => {
     { input: ["/a", "../b"], out: "/b" },
     { input: ["/a/b/c", "../../d"], out: "/a/d" },
     { input: ["/c", "../../d"], out: "/d" },
-    // { input: ["/c", ".././../d"], out: "../d" },
-    // { input: ["../a", "../b"], out: "../b" },
-    // { input: ["../a", "./../b"], out: "../b" },
-    // { input: ["../a", "./../../b"], out: "b" },
-    // { input: ["../a", "../../../b"], out: "../b" },
-    // { input: ["../a", "../../../../b"], out: "../../b" },
-    // { input: ["../a/", "../b"], out: "../b" },
+    { input: ["/c", ".././../d"], out: "/d" },
+    { input: ["../a", "../b"], out: "b" },
+    { input: ["../a", "./../b"], out: "b" },
+    { input: ["../a", "./../../b"], out: "../b" },
+    { input: ["../a", "../../../b"], out: "../../b" },
+    { input: ["../a", "../../../../b"], out: "../../../b" },
+    { input: ["../a/", "../b"], out: "b" },
   ];
 
   for (const t of tests) {
