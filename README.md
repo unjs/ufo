@@ -351,6 +351,17 @@ withoutFragment("http://example.com/foo?q=123#bar")
 // Returns "http://example.com/foo?q=123"
 ```
 
+### `withoutHost(input)`
+
+Removes the host from the URL preserving everything else.
+
+**Example:**
+
+```js
+withoutHost("http://example.com/foo?q=123#bar")
+// Returns "/foo?q=123#bar"
+```
+
 ### `withoutLeadingSlash(input)`
 
 Removes leading slash from the URL or pathname.
