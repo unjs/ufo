@@ -8,6 +8,7 @@ describe("joinURL", () => {
     // eslint-disable-next-line unicorn/no-null
     { input: [null, "./"], out: "./" },
     { input: ["./", "a"], out: "./a" },
+    { input: ["./a", "./b"], out: "./a/b" },
     { input: ["/a"], out: "/a" },
     { input: ["a", "b"], out: "a/b" },
     { input: ["/", "/b"], out: "/b" },
