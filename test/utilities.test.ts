@@ -338,7 +338,7 @@ describe("withoutHost", () => {
   const tests = [
     {
       input: "https://example.com",
-      out: "",
+      out: "/",
     },
     {
       input: "https://example.com/test?foo=123#hash",

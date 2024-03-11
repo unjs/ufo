@@ -590,5 +590,5 @@ export function withoutFragment(input: string): string {
  */
 export function withoutHost(input: string) {
   const parsed = parseURL(input);
-  return parsed.pathname + parsed.search + parsed.hash;
+  return (parsed.pathname || "/") + parsed.search + parsed.hash;
 }
