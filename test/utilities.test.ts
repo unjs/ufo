@@ -12,6 +12,7 @@ import {
   isScriptProtocol,
   withFragment,
   withoutFragment,
+  withoutHost,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -329,6 +330,37 @@ describe("withoutFragment", () => {
   for (const t of tests) {
     test(`${t.input}`, () => {
       expect(withoutFragment(t.input)).toBe(t.out);
+    });
+  }
+});
+
+describe("withoutHost", () => {
+  const tests = [
+    {
+      input: "https://example.com",
+      out: "/",
+    },
+    {
+      input: "?foo=123#hash",
+      out: "/?foo=123#hash",
+    },
+    {
+      input: "?",
+      out: "/?",
+    },
+    {
+      input: "https://example.com/test?foo=123#hash",
+      out: "/test?foo=123#hash",
+    },
+    {
+      input: "http://localhost:8000/media/search/movie?query=drive",
+      out: "/media/search/movie?query=drive",
+    },
+  ];
+
+  for (const t of tests) {
+    test(`${t.input}`, () => {
+      expect(withoutHost(t.input)).toBe(t.out);
     });
   }
 });
