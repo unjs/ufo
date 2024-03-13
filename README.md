@@ -148,7 +148,7 @@ obj.host = "bar.com";
 stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 ```
 
-## Query Utils
+## Qeury Utils
 
 ### `encodeQueryItem(key, value)`
 
@@ -254,6 +254,16 @@ isSamePath("/foo", "/foo/"); // true
 ### `isScriptProtocol(protocol?)`
 
 Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
+
+### `joinRelativeURL()`
+
+Joins multiple URL segments into a single URL and also handles relative paths with `./` and `../`.
+
+**Example:**
+
+```js
+joinURL("a", "/b", "/c"); // "a/b/c"
+```
 
 ### `joinURL(base)`
 
