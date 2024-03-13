@@ -13,6 +13,7 @@ const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
+const JOIN_LEADING_SLASH_RE = /^\.?\//;
 
 /**
  * Check if a path starts with `./` or `../`.
@@ -317,7 +318,34 @@ export function isNonEmptyURL(url: string) {
  *
  * @group utils
  */
-export function joinURL(..._input: string[]): string {
+export function joinURL(base: string, ...input: string[]): string {
+  let url = base || "";
+
+  for (const segment of input.filter((url) => isNonEmptyURL(url))) {
+    if (url) {
+      // TODO: Handle .. when joining
+      const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
+      url = withTrailingSlash(url) + _segment;
+    } else {
+      url = segment;
+    }
+  }
+
+  return url;
+}
+
+/**
+ * Joins multiple URL segments into a single URL and also handles relative paths with `./` and `../`.
+ *
+ * @example
+ *
+ * ```js
+ * joinURL("a", "/b", "/c"); // "a/b/c"
+ * ```
+ *
+ * @group utils
+ */
+export function joinRelativeURL(..._input: string[]): string {
   const input = _input.filter(Boolean);
 
   const segments: string[] = [];
