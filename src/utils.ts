@@ -340,7 +340,7 @@ export function joinURL(base: string, ...input: string[]): string {
  * @example
  *
  * ```js
- * joinURL("a", "/b", "/c"); // "a/b/c"
+ * joinRelativeURL("/a", "../b", "./c"); // "/b/c"
  * ```
  *
  * @group utils

@@ -262,7 +262,7 @@ Joins multiple URL segments into a single URL and also handles relative paths wi
 **Example:**
 
 ```js
-joinURL("a", "/b", "/c"); // "a/b/c"
+joinRelativeURL("/a", "../b", "./c"); // "/b/c"
 ```
 
 ### `joinURL(base)`
