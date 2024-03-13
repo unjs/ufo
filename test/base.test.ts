@@ -5,7 +5,7 @@ describe("withBase", () => {
   const tests = [
     { base: "/", input: "/", out: "/" },
     { base: "/foo", input: "", out: "/foo" },
-    { base: "/foo/", input: "/", out: "/foo/" },
+    { base: "/foo/", input: "/", out: "/foo" },
     { base: "/foo", input: "/bar", out: "/foo/bar" },
     { base: "/base/", input: "/base", out: "/base" },
     { base: "/base", input: "/base/", out: "/base/" },
