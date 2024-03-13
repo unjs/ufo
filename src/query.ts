@@ -26,7 +26,7 @@ export type ParsedQuery = Record<string, string | string[]>;
  * @note
  * The `__proto__` and `constructor` keys are ignored to prevent prototype pollution.
  *
- * @group qeury_utils
+ * @group Query_utils
  */
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = ""
@@ -61,7 +61,7 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
  *
  * If the value is an array, it will be encoded as multiple key-value pairs with the same key.
  *
- * @group qeury_utils
+ * @group Query_utils
  */
 export function encodeQueryItem(
   key: string,
@@ -86,7 +86,7 @@ export function encodeQueryItem(
 /**
  * Stringfies and encodes a query object into a query string.
  *
- * @group qeury_utils
+ * @group Query_utils
  */
 export function stringifyQuery(query: QueryObject): string {
   return Object.keys(query)
