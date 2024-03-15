@@ -16,6 +16,10 @@ const joinURLTests = [
   { input: ["/", "./foo"], out: "/foo" },
   { input: ["/", "./foo/"], out: "/foo/" },
   { input: ["/", "./foo", "bar"], out: "/foo/bar" },
+  {
+    input: ["https://google.com/", "./foo", "/bar"],
+    out: "https://google.com/foo/bar",
+  },
 ] as const;
 
 describe("joinURL", () => {
@@ -42,6 +46,10 @@ describe("joinRelativeURL", () => {
     { input: ["../a", "../../../b"], out: "../../b" },
     { input: ["../a", "../../../../b"], out: "../../../b" },
     { input: ["../a/", "../b"], out: "b" },
+    {
+      input: ["https://google.com/", "../foo"],
+      out: "https://google.com/foo",
+    },
   ];
 
   for (const t of relativeTests) {
