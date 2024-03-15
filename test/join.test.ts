@@ -20,6 +20,10 @@ const joinURLTests = [
     input: ["https://google.com/", "./foo", "/bar"],
     out: "https://google.com/foo/bar",
   },
+  {
+    input: ["https://google.com/", "../foo"],
+    out: "https://google.com/foo",
+  },
 ] as const;
 
 describe("joinURL", () => {
