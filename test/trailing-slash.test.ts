@@ -58,7 +58,7 @@ describe("withoutTrailingSlash, queryParams: false", () => {
     "foo/?123": "foo/?123",
     "foo/?123#abc": "foo/?123#abc",
     "foo/?k=v": "foo/?k=v",
-    "foo/?k=/": "foo/?k=/",
+    "foo/?k=/": "foo/?k=",
   };
 
   for (const input in tests) {

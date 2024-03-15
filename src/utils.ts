@@ -84,7 +84,7 @@ export function hasTrailingSlash(
   respectQueryAndFragment?: boolean
 ): boolean {
   if (!respectQueryAndFragment) {
-    return !input.includes("?") && input.endsWith("/");
+    return input.endsWith("/");
   }
   return TRAILING_SLASH_RE.test(input);
 }
