@@ -390,7 +390,7 @@ withoutProtocol("http://example.com"); // "example.com"
 
 Removes trailing slash from the URL or pathname.
 
-If second argument is is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+If second argument is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
 
 **Example:**
 
