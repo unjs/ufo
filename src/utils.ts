@@ -361,6 +361,9 @@ export function joinRelativeURL(..._input: string[]): string {
         continue;
       }
       if (s === "..") {
+        if (segments.length === 1 && hasProtocol(segments[0])) {
+          continue;
+        }
         segments.pop();
         segmentsDepth--;
         continue;
