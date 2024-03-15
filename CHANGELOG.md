@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.5.1
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.5.0...v1.5.1)
+
+### 🩹 Fixes
+
+- **joinRelativeURL:** Handle base with protocol ([#222](https://github.com/unjs/ufo/pull/222))
+
+### 🏡 Chore
+
+- Update readme ([ffc9d3e](https://github.com/unjs/ufo/commit/ffc9d3e))
+- Add automd to autofix ci ([fffbcd4](https://github.com/unjs/ufo/commit/fffbcd4))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v1.5.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.4.0...v1.5.0)
