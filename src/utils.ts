@@ -14,6 +14,7 @@ const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 const JOIN_LEADING_SLASH_RE = /^\.?\//;
+const JOIN_SEGMENT_SPLIT_RE = /(?<!\/)\/(?!\/)/;
 
 /**
  * Check if a path starts with `./` or `../`.
@@ -355,7 +356,7 @@ export function joinRelativeURL(..._input: string[]): string {
     if (!i || i === "/") {
       continue;
     }
-    for (const s of i.split("/")) {
+    for (const s of i.split(JOIN_SEGMENT_SPLIT_RE)) {
       if (!s || s === ".") {
         continue;
       }
