@@ -255,6 +255,16 @@ isSamePath("/foo", "/foo/"); // true
 
 Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
 
+### `joinRelativeURL()`
+
+Joins multiple URL segments into a single URL and also handles relative paths with `./` and `../`.
+
+**Example:**
+
+```js
+joinRelativeURL("/a", "../b", "./c"); // "/b/c"
+```
+
 ### `joinURL(base)`
 
 Joins multiple URL segments into a single URL.
