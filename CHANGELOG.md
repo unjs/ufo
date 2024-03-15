@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.5.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.4.0...v1.5.0)
+
+### 🚀 Enhancements
+
+- Add `withoutHost` utility ([#212](https://github.com/unjs/ufo/pull/212))
+- **joinURL:** Handle segments with `../` ([#217](https://github.com/unjs/ufo/pull/217))
+- `joinRelativeURL` ([#220](https://github.com/unjs/ufo/pull/220))
+
+### 🩹 Fixes
+
+- **withoutTrailingSlash:** Consider qurry param ([#219](https://github.com/unjs/ufo/pull/219))
+
+### 💅 Refactors
+
+- **joinURL:** Rewrite with clear syntax and relative `../` support ([#218](https://github.com/unjs/ufo/pull/218))
+
+### 📖 Documentation
+
+- Fix typo ([#213](https://github.com/unjs/ufo/pull/213))
+
+### 🏡 Chore
+
+- **release:** V1.4.0 ([541bc62](https://github.com/unjs/ufo/commit/541bc62))
+- Update automd ([3301e51](https://github.com/unjs/ufo/commit/3301e51))
+- Fix typo in jsdocs ([3aaf64d](https://github.com/unjs/ufo/commit/3aaf64d))
+
+### ❤️ Contributors
+
+- Thijs Wijnmaalen <thijs@wijnmaalen.name>
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Diptesh Choudhuri <ignisda2001@gmail.com>
+- Fabian B ([@madebyfabian](http://github.com/madebyfabian))
+
 ## v1.4.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.3.2...v1.4.0)
