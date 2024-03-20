@@ -345,6 +345,9 @@ export function joinURL(base: string, ...input: string[]): string {
  * @group utils
  */
 export function joinRelativeURL(..._input: string[]): string {
+  // Inlined regex to increase browser compatibiltiy
+  const JOIN_SEGMENT_SPLIT_RE = /\/(?!\/)/;
+
   const input = _input.filter(Boolean);
 
   const segments: string[] = [];
@@ -355,20 +358,22 @@ export function joinRelativeURL(..._input: string[]): string {
     if (!i || i === "/") {
       continue;
     }
-    for (const [sindex, s] of i.split("/").entries()) {
+    for (const s of i.split(JOIN_SEGMENT_SPLIT_RE)) {
       if (!s || s === ".") {
         continue;
       }
       if (s === "..") {
-        if (segmentsDepth === 1 && segments[0].endsWith(":/")) {
+        if (segments.length === 1 && hasProtocol(segments[0])) {
           continue;
         }
         segments.pop();
         segmentsDepth--;
         continue;
       }
-      if (sindex === 0 && s.endsWith(":")) {
-        segments.push(s + "/");
+      // eslint-disable-next-line unicorn/prefer-at
+      const lastSegment = segments[segments.length - 1];
+      if (lastSegment && lastSegment.endsWith(":/")) {
+        segments[segments.length - 1] = lastSegment + "/" + s;
         continue;
       }
       segments.push(s);
