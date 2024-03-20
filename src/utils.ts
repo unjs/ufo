@@ -345,9 +345,6 @@ export function joinURL(base: string, ...input: string[]): string {
  * @group utils
  */
 export function joinRelativeURL(..._input: string[]): string {
-  // Inlined regex to increase browser compatibiltiy for lookbehind (#224)
-  const JOIN_SEGMENT_SPLIT_RE = /(?<!\/)\/(?!\/)/;
-
   const input = _input.filter(Boolean);
 
   const segments: string[] = [];
@@ -358,16 +355,20 @@ export function joinRelativeURL(..._input: string[]): string {
     if (!i || i === "/") {
       continue;
     }
-    for (const s of i.split(JOIN_SEGMENT_SPLIT_RE)) {
+    for (const [sindex, s] of i.split("/").entries()) {
       if (!s || s === ".") {
         continue;
       }
       if (s === "..") {
-        if (segments.length === 1 && hasProtocol(segments[0])) {
+        if (segmentsDepth === 1 && segments[0].endsWith(":/")) {
           continue;
         }
         segments.pop();
         segmentsDepth--;
+        continue;
+      }
+      if (sindex === 0 && s.endsWith(":")) {
+        segments.push(s + "/");
         continue;
       }
       segments.push(s);
