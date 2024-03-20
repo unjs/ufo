@@ -345,8 +345,8 @@ export function joinURL(base: string, ...input: string[]): string {
  * @group utils
  */
 export function joinRelativeURL(..._input: string[]): string {
-  // Inlined regex to increase browser compatibiltiy for lookbehind (#224)
-  const JOIN_SEGMENT_SPLIT_RE = /(?<!\/)\/(?!\/)/;
+  // Inlined regex to increase browser compatibiltiy
+  const JOIN_SEGMENT_SPLIT_RE = /\/(?!\/)/;
 
   const input = _input.filter(Boolean);
 
@@ -358,7 +358,7 @@ export function joinRelativeURL(..._input: string[]): string {
     if (!i || i === "/") {
       continue;
     }
-    for (const s of i.split(JOIN_SEGMENT_SPLIT_RE)) {
+    for (const [sindex, s] of i.split(JOIN_SEGMENT_SPLIT_RE).entries()) {
       if (!s || s === ".") {
         continue;
       }
@@ -368,6 +368,11 @@ export function joinRelativeURL(..._input: string[]): string {
         }
         segments.pop();
         segmentsDepth--;
+        continue;
+      }
+      // eslint-disable-next-line unicorn/prefer-at
+      if (sindex === 1 && segments[segments.length - 1]?.endsWith(":/")) {
+        segments[segments.length - 1] += "/" + s;
         continue;
       }
       segments.push(s);
