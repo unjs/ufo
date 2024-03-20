@@ -358,7 +358,7 @@ export function joinRelativeURL(..._input: string[]): string {
     if (!i || i === "/") {
       continue;
     }
-    for (const s of i.split(JOIN_SEGMENT_SPLIT_RE)) {
+    for (const [sindex, s] of i.split(JOIN_SEGMENT_SPLIT_RE).entries()) {
       if (!s || s === ".") {
         continue;
       }
@@ -371,9 +371,8 @@ export function joinRelativeURL(..._input: string[]): string {
         continue;
       }
       // eslint-disable-next-line unicorn/prefer-at
-      const lastSegment = segments[segments.length - 1];
-      if (lastSegment && lastSegment.endsWith(":/")) {
-        segments[segments.length - 1] = lastSegment + "/" + s;
+      if (sindex === 1 && segments[segments.length - 1]?.endsWith(":/")) {
+        segments[segments.length - 1] += "/" + s;
         continue;
       }
       segments.push(s);
