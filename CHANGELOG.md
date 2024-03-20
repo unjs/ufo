@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.5.3
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.5.2...v1.5.3)
+
+### 🩹 Fixes
+
+- **joinRelativeURL:** Avoid lookbehind regex for browser compatibility ([#228](https://github.com/unjs/ufo/pull/228))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v1.5.2
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.5.1...v1.5.2)
