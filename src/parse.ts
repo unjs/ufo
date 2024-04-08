@@ -46,7 +46,7 @@ export interface ParsedHost {
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
   const _specialProtoMatch = input.match(
-    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i,
   );
   if (_specialProtoMatch) {
     const [, _proto, _pathname = ""] = _specialProtoMatch;
@@ -71,7 +71,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
       .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
   const [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
   const { pathname, search, hash } = parsePath(
-    path.replace(/\/(?=[A-Za-z]:)/, "")
+    path.replace(/\/(?=[A-Za-z]:)/, ""),
   );
 
   return {

@@ -92,7 +92,7 @@ describe("normalizeURL", () => {
   for (const input of validURLS) {
     test(input, () => {
       expect(withoutTrailingSlash(normalizeURL(input))).toBe(
-        withoutTrailingSlash(new URL(input).href)
+        withoutTrailingSlash(new URL(input).href),
       );
     });
   }

@@ -43,16 +43,16 @@ export interface HasProtocolOptions {
  */
 export function hasProtocol(
   inputString: string,
-  opts?: HasProtocolOptions
+  opts?: HasProtocolOptions,
 ): boolean;
 /** @deprecated Same as { hasProtocol(inputString, { acceptRelative: true }) */
 export function hasProtocol(
   inputString: string,
-  acceptRelative: boolean
+  acceptRelative: boolean,
 ): boolean;
 export function hasProtocol(
   inputString: string,
-  opts: boolean | HasProtocolOptions = {}
+  opts: boolean | HasProtocolOptions = {},
 ): boolean {
   if (typeof opts === "boolean") {
     opts = { acceptRelative: opts };
@@ -82,7 +82,7 @@ export function isScriptProtocol(protocol?: string) {
  */
 export function hasTrailingSlash(
   input = "",
-  respectQueryAndFragment?: boolean
+  respectQueryAndFragment?: boolean,
 ): boolean {
   if (!respectQueryAndFragment) {
     return input.endsWith("/");
@@ -107,7 +107,7 @@ export function hasTrailingSlash(
  */
 export function withoutTrailingSlash(
   input = "",
-  respectQueryAndFragment?: boolean
+  respectQueryAndFragment?: boolean,
 ): string {
   if (!respectQueryAndFragment) {
     return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
@@ -146,7 +146,7 @@ export function withoutTrailingSlash(
  */
 export function withTrailingSlash(
   input = "",
-  respectQueryAndFragment?: boolean
+  respectQueryAndFragment?: boolean,
 ): string {
   if (!respectQueryAndFragment) {
     return input.endsWith("/") ? input : input + "/";
@@ -283,7 +283,7 @@ export function withQuery(input: string, query: QueryObject): string {
  * @group utils
  */
 export function getQuery<T extends ParsedQuery = ParsedQuery>(
-  input: string
+  input: string,
 ): T {
   return parseQuery<T>(parseURL(input).search);
 }
@@ -506,7 +506,7 @@ export function normalizeURL(input: string): string {
 export function resolveURL(base = "", ...inputs: string[]): string {
   if (typeof base !== "string") {
     throw new TypeError(
-      `URL input should be string received ${typeof base} (${base})`
+      `URL input should be string received ${typeof base} (${base})`,
     );
   }
 

@@ -29,7 +29,7 @@ export type ParsedQuery = Record<string, string | string[]>;
  * @group Query_utils
  */
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
-  parametersString = ""
+  parametersString = "",
 ): T {
   const object: ParsedQuery = {};
   if (parametersString[0] === "?") {
@@ -65,7 +65,7 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
  */
 export function encodeQueryItem(
   key: string,
-  value: QueryValue | QueryValue[]
+  value: QueryValue | QueryValue[],
 ): string {
   if (typeof value === "number" || typeof value === "boolean") {
     value = String(value);

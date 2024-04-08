@@ -35,14 +35,14 @@ describe("$URL", () => {
 
   test("append", () => {
     const url = new $URL(
-      "https://john:doe@example.com:1080/path?query=value#hash"
+      "https://john:doe@example.com:1080/path?query=value#hash",
     );
     const path = new $URL("/newpath?newquery=newvalue#newhash");
 
     url.append(path);
 
     expect(url.toString()).toEqual(
-      "https://john:doe@example.com:1080/path/newpath?query=value&newquery=newvalue#newhash"
+      "https://john:doe@example.com:1080/path/newpath?query=value&newquery=newvalue#newhash",
     );
   });
 

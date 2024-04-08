@@ -274,7 +274,7 @@ describe("parseFilename", () => {
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(
-        parseFilename(t.input[0].toString(), { strict: t.input[1] })
+        parseFilename(t.input[0].toString(), { strict: t.input[1] }),
       ).toStrictEqual(t.out);
     });
   }

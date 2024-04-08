@@ -23,7 +23,7 @@ export class $URL implements URL {
   constructor(input = "") {
     if (typeof input !== "string") {
       throw new TypeError(
-        `URL input should be string received ${typeof input} (${input})`
+        `URL input should be string received ${typeof input} (${input})`,
       );
     }
 
@@ -77,7 +77,7 @@ export class $URL implements URL {
       } else {
         p.append(
           name,
-          typeof value === "string" ? value : JSON.stringify(value)
+          typeof value === "string" ? value : JSON.stringify(value),
         );
       }
     }

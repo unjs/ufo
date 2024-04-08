@@ -53,7 +53,7 @@ describe("hasProtocol", () => {
       expect(hasProtocol(t.input)).toBe(withDefault);
       expect(hasProtocol(t.input, { strict: true })).toBe(withStrict);
       expect(hasProtocol(t.input, { acceptRelative: true })).toBe(
-        withAcceptRelative
+        withAcceptRelative,
       );
       expect(hasProtocol(t.input, true)).toBe(withAcceptRelative);
     });
@@ -128,8 +128,8 @@ describe("stringifyParsedURL", () => {
     test(t.input.toString(), () => {
       expect(
         stringifyParsedURL(
-          typeof t.input === "string" ? parsePath(t.input) : t.input
-        )
+          typeof t.input === "string" ? parsePath(t.input) : t.input,
+        ),
       ).toBe(t.out);
     });
   }
