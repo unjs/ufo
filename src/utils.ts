@@ -456,7 +456,10 @@ export function withoutProtocol(input: string): string {
  * @group utils
  */
 export function withProtocol(input: string, protocol: string): string {
-  const match = input.match(PROTOCOL_REGEX);
+  let match = input.match(PROTOCOL_REGEX);
+  if (!match) {
+    match = input.match(/^\/{2,}/);
+  }
   if (!match) {
     return protocol + input;
   }
