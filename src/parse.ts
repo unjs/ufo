@@ -69,10 +69,15 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     input
       .replace(/\\/g, "/")
       .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
-  const [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
-  const { pathname, search, hash } = parsePath(
-    path.replace(/\/(?=[A-Za-z]:)/, ""),
-  );
+
+  // eslint-disable-next-line prefer-const
+  let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
+
+  if (protocol === "file:") {
+    path = path.replace(/\/(?=[A-Za-z]:)/, "");
+  }
+
+  const { pathname, search, hash } = parsePath(path);
 
   return {
     protocol: protocol.toLowerCase(),
