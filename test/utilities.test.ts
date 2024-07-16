@@ -179,6 +179,21 @@ describe("withHttps", () => {
 describe("withProtocol", () => {
   const tests = [
     {
+      input: "example.com",
+      protocol: "https://",
+      out: "https://example.com",
+    },
+    {
+      input: "//example.com",
+      protocol: "https://",
+      out: "https://example.com",
+    },
+    {
+      input: "://example.com", // Malformed URL is considered without protocol
+      protocol: "https://",
+      out: "https://://example.com",
+    },
+    {
       input: "http://example.com",
       protocol: "https://",
       out: "https://example.com",
