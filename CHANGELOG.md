@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.5.4
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.5.3...v1.5.4)
+
+### 🩹 Fixes
+
+- **parseURL:** Only normalize windows drive letters with `file://` protocol ([#246](https://github.com/unjs/ufo/pull/246))
+- **withProtocol:** Consider relative protocol ([#242](https://github.com/unjs/ufo/pull/242))
+
+### 🏡 Chore
+
+- Update deps ([0dbe44f](https://github.com/unjs/ufo/commit/0dbe44f))
+- Lint with eslint v9 ([51b0565](https://github.com/unjs/ufo/commit/51b0565))
+
+### 🎨 Styles
+
+- Lint with prettier defaults ([666091d](https://github.com/unjs/ufo/commit/666091d))
+
+### ❤️ Contributors
+
+- Natanael Dos Santos Feitosa ([@natanfeitosa](http://github.com/natanfeitosa))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Emil ([@ea-agital](http://github.com/ea-agital))
+
 ## v1.5.3
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.5.2...v1.5.3)
