@@ -60,6 +60,17 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "https://test.com/t:est",
+      out: {
+        auth: "",
+        hash: "",
+        host: "test.com",
+        pathname: "/t:est",
+        protocol: "https:",
+        search: "",
+      },
+    },
+    {
       input: "https://host.name\\@foo.bar/meme3.php?url=http://0.0.0.0/2.svg",
       out: {
         auth: "",
