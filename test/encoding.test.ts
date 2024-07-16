@@ -94,7 +94,7 @@ describe("encodeQueryValue", () => {
       out: "apple,banana,cherry",
     },
     {
-      input: "!@#$%^&*()_+{}[]|\\:;<>,./?",
+      input: String.raw`!@#$%^&*()_+{}[]|\:;<>,./?`,
       out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
     },
   ];
@@ -149,7 +149,7 @@ describe("encodeParam", () => {
     { input: "1+2=3", out: "1%2B2=3" },
     { input: "áéíóú", out: "%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA" },
     {
-      input: "!@#$%^&*()_-+=[]{}\\|;:'\",.<>/?",
+      input: String.raw`!@#$%^&*()_-+=[]{}\|;:'",.<>/?`,
       out: "!@%23$%25%5E%26*()_-%2B=%5B%5D%7B%7D%5C|;:'%22,.%3C%3E%2F%3F",
     },
     { input: 123, out: "123" },

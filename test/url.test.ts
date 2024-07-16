@@ -70,7 +70,7 @@ describe("$URL", () => {
 
     for (const t of tests) {
       test(t.input + " throw", () => {
-        expect(() => new $URL(t.input as any)).toThrow(TypeError(t.out));
+        expect(() => new $URL(t.input as any)).toThrow(new TypeError(t.out));
       });
     }
   });

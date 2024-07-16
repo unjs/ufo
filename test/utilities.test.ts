@@ -28,7 +28,7 @@ describe("hasProtocol", () => {
     { input: "https://", out: [true, true, true] },
     { input: "https://test.com", out: [true, true, true] },
     { input: "file:///home/user", out: [true, true, true] },
-    { input: "https:\\/foo.com", out: [true, true, true] },
+    { input: String.raw`https:\/foo.com`, out: [true, true, true] },
 
     // Has protocol (non strict)
     { input: "tel:", out: [true, false, true] },
@@ -43,8 +43,8 @@ describe("hasProtocol", () => {
     { input: "//test.com", out: [false, false, true] },
     { input: "///test.com", out: [false, false, true] },
     { input: "/\t//test.com", out: [false, false, true] },
-    { input: "/\\/test.com", out: [false, false, true] },
-    { input: "/\\localhost//", out: [false, false, true] },
+    { input: String.raw`/\/test.com`, out: [false, false, true] },
+    { input: String.raw`/\localhost//`, out: [false, false, true] },
   ];
 
   for (const t of tests) {

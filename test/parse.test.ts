@@ -71,7 +71,7 @@ describe("parseURL", () => {
       },
     },
     {
-      input: "https://host.name\\@foo.bar/meme3.php?url=http://0.0.0.0/2.svg",
+      input: String.raw`https://host.name\@foo.bar/meme3.php?url=http://0.0.0.0/2.svg`,
       out: {
         auth: "",
         hash: "",
@@ -178,7 +178,7 @@ describe("parseURL", () => {
 
   for (const t of tests) {
     test(t.input.toString(), () => {
-      expect(JSON.parse(JSON.stringify(parseURL(t.input)))).toEqual(t.out);
+      expect(structuredClone(parseURL(t.input))).toEqual(t.out);
     });
   }
 });
