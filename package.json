@@ -30,8 +30,8 @@
     "test": "pnpm lint && vitest run --typecheck"
   },
   "devDependencies": {
-    "@types/node": "^20.14.13",
-    "@vitest/coverage-v8": "^2.0.4",
+    "@types/node": "^20.14.14",
+    "@vitest/coverage-v8": "^2.0.5",
     "automd": "^0.3.8",
     "changelogen": "^0.5.5",
     "eslint": "^9.8.0",
@@ -41,7 +41,7 @@
     "typescript": "^5.5.4",
     "unbuild": "^2.0.0",
     "untyped": "^1.4.2",
-    "vitest": "^2.0.4"
+    "vitest": "^2.0.5"
   },
-  "packageManager": "pnpm@9.6.0"
+  "packageManager": "pnpm@9.7.0"
 }
