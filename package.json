@@ -30,7 +30,7 @@
     "test": "pnpm lint && vitest run --typecheck"
   },
   "devDependencies": {
-    "@types/node": "^20.14.15",
+    "@types/node": "^20.16.0",
     "@vitest/coverage-v8": "^2.0.5",
     "automd": "^0.3.8",
     "changelogen": "^0.5.5",
@@ -43,5 +43,5 @@
     "untyped": "^1.4.2",
     "vitest": "^2.0.5"
   },
-  "packageManager": "pnpm@9.7.0"
+  "packageManager": "pnpm@9.7.1"
 }
