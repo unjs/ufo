@@ -40,7 +40,7 @@ const { normalizeURL, joinURL } = require("ufo");
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-<!-- automd:jsdocs src=./src -->
+<!-- automd:jsdocs src=./src defaultGroup=utils -->
 
 ## Encoding Utils
 
@@ -168,6 +168,8 @@ Stringfies and encodes a query object into a query string.
 
 ## Utils
 
+### `$URL()`
+
 ### `cleanDoubleSlashes(input)`
 
 Removes double slashes from the URL.
@@ -195,6 +197,8 @@ getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
 ### `hasLeadingSlash(input)`
 
 Checks if the input has a leading slash (e.g. `/foo`).
+
+### `hasProtocol(inputString, opts)`
 
 ### `hasTrailingSlash(input, respectQueryAndFragment?)`
 
@@ -374,6 +378,16 @@ withoutHost("http://example.com/foo?q=123#bar")
 
 Removes leading slash from the URL or pathname.
 
+### `withoutProtocol(input)`
+
+Removes the protocol from the input.
+
+**Example:**
+
+```js
+withoutProtocol("http://example.com"); // "example.com"
+```
+
 ### `withoutTrailingSlash(input, respectQueryAndFragment?)`
 
 Removes trailing slash from the URL or pathname.
@@ -420,20 +434,6 @@ If seccond argument is `true`, it will only add the trailing slash if it's not p
 withTrailingSlash("/foo"); // "/foo/"
 
 withTrailingSlash("/path?query=true", true); // "/path/?query=true"
-```
-
-### `$URL()`
-
-### `hasProtocol(inputString, opts)`
-
-### `withoutProtocol(input)`
-
-Removes the protocol from the input.
-
-**Example:**
-
-```js
-withoutProtocol("http://example.com"); // "example.com"
 ```
 
 <!-- /automd -->
