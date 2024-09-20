@@ -40,7 +40,7 @@ const { normalizeURL, joinURL } = require("ufo");
 import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 ```
 
-<!-- AUTOMD_START generator="jsdocs" defaultGroup="utils" -->
+<!-- automd:jsdocs src=./src defaultGroup=utils -->
 
 ## Encoding Utils
 
@@ -58,7 +58,7 @@ Decodes query key (consistent with `encodeQueryKey` for plus encoding).
 
 ### `decodeQueryValue(text)`
 
-Decode query value (consistent with encodeQueryValue for plus encoding).
+Decode query value (consistent with `encodeQueryValue` for plus encoding).
 
 ### `encode(text)`
 
@@ -96,7 +96,7 @@ Takes a string of the form `username:password` and returns an object with the us
 
 ### `parseFilename(input)`
 
-Parses a url and returns last segment in path as filename.
+Parses a URL and returns last segment in path as filename.
 
 If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
 
@@ -160,13 +160,15 @@ If the value is an array, it will be encoded as multiple key-value pairs with th
 
 Parses and decodes a query string into an object.
 
-input can be a query string with or without the leading `?`
+The input can be a query string with or without the leading `?`.
 
 ### `stringifyQuery(query)`
 
 Stringfies and encodes a query object into a query string.
 
 ## Utils
+
+### `$URL()`
 
 ### `cleanDoubleSlashes(input)`
 
@@ -183,7 +185,7 @@ cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
 
 ### `getQuery(input)`
 
-Parses and decods the query object of an input URL into an object.
+Parses and decodes the query object of an input URL into an object.
 
 **Example:**
 
@@ -194,10 +196,9 @@ getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
 
 ### `hasLeadingSlash(input)`
 
-Checks if the input has a leading slash. (e.g. `/foo`)
+Checks if the input has a leading slash (e.g. `/foo`).
 
 ### `hasProtocol(inputString, opts)`
-
 
 ### `hasTrailingSlash(input, respectQueryAndFragment?)`
 
@@ -205,13 +206,14 @@ Checks if the input has a trailing slash.
 
 ### `isEmptyURL(url)`
 
-Checks if the input url is empty or `/`.
+Checks if the input URL is empty or `/`.
 
 ### `isEqual(a, b, options)`
 
 Checks if two paths are equal regardless of encoding, trailing slash, and leading slash differences.
 
 You can make slash check strict by setting `{ trailingSlash: true, leadingSlash: true }` as options.
+
 You can make encoding check strict by setting `{ encoding: true }` as options.
 
 **Example:**
@@ -229,7 +231,7 @@ isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
 
 ### `isNonEmptyURL(url)`
 
-Checks if the input url is not empty nor `/`.
+Checks if the input URL is not empty nor `/`.
 
 ### `isRelative(inputString)`
 
@@ -277,9 +279,9 @@ joinURL("a", "/b", "/c"); // "a/b/c"
 
 ### `normalizeURL(input)`
 
-Normlizes inputed url:
+Normlizes the input URL:
 
-- Ensures url is properly encoded - Ensures pathname starts with slash - Preserves protocol/host if provided
+- Ensures the URL is properly encoded - Ensures pathname starts with a slash - Preserves protocol/host if provided
 
 **Example:**
 
@@ -310,7 +312,7 @@ If input aleady start with base, it will not be added again.
 
 ### `withFragment(input, hash)`
 
-Add/Replace the fragment section of the URL.
+Adds or replaces the fragment section of the URL.
 
 **Example:**
 
@@ -322,7 +324,7 @@ withFragment("/foo#bar", ""); // "/foo"
 
 ### `withHttp(input)`
 
-Adds or replaces url protocol to `http://`.
+Adds or replaces the URL protocol to `http://`.
 
 **Example:**
 
@@ -332,7 +334,7 @@ withHttp("https://example.com"); // http://example.com
 
 ### `withHttps(input)`
 
-Adds or replaces url protocol to `https://`.
+Adds or replaces the URL protocol to `https://`.
 
 **Example:**
 
@@ -363,7 +365,7 @@ withoutFragment("http://example.com/foo?q=123#bar")
 
 ### `withoutHost(input)`
 
-Removes the host from the URL preserving everything else.
+Removes the host from the URL while preserving everything else.
 
 **Example:**
 
@@ -390,7 +392,7 @@ withoutProtocol("http://example.com"); // "example.com"
 
 Removes trailing slash from the URL or pathname.
 
-If second argument is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+If second argument is `true`, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
 
 **Example:**
 
@@ -402,7 +404,7 @@ withoutTrailingSlash("/path/?query=true", true); // "/path?query=true"
 
 ### `withProtocol(input, protocol)`
 
-Adds or Replaces protocol of the input URL.
+Adds or replaces protocol of the input URL.
 
 **Example:**
 
@@ -422,7 +424,7 @@ withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
 
 ### `withTrailingSlash(input, respectQueryAndFragment?)`
 
-Ensures url ends with a trailing slash.
+Ensures the URL ends with a trailing slash.
 
 If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
 
@@ -434,8 +436,7 @@ withTrailingSlash("/foo"); // "/foo/"
 withTrailingSlash("/path?query=true", true); // "/path/?query=true"
 ```
 
-
-<!-- AUTOMD_END -->
+<!-- /automd -->
 
 ## License
 

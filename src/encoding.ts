@@ -155,7 +155,7 @@ export function decodeQueryKey(text: string): string {
 }
 
 /**
- * Decode query value (consistent with encodeQueryValue for plus encoding).
+ * Decode query value (consistent with `encodeQueryValue` for plus encoding).
  *
  * @group encoding_utils
  *

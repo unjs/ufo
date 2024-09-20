@@ -93,7 +93,7 @@ export function hasTrailingSlash(
 /**
  * Removes trailing slash from the URL or pathname.
  *
- * If second argument is true, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
+ * If second argument is `true`, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
  *
  * @example
  *
@@ -130,7 +130,7 @@ export function withoutTrailingSlash(
 }
 
 /**
- * Ensures url ends with a trailing slash.
+ * Ensures the URL ends with a trailing slash.
  *
  * If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
  *
@@ -169,7 +169,7 @@ export function withTrailingSlash(
 }
 
 /**
- * Checks if the input has a leading slash. (e.g. `/foo`)
+ * Checks if the input has a leading slash (e.g. `/foo`).
  *
  * @group utils
  */
@@ -272,7 +272,7 @@ export function withQuery(input: string, query: QueryObject): string {
 }
 
 /**
- * Parses and decods the query object of an input URL into an object.
+ * Parses and decodes the query object of an input URL into an object.
  *
  * @example
  *
@@ -289,7 +289,7 @@ export function getQuery<T extends ParsedQuery = ParsedQuery>(
 }
 
 /**
- * Checks if the input url is empty or `/`.
+ * Checks if the input URL is empty or `/`.
  *
  * @group utils
  */
@@ -298,7 +298,7 @@ export function isEmptyURL(url: string) {
 }
 
 /**
- * Checks if the input url is not empty nor `/`.
+ * Checks if the input URL is not empty nor `/`.
  *
  * @group utils
  */
@@ -404,7 +404,7 @@ export function joinRelativeURL(..._input: string[]): string {
 }
 
 /**
- * Adds or replaces url protocol to `http://`.
+ * Adds or replaces the URL protocol to `http://`.
  *
  * @example
  *
@@ -419,7 +419,7 @@ export function withHttp(input: string): string {
 }
 
 /**
- * Adds or replaces url protocol to `https://`.
+ * Adds or replaces the URL protocol to `https://`.
  *
  * @example
  *
@@ -446,7 +446,7 @@ export function withoutProtocol(input: string): string {
 }
 
 /**
- * Adds or Replaces protocol of the input URL.
+ * Adds or replaces protocol of the input URL.
  *
  * @example
  * ```js
@@ -467,10 +467,10 @@ export function withProtocol(input: string, protocol: string): string {
 }
 
 /**
- * Normlizes inputed url:
+ * Normlizes the input URL:
  *
- * - Ensures url is properly encoded
- * - Ensures pathname starts with slash
+ * - Ensures the URL is properly encoded
+ * - Ensures pathname starts with a slash
  * - Preserves protocol/host if provided
  *
  * @example
@@ -612,7 +612,7 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
 }
 
 /**
- * Add/Replace the fragment section of the URL.
+ * Adds or replaces the fragment section of the URL.
  *
  * @example
  *
@@ -650,7 +650,7 @@ export function withoutFragment(input: string): string {
 }
 
 /**
- * Removes the host from the URL preserving everything else.
+ * Removes the host from the URL while preserving everything else.
  *
  * @example
  * ```js

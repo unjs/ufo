@@ -1,6 +1,8 @@
 import { decode } from "./encoding";
 import { hasProtocol } from "./utils";
+
 const protocolRelative = Symbol.for("ufo:protocolRelative");
+
 export interface ParsedURL {
   protocol?: string;
   host?: string;
@@ -180,7 +182,7 @@ const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
 const FILENAME_REGEX = /\/([^/]+)$/;
 
 /**
- * Parses a url and returns last segment in path as filename.
+ * Parses a URL and returns last segment in path as filename.
  *
  * If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
  *

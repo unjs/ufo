@@ -21,7 +21,7 @@ export type ParsedQuery = Record<string, string | string[]>;
 /**
  * Parses and decodes a query string into an object.
  *
- * input can be a query string with or without the leading `?`
+ * The input can be a query string with or without the leading `?`.
  *
  * @note
  * The `__proto__` and `constructor` keys are ignored to prevent prototype pollution.
@@ -76,7 +76,10 @@ export function encodeQueryItem(
 
   if (Array.isArray(value)) {
     return value
-      .map((_value) => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`)
+      .map(
+        (_value: QueryValue) =>
+          `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`,
+      )
       .join("&");
   }
 
