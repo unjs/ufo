@@ -5,7 +5,23 @@
 [![bundle][bundle-src]][bundle-href]
 [![Codecov][codecov-src]][codecov-href]
 
-URL utils for humans.
+## About
+ufo provides a range of functions for encoding, decoding, manipulating, parsing, and more actions to URLs and their respective components. The purpose of this application is to make working with urls easier for developers. 
+
+Developers often need to manipulate URLs, most prominently in web design and application development. 
+
+## Cases
+This application would be useful in any of these cases
+
+-Routing and Navigation
+
+-API Interactions
+
+-SEO Optimization
+
+-Security
+
+and more...
 
 ## Install
 
