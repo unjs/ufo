@@ -42,6 +42,24 @@ import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 
 <!-- automd:jsdocs src=./src defaultGroup=utils -->
 
+## Features
+-Intuitive API and Documentation
+
+-Supports ESM and CommonJS import
+
+-Comprehensive list of URL manipulations
+
+-Encoding and Decoding functionality
+## Examples
+//normalize URL
+const normalized = normalizeURL("http://example.com//foo//bar");
+console.log(normalized); 
+//output: "http://example.com/foo/bar"
+
+//parse a URL
+const parse = parseURL("http://example.com/foo?bar=baz#fragment");
+console.log(parse); 
+//output: { protocol: 'http:', auth: '', host: 'example.com', pathname: '/foo', search: '?bar=baz', hash: '#fragment' }
 ## Encoding Utils
 
 ### `decode(text)`
@@ -440,7 +458,8 @@ withTrailingSlash("/path?query=true", true); // "/path/?query=true"
 
 ## License
 
-[MIT](./LICENSE)
+## License
+This project is licensed under the MIT License. See [MIT](./LICENSE) for more details.
 
 Special thanks to Eduardo San Martin Morote ([posva](https://github.com/posva)) for [encoding utilities](https://github.com/vuejs/vue-router-next/blob/v4.0.1/src/encoding.ts)
 
