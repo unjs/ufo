@@ -91,7 +91,7 @@ export function hasTrailingSlash(
 }
 
 /**
- * Removes trailing slash from the URL or pathname.
+ * Removes the trailing slash from the URL or pathname.
  *
  * If second argument is `true`, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
  *
@@ -132,7 +132,7 @@ export function withoutTrailingSlash(
 /**
  * Ensures the URL ends with a trailing slash.
  *
- * If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+ * If second argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
  *
  * @example
  *
@@ -217,9 +217,9 @@ export function cleanDoubleSlashes(input = ""): string {
 }
 
 /**
- * Ensures the URL or pathname has a trailing slash.
+ * Ensures the URL or pathname starts with base.
  *
- * If input aleady start with base, it will not be added again.
+ * If input aleady starts with base, it will not be added again.
  *
  * @group utils
  */
@@ -298,7 +298,7 @@ export function isEmptyURL(url: string) {
 }
 
 /**
- * Checks if the input URL is not empty nor `/`.
+ * Checks if the input URL is neither empty nor `/`.
  *
  * @group utils
  */
@@ -554,7 +554,7 @@ export function resolveURL(base = "", ...inputs: string[]): string {
 }
 
 /**
- * Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
+ * Check if two paths are equal or not. Trailing slash and encoding are normalized before comparison.
  *
  * @example
  * ```js
