@@ -231,7 +231,7 @@ isEqual("/foo bar", "/foo%20bar", { encoding: true }); // false
 
 ### `isNonEmptyURL(url)`
 
-Checks if the input URL is not empty nor `/`.
+Checks if the input URL is neither empty nor `/`.
 
 ### `isRelative(inputString)`
 
@@ -245,7 +245,7 @@ isRelative("./foo"); // true
 
 ### `isSamePath(p1, p2)`
 
-Check two paths are equal or not. Trailing slash and encoding are normalized before comparison.
+Check if two paths are equal or not. Trailing slash and encoding are normalized before comparison.
 
 **Example:**
 
@@ -306,9 +306,9 @@ resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
 
 ### `withBase(input, base)`
 
-Ensures the URL or pathname has a trailing slash.
+Ensures the URL or pathname starts with base.
 
-If input aleady start with base, it will not be added again.
+If input aleady starts with base, it will not be added again.
 
 ### `withFragment(input, hash)`
 
@@ -390,7 +390,7 @@ withoutProtocol("http://example.com"); // "example.com"
 
 ### `withoutTrailingSlash(input, respectQueryAndFragment?)`
 
-Removes trailing slash from the URL or pathname.
+Removes the trailing slash from the URL or pathname.
 
 If second argument is `true`, it will only remove the trailing slash if it's not part of the query or fragment with cost of more expensive operations.
 
@@ -426,7 +426,7 @@ withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
 
 Ensures the URL ends with a trailing slash.
 
-If seccond argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
+If second argument is `true`, it will only add the trailing slash if it's not part of the query or fragment with cost of more expensive operation.
 
 **Example:**
 
