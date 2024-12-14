@@ -64,6 +64,11 @@ describe("withQuery", () => {
       query: { a: "X", "b[]": [], c: "Y" },
       out: "/?a=X&c=Y",
     },
+    {
+      input: "/",
+      query: { foo: 2, bar: { k: "v" } },
+      out: "/?foo=2&bar=%7B%22k%22:%22v%22%7D",
+    },
   ];
 
   for (const t of tests) {
@@ -84,6 +89,10 @@ describe("getQuery", () => {
     "http://foo.com/?param=": { param: "" },
     "http://foo.com/?param=%7B%22a%22:%5B%7B%22obj%22:%5B1,2,3%5D%7D%5D%7D": {
       param: '{"a":[{"obj":[1,2,3]}]}',
+    },
+    "https://foo.com/?foo=2&bar=%7B%22k%22:%22v%22%7D": {
+      foo: 2,
+      bar: { k: "v" },
     },
   };
 
