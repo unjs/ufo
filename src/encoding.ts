@@ -20,7 +20,7 @@ const ENC_SLASH_RE = /%2f/gi;
 const ENC_ENC_SLASH_RE = /%252f/gi;
 
 /**
- * Encode characters that need to be encoded on the path, search and hash
+ * Encodes characters that need to be encoded in the path, search and hash
  * sections of the URL.
  *
  * @group encoding_utils
@@ -33,7 +33,7 @@ export function encode(text: string | number): string {
 }
 
 /**
- * Encode characters that need to be encoded on the hash section of the URL.
+ * Encodes characters that need to be encoded in the hash section of the URL.
  *
  * @group encoding_utils
  *
@@ -48,7 +48,7 @@ export function encodeHash(text: string): string {
 }
 
 /**
- * Encode characters that need to be encoded query values on the query
+ * Encodes characters that need to be encoded for query values in the query
  * section of the URL.
  *
  * @group encoding_utils
@@ -59,7 +59,7 @@ export function encodeHash(text: string): string {
 export function encodeQueryValue(input: QueryValue): string {
   return (
     encode(typeof input === "string" ? input : JSON.stringify(input))
-      // Encode the space as +, encode the + to differentiate it from the space
+      // Encodes the space as +, encode the + to differentiate it from the space
       .replace(PLUS_RE, "%2B")
       .replace(ENC_SPACE_RE, "+")
       .replace(HASH_RE, "%23")
@@ -71,7 +71,7 @@ export function encodeQueryValue(input: QueryValue): string {
 }
 
 /**
- * Encode characters that need to be encoded query values on the query
+ * Encodes characters that need to be encoded for query values in the query
  * section of the URL and also encodes the `=` character.
  *
  * @group encoding_utils
@@ -83,7 +83,7 @@ export function encodeQueryKey(text: string | number): string {
 }
 
 /**
- * Encode characters that need to be encoded on the path section of the URL.
+ * Encodes characters that need to be encoded in the path section of the URL.
  *
  * @group encoding_utils
  *
@@ -100,7 +100,7 @@ export function encodePath(text: string | number): string {
 }
 
 /**
- * Encode characters that need to be encoded on the path section of the URL as a
+ * Encodes characters that need to be encoded in the path section of the URL as a
  * param. This function encodes everything `encodePath` does plus the
  * slash (`/`) character.
  *
@@ -114,7 +114,7 @@ export function encodeParam(text: string | number): string {
 }
 
 /**
- * Decode text using `decodeURIComponent`. Returns the original text if it
+ * Decodes text using `decodeURIComponent`. Returns the original text if it
  * fails.
  *
  * @group encoding_utils
@@ -131,7 +131,7 @@ export function decode(text: string | number = ""): string {
 }
 
 /**
- * Decode path section of URL (consistent with encodePath for slash encoding).
+ * Decodes path section of URL (consistent with encodePath for slash encoding).
  *
  * @group encoding_utils
  *
@@ -155,7 +155,7 @@ export function decodeQueryKey(text: string): string {
 }
 
 /**
- * Decode query value (consistent with `encodeQueryValue` for plus encoding).
+ * Decodes query value (consistent with `encodeQueryValue` for plus encoding).
  *
  * @group encoding_utils
  *

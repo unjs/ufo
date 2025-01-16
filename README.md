@@ -46,11 +46,11 @@ import { parseURL } from "https://unpkg.com/ufo/dist/index.mjs";
 
 ### `decode(text)`
 
-Decode text using `decodeURIComponent`. Returns the original text if it fails.
+Decodes text using `decodeURIComponent`. Returns the original text if it fails.
 
 ### `decodePath(text)`
 
-Decode path section of URL (consistent with encodePath for slash encoding).
+Decodes path section of URL (consistent with encodePath for slash encoding).
 
 ### `decodeQueryKey(text)`
 
@@ -58,15 +58,15 @@ Decodes query key (consistent with `encodeQueryKey` for plus encoding).
 
 ### `decodeQueryValue(text)`
 
-Decode query value (consistent with `encodeQueryValue` for plus encoding).
+Decodes query value (consistent with `encodeQueryValue` for plus encoding).
 
 ### `encode(text)`
 
-Encode characters that need to be encoded on the path, search and hash sections of the URL.
+Encodes characters that need to be encoded in the path, search and hash sections of the URL.
 
 ### `encodeHash(text)`
 
-Encode characters that need to be encoded on the hash section of the URL.
+Encodes characters that need to be encoded in the hash section of the URL.
 
 ### `encodeHost(name)`
 
@@ -74,19 +74,19 @@ Encodes hostname with punycode encoding.
 
 ### `encodeParam(text)`
 
-Encode characters that need to be encoded on the path section of the URL as a param. This function encodes everything `encodePath` does plus the slash (`/`) character.
+Encodes characters that need to be encoded in the path section of the URL as a param. This function encodes everything `encodePath` does plus the slash (`/`) character.
 
 ### `encodePath(text)`
 
-Encode characters that need to be encoded on the path section of the URL.
+Encodes characters that need to be encoded in the path section of the URL.
 
 ### `encodeQueryKey(text)`
 
-Encode characters that need to be encoded query values on the query section of the URL and also encodes the `=` character.
+Encodes characters that need to be encoded for query values in the query section of the URL and also encodes the `=` character.
 
 ### `encodeQueryValue(input)`
 
-Encode characters that need to be encoded query values on the query section of the URL.
+Encodes characters that need to be encoded for query values in the query section of the URL.
 
 ## Parsing Utils
 
