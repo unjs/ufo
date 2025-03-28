@@ -181,6 +181,9 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
 const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
 const FILENAME_REGEX = /\/([^/]+)$/;
 
+export interface ParseFilenameOptions {
+  strict?: boolean
+}
 /**
  * Parses a URL and returns last segment in path as filename.
  *
@@ -197,10 +200,13 @@ const FILENAME_REGEX = /\/([^/]+)$/;
  * // Result: undefined
  * parseFilename("/path/to/.hidden-file", { strict: true });
  * ```
+ * 
+ * @param [input] - The URL to parse.
+ * @param [opts]  - Options to use while parsing
  */
-export function parseFilename(input = "", { strict }): string | undefined {
+export function parseFilename(input = "", opts: ParseFilenameOptions = {}): string | undefined {
   const { pathname } = parseURL(input);
-  const matches = strict
+  const matches = opts.strict
     ? pathname.match(FILENAME_STRICT_REGEX)
     : pathname.match(FILENAME_REGEX);
   return matches ? matches[1] : undefined;
