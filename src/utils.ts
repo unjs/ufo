@@ -219,7 +219,7 @@ export function cleanDoubleSlashes(input = ""): string {
 /**
  * Ensures the URL or pathname starts with base.
  *
- * If input aleady starts with base, it will not be added again.
+ * If input already starts with base, it will not be added again.
  *
  * @group utils
  */
@@ -345,7 +345,7 @@ export function joinURL(base: string, ...input: string[]): string {
  * @group utils
  */
 export function joinRelativeURL(..._input: string[]): string {
-  // Inlined regex to increase browser compatibiltiy
+  // Inlined regex to increase browser compatibility
   const JOIN_SEGMENT_SPLIT_RE = /\/(?!\/)/;
 
   const input = _input.filter(Boolean);
@@ -467,7 +467,7 @@ export function withProtocol(input: string, protocol: string): string {
 }
 
 /**
- * Normlizes the input URL:
+ * Normalizes the input URL:
  *
  * - Ensures the URL is properly encoded
  * - Ensures pathname starts with a slash

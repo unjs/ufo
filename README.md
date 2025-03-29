@@ -279,9 +279,11 @@ joinURL("a", "/b", "/c"); // "a/b/c"
 
 ### `normalizeURL(input)`
 
-Normlizes the input URL:
+Normalizes the input URL:
 
-- Ensures the URL is properly encoded - Ensures pathname starts with a slash - Preserves protocol/host if provided
+- Ensures the URL is properly encoded
+- Ensures pathname starts with a slash
+- Preserves protocol/host if provided
 
 **Example:**
 
@@ -308,7 +310,7 @@ resolveURL("http://foo.com/foo?test=123#token", "bar", "baz");
 
 Ensures the URL or pathname starts with base.
 
-If input aleady starts with base, it will not be added again.
+If input already starts with base, it will not be added again.
 
 ### `withFragment(input, hash)`
 
@@ -359,7 +361,7 @@ Removes the fragment section from the URL.
 **Example:**
 
 ```js
-withoutFragment("http://example.com/foo?q=123#bar")
+withoutFragment("http://example.com/foo?q=123#bar");
 // Returns "http://example.com/foo?q=123"
 ```
 
@@ -370,7 +372,7 @@ Removes the host from the URL while preserving everything else.
 **Example:**
 
 ```js
-withoutHost("http://example.com/foo?q=123#bar")
+withoutHost("http://example.com/foo?q=123#bar");
 // Returns "/foo?q=123#bar"
 ```
 
