@@ -45,7 +45,7 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (object[key] === undefined) {
+    if (!Object.prototype.hasOwnProperty.call(object, key)) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
       (object[key] as string[]).push(value);
