@@ -422,6 +422,16 @@ Add/Replace the query section of the URL.
 withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
 ```
 
+### `filterQuery(input, predicate)`
+
+Removes the query section of the URL.
+
+**Example:**
+
+```js
+filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
+```
+
 ### `withTrailingSlash(input, respectQueryAndFragment?)`
 
 Ensures the URL ends with a trailing slash.
