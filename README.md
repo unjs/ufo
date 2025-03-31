@@ -183,6 +183,16 @@ cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
 // Returns "http://example.com/analyze/http://localhost:3000/"
 ```
 
+### `filterQuery(input, predicate)`
+
+Removes the query section of the URL.
+
+**Example:**
+
+```js
+filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
+```
+
 ### `getQuery(input)`
 
 Parses and decodes the query object of an input URL into an object.
@@ -420,16 +430,6 @@ Add/Replace the query section of the URL.
 
 ```js
 withQuery("/foo?page=a", { token: "secret" }); // "/foo?page=a&token=secret"
-```
-
-### `filterQuery(input, predicate)`
-
-Removes the query section of the URL.
-
-**Example:**
-
-```js
-filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
 ```
 
 ### `withTrailingSlash(input, respectQueryAndFragment?)`
