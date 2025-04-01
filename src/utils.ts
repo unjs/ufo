@@ -270,6 +270,7 @@ export function withQuery(input: string, query: QueryObject): string {
   parsed.search = stringifyQuery(mergedQuery);
   return stringifyParsedURL(parsed);
 }
+
 /**
  * Removes the query section of the URL.
  *
@@ -285,11 +286,11 @@ export function filterQuery(
   input: string,
   predicate: (key: string, value: string | string[]) => boolean,
 ): string {
-  const parsed = parseURL(input);
-  if (!parsed.search) {
+  if (!input.includes("?")) {
     return input;
   }
 
+  const parsed = parseURL(input);
   const query = parseQuery(parsed.search);
   const filteredQuery = Object.fromEntries(
     Object.entries(query).filter(([key, value]) => predicate(key, value)),
