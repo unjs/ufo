@@ -31,7 +31,7 @@ export type ParsedQuery = Record<string, string | string[]>;
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = "",
 ): T {
-  const object: ParsedQuery = {};
+  const object: ParsedQuery = Object.create(null);
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
@@ -45,7 +45,7 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (!Object.prototype.hasOwnProperty.call(object, key)) {
+    if (object[key] === undefined) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
       (object[key] as string[]).push(value);
