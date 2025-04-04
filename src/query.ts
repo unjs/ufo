@@ -31,7 +31,7 @@ export type ParsedQuery = Record<string, string | string[]>;
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = "",
 ): T {
-  const object: ParsedQuery = Object.create(null);
+  const object: ParsedQuery = new EmptyObject();
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
@@ -98,3 +98,12 @@ export function stringifyQuery(query: QueryObject): string {
     .filter(Boolean)
     .join("&");
 }
+
+/**
+ * Ported from: https://github.com/unjs/rou3/blob/4e223bca14b9bd331cd3f2c2bfc109555edccc3c/src/_utils.ts#L1-L5
+ */
+const EmptyObject = /* @__PURE__ */ (() => {
+  const C = function () {};
+  C.prototype = Object.create(null);
+  return C;
+})() as unknown as { new (): any };
