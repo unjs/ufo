@@ -94,7 +94,7 @@ Encodes characters that need to be encoded for query values in the query section
 
 Takes a string of the form `username:password` and returns an object with the username and password decoded.
 
-### `parseFilename(input)`
+### `parseFilename(input, opts?: { strict? })`
 
 Parses a URL and returns last segment in path as filename.
 

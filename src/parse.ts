@@ -203,7 +203,7 @@ const FILENAME_REGEX = /\/([^/]+)$/;
  */
 export function parseFilename(
   input = "",
-  opts: { strict },
+  opts?: { strict?: boolean },
 ): string | undefined {
   const { pathname } = parseURL(input);
   const matches = opts?.strict
