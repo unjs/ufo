@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseURL, parseHost, parseFilename, ParseFilenameOptions } from "../src";
+import { parseURL, parseHost, parseFilename } from "../src";
 
 describe("parseURL", () => {
   const tests = [
@@ -197,115 +197,99 @@ describe("parseHost", () => {
 });
 
 describe("parseFilename", () => {
-  const tests: { input: { url: string, opts?: ParseFilenameOptions }, out?: string }[] = [
-    { input: { url: "/path/to/filename.ext", opts: undefined }, out: "filename.ext" },
-    { input: { url: "/path/to/.hidden-file", opts: undefined }, out: ".hidden-file" },
-    { input: { url: "/path/to/filename.ext", opts: { strict: false } }, out: "filename.ext" },
-    { input: { url: "/path/to/.hidden-file", opts: { strict: false } }, out: ".hidden-file" },
-    { input: { url: "/path/to/dir/", opts: { strict: false } }, out: undefined },
-    { input: { url: ".", opts: { strict: false } }, out: undefined },
-    { input: { url: "/", opts: { strict: false } }, out: undefined },
-    { input: { url: "", opts: { strict: false } }, out: undefined },
+  const tests = [
+    { input: ["/path/to/filename.ext", false], out: "filename.ext" },
+    { input: ["/path/to/.hidden-file", false], out: ".hidden-file" },
+    { input: ["/path/to/dir/", false], out: undefined },
+    { input: [".", false], out: undefined },
+    { input: ["/", false], out: undefined },
+    { input: ["", false], out: undefined },
     {
-      input: { url: "http://example.com/path/to/filename.ext", opts: { strict: false } },
+      input: ["http://example.com/path/to/filename.ext", false],
       out: "filename.ext",
     },
     {
-      input: { url: "http://example.com/path/to/filename.ext?query=true", opts: { strict: false } },
+      input: ["http://example.com/path/to/filename.ext?query=true", false],
       out: "filename.ext",
     },
     {
-      input: { url: "http://example.com/path/to/filename.ext#hash", opts: { strict: false } },
+      input: ["http://example.com/path/to/filename.ext#hash", false],
       out: "filename.ext",
     },
     {
-      input: { url: "http://example.com/path/to/filename.ext?query=true#hash", opts: { strict: false } },
+      input: ["http://example.com/path/to/filename.ext?query=true#hash", false],
       out: "filename.ext",
     },
     {
-      input: {
-        url:
-          "http://example.com/path/to/filename.ext/?query=true#hash",
-        opts: {
-          strict:
-            false,
-        }
-      },
+      input: [
+        "http://example.com/path/to/filename.ext/?query=true#hash",
+        false,
+      ],
       out: undefined,
     },
-    { input: { url: "http://example.com/path/to/dir/", opts: { strict: false } }, out: undefined },
+    { input: ["http://example.com/path/to/dir/", false], out: undefined },
     {
-      input: { url: "http://example.com/path/to/dir/?query=true#hash", opts: { strict: false } },
+      input: ["http://example.com/path/to/dir/?query=true#hash", false],
       out: undefined,
     },
-    { input: { url: "http://example.com/path/to/dir/#hash", opts: { strict: false } }, out: undefined },
-    { input: { url: "http://example.com", opts: { strict: false } }, out: undefined },
+    { input: ["http://example.com/path/to/dir/#hash", false], out: undefined },
+    { input: ["http://example.com", false], out: undefined },
     {
-      input: { url: "ftp://example.com/path/to/filename.ext", opts: { strict: false } },
+      input: ["ftp://example.com/path/to/filename.ext", false],
       out: "filename.ext",
     },
-    { input: { url: "file:///path/to/filename.ext", opts: { strict: false } }, out: "filename.ext" },
-    { input: { url: "/path/to/filename.ext", opts: { strict: true } }, out: "filename.ext" },
-    { input: { url: "/path/to/.hidden-file", opts: { strict: true } }, out: undefined },
-    { input: { url: "/path/to/dir/", opts: { strict: true } }, out: undefined },
-    { input: { url: ".", opts: { strict: true } }, out: undefined },
-    { input: { url: "/", opts: { strict: true } }, out: undefined },
-    { input: { url: "", opts: { strict: true } }, out: undefined },
+    { input: ["file:///path/to/filename.ext", false], out: "filename.ext" },
+    { input: ["/path/to/filename.ext", true], out: "filename.ext" },
+    { input: ["/path/to/.hidden-file", true], out: undefined },
+    { input: ["/path/to/dir/", true], out: undefined },
+    { input: [".", true], out: undefined },
+    { input: ["/", true], out: undefined },
+    { input: ["", true], out: undefined },
     {
-      input: {
-        url: "http://example.com/path/to/filename.ext", opts: { strict: true }
-      },
-      out: "filename.ext",
-    },
-    {
-      input: {
-        url: "http://example.com/path/to/filename.ext?query=true", opts: { strict: true }
-      },
+      input: ["http://example.com/path/to/filename.ext", true],
       out: "filename.ext",
     },
     {
-      input: {
-        url: "http://example.com/path/to/filename.ext#hash", opts: { strict: true }
-      },
+      input: ["http://example.com/path/to/filename.ext?query=true", true],
       out: "filename.ext",
     },
     {
-      input: {
-        url: "http://example.com/path/to/filename.ext?query=true#hash", opts: { strict: true }
-      },
+      input: ["http://example.com/path/to/filename.ext#hash", true],
       out: "filename.ext",
     },
     {
-      input: {
-        url: "http://example.com/path/to/filename.ext/?query=true#hash", opts: { strict: true }
-      },
+      input: ["http://example.com/path/to/filename.ext?query=true#hash", true],
+      out: "filename.ext",
+    },
+    {
+      input: ["http://example.com/path/to/filename.ext/?query=true#hash", true],
       out: undefined,
     },
-    { input: { url: "http://example.com/path/to/dir/", opts: { strict: true } }, out: undefined },
+    { input: ["http://example.com/path/to/dir/", true], out: undefined },
     {
-      input: {
-        url: "http://example.com/path/to/dir/?query=true#hash", opts: { strict: true }
-      },
+      input: ["http://example.com/path/to/dir/?query=true#hash", true],
       out: undefined,
     },
-    { input: { url: "http://example.com/path/to/dir/#hash", opts: { strict: true } }, out: undefined },
-    { input: { url: "http://example.com", opts: { strict: true } }, out: undefined },
+    { input: ["http://example.com/path/to/dir/#hash", true], out: undefined },
+    { input: ["http://example.com", true], out: undefined },
     {
-      input: {
-        url: "ftp://example.com/path/to/filename.ext", opts: { strict: true }
-      },
+      input: ["ftp://example.com/path/to/filename.ext", true],
       out: "filename.ext",
     },
-    { input: { url: "file:///path/to/filename.ext", opts: { strict: true } }, out: "filename.ext" },
-    { input: { url: "/path/to/filename.ext/", opts: { strict: true } }, out: undefined },
-    { input: { url: "/path/to/dir/../filename.ext", opts: { strict: true } }, out: "filename.ext" },
-    { input: { url: "/path/to/dir/../filename.ext/", opts: { strict: true } }, out: undefined },
-  ];
+    { input: ["file:///path/to/filename.ext", true], out: "filename.ext" },
+    { input: ["/path/to/filename.ext/", true], out: undefined },
+    { input: ["/path/to/dir/../filename.ext", true], out: "filename.ext" },
+    { input: ["/path/to/dir/../filename.ext/", true], out: undefined },
+  ] as const;
+
+  test("works", () => {
+    expect(parseFilename("/path/to/filename.ext")).toEqual("filename.ext");
+  });
 
   for (const t of tests) {
-    test(t.input.url.toString(), () => {
+    test(t.input.toString(), () => {
       expect(
-        parseFilename(t.input.url.toString(), t.input.opts),
+        parseFilename(t.input[0].toString(), { strict: t.input[1] }),
       ).toStrictEqual(t.out);
     });
   }
