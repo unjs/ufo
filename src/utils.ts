@@ -272,6 +272,34 @@ export function withQuery(input: string, query: QueryObject): string {
 }
 
 /**
+ * Removes the query section of the URL.
+ *
+ * @example
+ *
+ * ```js
+ * filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
+ * ```
+ *
+ * @group utils
+ */
+export function filterQuery(
+  input: string,
+  predicate: (key: string, value: string | string[]) => boolean,
+): string {
+  if (!input.includes("?")) {
+    return input;
+  }
+
+  const parsed = parseURL(input);
+  const query = parseQuery(parsed.search);
+  const filteredQuery = Object.fromEntries(
+    Object.entries(query).filter(([key, value]) => predicate(key, value)),
+  );
+  parsed.search = stringifyQuery(filteredQuery);
+  return stringifyParsedURL(parsed);
+}
+
+/**
  * Parses and decodes the query object of an input URL into an object.
  *
  * @example
