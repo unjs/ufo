@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.6.0
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.5.4...v1.6.0)
+
+### 🚀 Enhancements
+
+- Add `filterQuery` utility ([#287](https://github.com/unjs/ufo/pull/287))
+
+### 🩹 Fixes
+
+- **parseQuery:** Use object with null prototype ([#286](https://github.com/unjs/ufo/pull/286))
+- **parseFilename:** Use optional chaining to access `opts.strict` ([#284](https://github.com/unjs/ufo/pull/284))
+
+### 📖 Documentation
+
+- Clarify `withBase` jsdocs ([#266](https://github.com/unjs/ufo/pull/266))
+- Fix typos ([#278](https://github.com/unjs/ufo/pull/278))
+- Spelling and formatting ([#285](https://github.com/unjs/ufo/pull/285))
+
+### 🏡 Chore
+
+- Consistent spelling in JSDoc comments & update automd syntax ([#256](https://github.com/unjs/ufo/pull/256))
+- Apply automated lint fixes ([aa6d406](https://github.com/unjs/ufo/commit/aa6d406))
+- Apply automated lint fixes ([46d0a04](https://github.com/unjs/ufo/commit/46d0a04))
+- Update dev dependencies ([9eaa57c](https://github.com/unjs/ufo/commit/9eaa57c))
+- Lint ([a7012eb](https://github.com/unjs/ufo/commit/a7012eb))
+
+### ✅ Tests
+
+- **query:** Validate more than 2 values for key ([#273](https://github.com/unjs/ufo/pull/273))
+
+### 🤖 CI
+
+- Always update corepack ([e383832](https://github.com/unjs/ufo/commit/e383832))
+
+### ❤️ Contributors
+
+- Kricsleo ([@kricsleo](https://github.com/kricsleo))
+- Ezra Ashenafi ([@Eazash](https://github.com/Eazash))
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+- Bobbie Goede <bobbiegoede@gmail.com>
+- Nano ([@Konano](https://github.com/Konano))
+- Aman Desai ([@amandesai01](https://github.com/amandesai01))
+- Dave Honneffer ([@pearofducks](https://github.com/pearofducks))
+- Johann Schopplich ([@johannschopplich](https://github.com/johannschopplich))
+
 ## v1.5.4
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.5.3...v1.5.4)
