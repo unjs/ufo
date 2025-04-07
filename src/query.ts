@@ -21,6 +21,8 @@ export type ParsedQuery = Record<string, string | string[]>;
 const EmptyObject = /* @__PURE__ */ (() => {
   const C = function () {};
   C.prototype = Object.create(null);
+  return C;
+})() as unknown as { new (): any };
 
 /**
  * Parses and decodes a query string into an object.
@@ -102,6 +104,3 @@ export function stringifyQuery(query: QueryObject): string {
     .filter(Boolean)
     .join("&");
 }
-
-  return C;
-})() as unknown as { new (): any };
