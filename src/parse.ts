@@ -197,10 +197,16 @@ const FILENAME_REGEX = /\/([^/]+)$/;
  * // Result: undefined
  * parseFilename("/path/to/.hidden-file", { strict: true });
  * ```
+ *
+ * @param [input] - The URL to parse.
+ * @param [opts]  - Options to use while parsing
  */
-export function parseFilename(input = "", { strict }): string | undefined {
+export function parseFilename(
+  input = "",
+  opts?: { strict?: boolean },
+): string | undefined {
   const { pathname } = parseURL(input);
-  const matches = strict
+  const matches = opts?.strict
     ? pathname.match(FILENAME_STRICT_REGEX)
     : pathname.match(FILENAME_REGEX);
   return matches ? matches[1] : undefined;

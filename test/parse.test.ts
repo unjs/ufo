@@ -280,7 +280,11 @@ describe("parseFilename", () => {
     { input: ["/path/to/filename.ext/", true], out: undefined },
     { input: ["/path/to/dir/../filename.ext", true], out: "filename.ext" },
     { input: ["/path/to/dir/../filename.ext/", true], out: undefined },
-  ];
+  ] as const;
+
+  test("works", () => {
+    expect(parseFilename("/path/to/filename.ext")).toEqual("filename.ext");
+  });
 
   for (const t of tests) {
     test(t.input.toString(), () => {
