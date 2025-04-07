@@ -18,6 +18,10 @@ export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export type ParsedQuery = Record<string, string | string[]>;
 
+const EmptyObject = /* @__PURE__ */ (() => {
+  const C = function () {};
+  C.prototype = Object.create(null);
+
 /**
  * Parses and decodes a query string into an object.
  *
@@ -99,11 +103,5 @@ export function stringifyQuery(query: QueryObject): string {
     .join("&");
 }
 
-/**
- * Ported from: https://github.com/unjs/rou3/blob/4e223bca14b9bd331cd3f2c2bfc109555edccc3c/src/_utils.ts#L1-L5
- */
-const EmptyObject = /* @__PURE__ */ (() => {
-  const C = function () {};
-  C.prototype = Object.create(null);
   return C;
 })() as unknown as { new (): any };
