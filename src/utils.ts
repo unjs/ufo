@@ -118,7 +118,7 @@ export function withoutTrailingSlash(
   let path = input;
   let fragment = "";
   const fragmentIndex = input.indexOf("#");
-  if (fragmentIndex >= 0) {
+  if (fragmentIndex !== -1) {
     path = input.slice(0, fragmentIndex);
     fragment = input.slice(fragmentIndex);
   }
@@ -157,7 +157,7 @@ export function withTrailingSlash(
   let path = input;
   let fragment = "";
   const fragmentIndex = input.indexOf("#");
-  if (fragmentIndex >= 0) {
+  if (fragmentIndex !== -1) {
     path = input.slice(0, fragmentIndex);
     fragment = input.slice(fragmentIndex);
     if (!path) {
