@@ -18,11 +18,11 @@ export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export type ParsedQuery = Record<string, string | string[]>;
 
-const EmptyObject = /* @__PURE__ */ (() => {
-  const C = function () {};
-  C.prototype = Object.create(null);
-  return C;
-})() as unknown as { new (): any };
+// const EmptyObject = /* @__PURE__ */ (() => {
+//   const C = function () {};
+//   C.prototype = Object.create(null);
+//   return C;
+// })() as unknown as { new (): any };
 
 /**
  * Parses and decodes a query string into an object.
@@ -37,7 +37,9 @@ const EmptyObject = /* @__PURE__ */ (() => {
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = "",
 ): T {
-  const object: ParsedQuery = new EmptyObject();
+  // TODO: Use new EmptyObject() instead of Object.create(null) for better performance in next major version
+  // https://github.com/unjs/ufo/pull/290
+  const object: ParsedQuery = Object.create(null);
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
