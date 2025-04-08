@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.6.1
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.6.0...v1.6.1)
+
+### 🩹 Fixes
+
+- **query:** Use `Object.create(null)` ([#290](https://github.com/unjs/ufo/pull/290))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+
 ## v1.6.0
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.5.4...v1.6.0)
