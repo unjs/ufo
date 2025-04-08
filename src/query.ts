@@ -18,11 +18,11 @@ export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export type ParsedQuery = Record<string, string | string[]>;
 
-const EmptyObject = /* @__PURE__ */ (() => {
-  const C = function () {};
-  C.prototype = Object.create(null);
-  return C;
-})() as unknown as { new (): any };
+// const EmptyObject = /* @__PURE__ */ (() => {
+//   const C = function () {};
+//   C.prototype = Object.create(null);
+//   return C;
+// })() as unknown as { new (): any };
 
 /**
  * Parses and decodes a query string into an object.
@@ -37,7 +37,7 @@ const EmptyObject = /* @__PURE__ */ (() => {
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = "",
 ): T {
-  const object: ParsedQuery = new EmptyObject();
+  const object: ParsedQuery = {}; // new EmptyObject();
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
@@ -55,8 +55,10 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       object[key] = value;
     } else if (Array.isArray(object[key])) {
       (object[key] as string[]).push(value);
+    } else if (typeof object[key] === "string") {
+      object[key] = [object[key], value];
     } else {
-      object[key] = [object[key] as string, value];
+      object[key] = value; // key is an object prototype key (like toString)
     }
   }
   return object as T;
