@@ -95,6 +95,13 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
 /**
  * Splits the input string into three parts, and returns an object with those three parts.
  *
+ * @example
+ *
+ * ```js
+ * parsePath("http://foo.com/foo?test=123#token");
+ * // { pathname: 'http://foo.com/foo', search: '?test=123', hash: '#token' }
+ * ```
+ *
  * @group parsing_utils
  *
  * @param [input] - The URL to parse.
@@ -131,6 +138,13 @@ export function parseAuth(input = ""): ParsedAuth {
 
 /**
  * Takes a string, and returns an object with two properties: `hostname` and `port`.
+ *
+ * @example
+ *
+ * ```js
+ * parseHost("foo.com:8080");
+ * // { hostname: 'foo.com', port: '8080' }
+ * ```
  *
  * @group parsing_utils
  *

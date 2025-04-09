@@ -39,6 +39,22 @@ export interface HasProtocolOptions {
  *
  * You can use `{ acceptRelative: true }` to accept relative URLs as valid protocol.
  *
+ * @example
+ *
+ * ```js
+ * hasProtocol('https://example.com'); // true
+ *
+ * hasProtocol("//example.com"); // false
+ *
+ * hasProtocol('//example.com', { acceptRelative: true });  // true
+ *
+ * hasProtocol("ftp://example.com"); // true
+ *
+ * hasProtocol('data:text/plain'); // true
+ *
+ * hasProtocol('data:text/plain', { strict: true }); // false
+ * ```
+ *
  * @group utils
  */
 export function hasProtocol(
@@ -69,6 +85,21 @@ export function hasProtocol(
 /**
  * Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
  *
+ * @example
+ *
+ * ```js
+ * isScriptProtocol("javascript:alert(1)"); // true
+ *
+ * isScriptProtocol("data:text/html,hello"); // true
+ *
+ * isScriptProtocol("blob:hello"); // true
+ *
+ * isScriptProtocol("vbscript:alert(1)"); // true
+ *
+ * isScriptProtocol("https://example.com"); // false
+ *
+ * ```
+ *
  * @group utils
  */
 export function isScriptProtocol(protocol?: string) {
@@ -77,6 +108,18 @@ export function isScriptProtocol(protocol?: string) {
 
 /**
  * Checks if the input has a trailing slash.
+ *
+ * @example
+ *
+ * ```js
+ * hasTrailingSlash("/foo/"); // true
+ *
+ * hasTrailingSlash("/foo"); // false
+ *
+ * hasTrailingSlash("/foo?query=true", true); // false
+ *
+ * hasTrailingSlash("/foo/?query=true", true); // true
+ * ```
  *
  * @group utils
  */
@@ -180,6 +223,12 @@ export function hasLeadingSlash(input = ""): boolean {
 /**
  * Removes leading slash from the URL or pathname.
  *
+ * @example
+ *
+ * ```js
+ * withoutLeadingSlash("/foo"); // "foo"
+ * ```
+ *
  * @group utils
  */
 export function withoutLeadingSlash(input = ""): string {
@@ -188,6 +237,12 @@ export function withoutLeadingSlash(input = ""): string {
 
 /**
  * Ensures the URL or pathname has a leading slash.
+ *
+ * @example
+ *
+ * ```js
+ * withLeadingSlash("foo"); // "/foo"
+ * ```
  *
  * @group utils
  */
@@ -221,6 +276,14 @@ export function cleanDoubleSlashes(input = ""): string {
  *
  * If input already starts with base, it will not be added again.
  *
+ * @example
+ *
+ * ```js
+ * withBase("/foo/bar", "/foo"); // "/foo/bar"
+ *
+ * withBase("/foo/bar", "/baz"); // "/baz/foo/bar"
+ * ```
+ *
  * @group utils
  */
 export function withBase(input: string, base: string) {
@@ -238,6 +301,12 @@ export function withBase(input: string, base: string) {
  * Removes the base from the URL or pathname.
  *
  * If input does not start with base, it will not be removed.
+ *
+ * @example
+ *
+ * ```js
+ * withoutBase("/foo/bar", "/foo"); // "/bar"
+ * ```
  *
  * @group utils
  */

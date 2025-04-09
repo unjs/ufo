@@ -29,6 +29,13 @@ export type ParsedQuery = Record<string, string | string[]>;
  *
  * The input can be a query string with or without the leading `?`.
  *
+ * @example
+ *
+ * ```js
+ * parseQuery("?foo=bar&baz=qux");
+ * // { foo: "bar", baz: "qux" }
+ * ```
+ *
  * @note
  * The `__proto__` and `constructor` keys are ignored to prevent prototype pollution.
  *
@@ -69,6 +76,16 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
  *
  * If the value is an array, it will be encoded as multiple key-value pairs with the same key.
  *
+ * @example
+ *
+ * ```js
+ * encodeQueryItem('message', 'Hello World')
+ * // 'message=Hello%20World'
+ *
+ * encodeQueryItem('tags', ['javascript', 'web', 'dev'])
+ * // 'tags=javascript&tags=web&tags=dev'
+ * ```
+ *
  * @group Query_utils
  */
 export function encodeQueryItem(
@@ -96,6 +113,16 @@ export function encodeQueryItem(
 
 /**
  * Stringfies and encodes a query object into a query string.
+ *
+ * @example
+ *
+ * ```js
+ * stringifyQuery({ foo: 'bar', baz: 'qux' })
+ * // 'foo=bar&baz=qux'
+ *
+ * stringifyQuery({ foo: 'bar', baz: undefined })
+ * // 'foo=bar'
+ * ```
  *
  * @group Query_utils
  */
