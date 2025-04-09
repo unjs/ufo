@@ -80,7 +80,7 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
  *
  * ```js
  * encodeQueryItem('message', 'Hello World')
- * // 'message=Hello%20World'
+ * // 'message=Hello+World'
  *
  * encodeQueryItem('tags', ['javascript', 'web', 'dev'])
  * // 'tags=javascript&tags=web&tags=dev'
