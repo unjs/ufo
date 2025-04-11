@@ -34,6 +34,9 @@ export type ParsedQuery = Record<string, string | string[]>;
  * ```js
  * parseQuery("?foo=bar&baz=qux");
  * // { foo: "bar", baz: "qux" }
+ *
+ * parseQuery("tags=javascript&tags=web&tags=dev");
+ * // { tags: ["javascript", "web", "dev"] }
  * ```
  *
  * @note

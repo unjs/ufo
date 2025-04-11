@@ -34,6 +34,18 @@ export interface HasProtocolOptions {
   strict?: boolean;
 }
 
+
+export function hasProtocol(
+  inputString: string,
+  opts?: HasProtocolOptions,
+): boolean;
+
+/** @deprecated Same as { hasProtocol(inputString, { acceptRelative: true }) */
+export function hasProtocol(
+  inputString: string,
+  acceptRelative: boolean,
+): boolean;
+
 /**
  * Checks if the input has a protocol.
  *
@@ -57,15 +69,6 @@ export interface HasProtocolOptions {
  *
  * @group utils
  */
-export function hasProtocol(
-  inputString: string,
-  opts?: HasProtocolOptions,
-): boolean;
-/** @deprecated Same as { hasProtocol(inputString, { acceptRelative: true }) */
-export function hasProtocol(
-  inputString: string,
-  acceptRelative: boolean,
-): boolean;
 export function hasProtocol(
   inputString: string,
   opts: boolean | HasProtocolOptions = {},

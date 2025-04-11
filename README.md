@@ -191,6 +191,9 @@ The input can be a query string with or without the leading `?`.
 ```js
 parseQuery("?foo=bar&baz=qux");
 // { foo: "bar", baz: "qux" }
+
+parseQuery("tags=javascript&tags=web&tags=dev");
+// { tags: ["javascript", "web", "dev"] }
 ```
 
 ### `stringifyQuery(query)`
@@ -250,6 +253,26 @@ getQuery("http://foo.com/foo?test=123&unicode=%E5%A5%BD");
 Checks if the input has a leading slash (e.g. `/foo`).
 
 ### `hasProtocol(inputString, opts)`
+
+Checks if the input has a protocol.
+
+You can use `{ acceptRelative: true }` to accept relative URLs as valid protocol.
+
+**Example:**
+
+```js
+hasProtocol('https://example.com'); // true
+
+hasProtocol("//example.com"); // false
+
+hasProtocol('//example.com', { acceptRelative: true });  // true
+
+hasProtocol("ftp://example.com"); // true
+
+hasProtocol('data:text/plain'); // true
+
+hasProtocol('data:text/plain', { strict: true }); // false
+```
 
 ### `hasTrailingSlash(input, respectQueryAndFragment?)`
 
