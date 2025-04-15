@@ -114,9 +114,23 @@ parseFilename("/path/to/.hidden-file", { strict: true });
 
 Takes a string, and returns an object with two properties: `hostname` and `port`.
 
+**Example:**
+
+```js
+parseHost("foo.com:8080");
+// { hostname: 'foo.com', port: '8080' }
+```
+
 ### `parsePath(input)`
 
 Splits the input string into three parts, and returns an object with those three parts.
+
+**Example:**
+
+```js
+parsePath("http://foo.com/foo?test=123#token");
+// { pathname: 'http://foo.com/foo', search: '?test=123', hash: '#token' }
+```
 
 ### `parseURL(input, defaultProto?)`
 
@@ -156,15 +170,45 @@ Encodes a pair of key and value into a url query string value.
 
 If the value is an array, it will be encoded as multiple key-value pairs with the same key.
 
+**Example:**
+
+```js
+encodeQueryItem('message', 'Hello World')
+// 'message=Hello+World'
+
+encodeQueryItem('tags', ['javascript', 'web', 'dev'])
+// 'tags=javascript&tags=web&tags=dev'
+```
+
 ### `parseQuery(parametersString)`
 
 Parses and decodes a query string into an object.
 
 The input can be a query string with or without the leading `?`.
 
+**Example:**
+
+```js
+parseQuery("?foo=bar&baz=qux");
+// { foo: "bar", baz: "qux" }
+
+parseQuery("tags=javascript&tags=web&tags=dev");
+// { tags: ["javascript", "web", "dev"] }
+```
+
 ### `stringifyQuery(query)`
 
 Stringfies and encodes a query object into a query string.
+
+**Example:**
+
+```js
+stringifyQuery({ foo: 'bar', baz: 'qux' })
+// 'foo=bar&baz=qux'
+
+stringifyQuery({ foo: 'bar', baz: undefined })
+// 'foo=bar'
+```
 
 ## Utils
 
@@ -210,9 +254,41 @@ Checks if the input has a leading slash (e.g. `/foo`).
 
 ### `hasProtocol(inputString, opts)`
 
+Checks if the input has a protocol.
+
+You can use `{ acceptRelative: true }` to accept relative URLs as valid protocol.
+
+**Example:**
+
+```js
+hasProtocol('https://example.com'); // true
+
+hasProtocol("//example.com"); // false
+
+hasProtocol('//example.com', { acceptRelative: true });  // true
+
+hasProtocol("ftp://example.com"); // true
+
+hasProtocol('data:text/plain'); // true
+
+hasProtocol('data:text/plain', { strict: true }); // false
+```
+
 ### `hasTrailingSlash(input, respectQueryAndFragment?)`
 
 Checks if the input has a trailing slash.
+
+**Example:**
+
+```js
+hasTrailingSlash("/foo/"); // true
+
+hasTrailingSlash("/foo"); // false
+
+hasTrailingSlash("/foo?query=true", true); // false
+
+hasTrailingSlash("/foo/?query=true", true); // true
+```
 
 ### `isEmptyURL(url)`
 
@@ -267,6 +343,20 @@ isSamePath("/foo", "/foo/"); // true
 
 Checks if the input protocol is any of the dangerous `blob:`, `data:`, `javascript`: or `vbscript:` protocols.
 
+**Example:**
+
+```js
+isScriptProtocol("javascript:alert(1)"); // true
+
+isScriptProtocol("data:text/html,hello"); // true
+
+isScriptProtocol("blob:hello"); // true
+
+isScriptProtocol("vbscript:alert(1)"); // true
+
+isScriptProtocol("https://example.com"); // false
+```
+
 ### `joinRelativeURL()`
 
 Joins multiple URL segments into a single URL and also handles relative paths with `./` and `../`.
@@ -320,6 +410,14 @@ Ensures the URL or pathname starts with base.
 
 If input already starts with base, it will not be added again.
 
+**Example:**
+
+```js
+withBase("/foo/bar", "/foo"); // "/foo/bar"
+
+withBase("/foo/bar", "/baz"); // "/baz/foo/bar"
+```
+
 ### `withFragment(input, hash)`
 
 Adds or replaces the fragment section of the URL.
@@ -356,11 +454,23 @@ withHttps("http://example.com"); // https://example.com
 
 Ensures the URL or pathname has a leading slash.
 
+**Example:**
+
+```js
+withLeadingSlash("foo"); // "/foo"
+```
+
 ### `withoutBase(input, base)`
 
 Removes the base from the URL or pathname.
 
 If input does not start with base, it will not be removed.
+
+**Example:**
+
+```js
+withoutBase("/foo/bar", "/foo"); // "/bar"
+```
 
 ### `withoutFragment(input)`
 
@@ -387,6 +497,12 @@ withoutHost("http://example.com/foo?q=123#bar")
 ### `withoutLeadingSlash(input)`
 
 Removes leading slash from the URL or pathname.
+
+**Example:**
+
+```js
+withoutLeadingSlash("/foo"); // "foo"
+```
 
 ### `withoutProtocol(input)`
 
