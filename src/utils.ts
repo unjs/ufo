@@ -100,7 +100,6 @@ export function hasProtocol(
  * isScriptProtocol("vbscript:alert(1)"); // true
  *
  * isScriptProtocol("https://example.com"); // false
- *
  * ```
  *
  * @group utils
