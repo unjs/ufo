@@ -355,7 +355,6 @@ isScriptProtocol("blob:hello"); // true
 isScriptProtocol("vbscript:alert(1)"); // true
 
 isScriptProtocol("https://example.com"); // false
-
 ```
 
 ### `joinRelativeURL()`

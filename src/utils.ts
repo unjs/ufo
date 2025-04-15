@@ -34,7 +34,6 @@ export interface HasProtocolOptions {
   strict?: boolean;
 }
 
-
 export function hasProtocol(
   inputString: string,
   opts?: HasProtocolOptions,
