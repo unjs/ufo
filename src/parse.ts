@@ -14,6 +14,8 @@ export interface ParsedURL {
   [protocolRelative]?: boolean;
 }
 
+export type ParsedPath = Pick<ParsedURL, "pathname" | "hash" | "search">;
+
 export interface ParsedAuth {
   username: string;
   password: string;
@@ -107,7 +109,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
  * @param [input] - The URL to parse.
  * @returns An object with three properties: `pathname`, `search`, and `hash`.
  */
-export function parsePath(input = ""): ParsedURL {
+export function parsePath(input = ""): ParsedPath {
   const [pathname = "", search = "", hash = ""] = (
     input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []
   ).splice(1);
