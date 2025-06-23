@@ -73,9 +73,9 @@ export function toASCII(o) {
                 t >= f && t < o && (o = t);
               }
               const a = p + 1;
-              o - f > e((2147483647 - i) / a) && s("overflow"),
+              (o - f > e((2147483647 - i) / a) && s("overflow"),
                 (i += (o - f) * a),
-                (f = o);
+                (f = o));
               for (const o of n) {
                 if ((o < f && ++i > 2147483647 && s("overflow"), o == f)) {
                   let n = i;
@@ -86,12 +86,12 @@ export function toASCII(o) {
                     }
                     const u = n - s;
                     const f = 36 - s;
-                    t.push(r(c(s + (u % f), 0))), (n = e(u / f));
+                    (t.push(r(c(s + (u % f), 0))), (n = e(u / f)));
                   }
-                  t.push(r(c(n, 0))), (l = u(i, a, p == h)), (i = 0), ++p;
+                  (t.push(r(c(n, 0))), (l = u(i, a, p == h)), (i = 0), ++p);
                 }
               }
-              ++i, ++f;
+              (++i, ++f);
             }
             return t.join("");
           })(t)
