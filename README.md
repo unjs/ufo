@@ -229,7 +229,7 @@ cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
 
 ### `filterQuery(input, predicate)`
 
-Removes the query section of the URL.
+Filters the query section of the URL based on a predicate function.
 
 **Example:**
 
