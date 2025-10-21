@@ -48,6 +48,15 @@ export function encodeHash(text: string): string {
 }
 
 /**
+ * Encodes hostname with punycode encoding.
+ *
+ * @group encoding_utils
+ */
+export function encodeHost(name = "") {
+  return toASCII(name);
+}
+
+/**
  * Encodes characters that need to be encoded for query values in the query
  * section of the URL.
  *
@@ -164,13 +173,4 @@ export function decodeQueryKey(text: string): string {
  */
 export function decodeQueryValue(text: string): string {
   return decode(text.replace(PLUS_RE, " "));
-}
-
-/**
- * Encodes hostname with punycode encoding.
- *
- * @group encoding_utils
- */
-export function encodeHost(name = "") {
-  return toASCII(name);
 }
