@@ -17,7 +17,6 @@ describe("resolveURL", () => {
   });
 
   test("invalid URL (null)", () => {
-    // eslint-disable-next-line unicorn/no-null
     expect(() => resolveURL(null as any)).toThrow(
       "URL input should be string received object (null)",
     );
