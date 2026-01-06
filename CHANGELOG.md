@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.6.2
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.6.1...v1.6.2)
+
+### 🩹 Fixes
+
+- Fix `parsePath` return type ([#293](https://github.com/unjs/ufo/pull/293))
+
+### 📖 Documentation
+
+- Add more examples in jsdoc ([#291](https://github.com/unjs/ufo/pull/291))
+
+### 📦 Build
+
+- Fix exports condition order to prefer esm with default fallback ([8457581](https://github.com/unjs/ufo/commit/8457581))
+
+### 🏡 Chore
+
+- **release:** V1.6.1 ([b83cbea](https://github.com/unjs/ufo/commit/b83cbea))
+- Update deps ([9d1833b](https://github.com/unjs/ufo/commit/9d1833b))
+- Lint ([0181677](https://github.com/unjs/ufo/commit/0181677))
+
+### ❤️ Contributors
+
+- Daedalus ([@ComfortablyCoding](https://github.com/ComfortablyCoding))
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+- Alex Liu ([@Mini-ghost](https://github.com/Mini-ghost))
+
 ## v1.6.1
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.6.0...v1.6.1)
