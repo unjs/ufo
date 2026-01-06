@@ -54,7 +54,6 @@ describe("$URL", () => {
   describe("constructor errors", () => {
     const tests = [
       {
-        // eslint-disable-next-line unicorn/no-null
         input: null,
         out: "URL input should be string received object (null)",
       },

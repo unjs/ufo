@@ -18,7 +18,6 @@ describe("withQuery", () => {
       out: "/?foo=true&bar=false",
     },
     { input: "/?foo=1", query: { foo: undefined }, out: "/" },
-    // eslint-disable-next-line unicorn/no-null
     { input: "/?foo=1", query: { foo: null }, out: "/?foo" },
     {
       input: "/",
