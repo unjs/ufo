@@ -319,6 +319,10 @@ export function withoutBase(input: string, base: string) {
   if (!input.startsWith(_base)) {
     return input;
   }
+  const nextChar = input[_base.length];
+  if (nextChar && nextChar !== "/" && nextChar !== "?") {
+    return input;
+  }
   const trimmed = input.slice(_base.length);
   return trimmed[0] === "/" ? trimmed : "/" + trimmed;
 }
