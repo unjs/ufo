@@ -320,7 +320,6 @@ export function withoutBase(input: string, base: string) {
     return input;
   }
   const nextChar = input[_base.length];
-  console.log("nextChar", nextChar, _base, input);
   if (nextChar && nextChar !== "/" && nextChar !== "?") {
     return input;
   }
