@@ -293,7 +293,11 @@ export function withBase(input: string, base: string) {
   }
   const _base = withoutTrailingSlash(base);
   if (input.startsWith(_base)) {
-    return input;
+    const nextChar = input[_base.length];
+    // Ensure '/admin-dashboard' is not considered as having base '/admin/'
+    if (!nextChar || nextChar === "/" || nextChar === "?") {
+      return input;
+    }
   }
   return joinURL(_base, input);
 }
@@ -319,6 +323,7 @@ export function withoutBase(input: string, base: string) {
   if (!input.startsWith(_base)) {
     return input;
   }
+  // Ensure '/admin-dashboard' is not considered as having base '/admin/'
   const nextChar = input[_base.length];
   if (nextChar && nextChar !== "/" && nextChar !== "?") {
     return input;
