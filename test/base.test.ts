@@ -13,6 +13,22 @@ describe("withBase", () => {
     { base: "/base/", input: "/base/a", out: "/base/a" },
     { base: "/base/", input: "https://test.com", out: "https://test.com" },
     { base: "/", input: "https://test.com", out: "https://test.com" },
+    {
+      base: "/admin/",
+      input: "/admin-dashboard",
+      out: "/admin/admin-dashboard",
+    },
+    {
+      base: "/admin/",
+      input: "/admin/admin-dashboard",
+      out: "/admin/admin-dashboard",
+    },
+    {
+      base: "/admin",
+      input: "/admin-dashboard",
+      out: "/admin/admin-dashboard",
+    },
+    { base: "/admin/", input: "/admin/dashboard", out: "/admin/dashboard" },
   ];
 
   for (const t of tests) {
@@ -38,6 +54,14 @@ describe("withoutBase", () => {
     { base: "/api", input: "/api?test", out: "/?test" },
     { base: "/base/", input: "https://test.com", out: "https://test.com" },
     { base: "/", input: "https://test.com", out: "https://test.com" },
+    { base: "/admin/", input: "/admin-dashboard", out: "/admin-dashboard" },
+    {
+      base: "/admin/",
+      input: "/admin/admin-dashboard",
+      out: "/admin-dashboard",
+    },
+    { base: "/admin", input: "/admin-dashboard", out: "/admin-dashboard" },
+    { base: "/admin/", input: "/admin/dashboard", out: "/dashboard" },
   ];
 
   for (const t of tests) {
