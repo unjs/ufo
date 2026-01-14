@@ -8,6 +8,7 @@ import {
   encodeParam,
   decode,
   decodeQueryKey,
+  decodeQueryValue
 } from "../src/";
 
 describe("encode", () => {
@@ -85,6 +86,7 @@ describe("encodeQueryValue", () => {
   const tests = [
     { input: "hello world", out: "hello+world" },
     { input: "hello+world", out: "hello%2Bworld" },
+    { input: "a`b", out: "a%60b" },
     { input: "key=value", out: "key=value" },
     { input: true, out: "true" },
     { input: 42, out: "42" },
@@ -112,6 +114,7 @@ describe("encodeQueryKey", () => {
     { input: "key=value", out: "key%3Dvalue" },
     { input: 123, out: "123" },
     { input: "=value", out: "%3Dvalue" },
+    { input: "a`b", out : "a%60b" }
   ];
 
   for (const t of tests) {
@@ -199,11 +202,30 @@ describe("decodeQueryKey", () => {
     { input: "%3Dvalue", out: "=value" },
     { input: "key+with+space", out: "key with space" },
     { input: "key%2bwith%2bplus", out: "key+with+plus" },
+    { input: "a%60b", out: "a`b" }
   ];
 
   for (const t of tests) {
     test(t.input.toString(), () => {
       expect(decodeQueryKey(t.input.toString())).toStrictEqual(t.out);
+    });
+  }
+});
+
+describe("decodeQueryValue", () => {
+  const tests = [
+    { input: "key", out: "key" },
+    { input: "key%3Dvalue", out: "key=value" },
+    { input: "123", out: "123" },
+    { input: "%3Dvalue", out: "=value" },
+    { input: "key+with+space", out: "key with space" },
+    { input: "key%2bwith%2bplus", out: "key+with+plus" },
+    { input: "a%60b", out: "a`b" }
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(decodeQueryValue(t.input.toString())).toStrictEqual(t.out);
     });
   }
 });
