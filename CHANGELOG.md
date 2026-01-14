@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.6.3
+
+[compare changes](https://github.com/unjs/ufo/compare/v1.6.2...v1.6.3)
+
+### 🩹 Fixes
+
+- **withBase, withoutBase:** Prevent false prefix matches ([#313](https://github.com/unjs/ufo/pull/313))
+
+### 🏡 Chore
+
+- Update deps ([04b73bd](https://github.com/unjs/ufo/commit/04b73bd))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+- Florian Heuberger ([@Flo0806](https://github.com/Flo0806))
+
 ## v1.6.2
 
 [compare changes](https://github.com/unjs/ufo/compare/v1.6.1...v1.6.2)
