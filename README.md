@@ -229,7 +229,7 @@ cleanDoubleSlashes("http://example.com/analyze//http://localhost:3000//");
 
 ### `filterQuery(input, predicate)`
 
-Removes the query section of the URL.
+Filters the query section of the URL based on a predicate function.
 
 **Example:**
 
@@ -512,6 +512,16 @@ Removes the protocol from the input.
 
 ```js
 withoutProtocol("http://example.com"); // "example.com"
+```
+
+### `withoutQuery(input)`
+
+Removes the query section of the URL.
+
+**Example:**
+
+```js
+withoutQuery("/foo?bar=1&baz=2"); // "/foo"
 ```
 
 ### `withoutTrailingSlash(input, respectQueryAndFragment?)`

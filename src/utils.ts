@@ -356,6 +356,27 @@ export function withQuery(input: string, query: QueryObject): string {
  * @example
  *
  * ```js
+ * withoutQuery("/foo?bar=1&baz=2"); // "/foo"
+ * ```
+ *
+ * @group utils
+ */
+export function withoutQuery(input: string): string {
+  if (!input.includes("?")) {
+    return input;
+  }
+
+  const parsed = parseURL(input);
+  parsed.search = "";
+  return stringifyParsedURL(parsed);
+}
+
+/**
+ * Filters the query section of the URL based on a predicate function.
+ *
+ * @example
+ *
+ * ```js
  * filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
  * ```
  *
