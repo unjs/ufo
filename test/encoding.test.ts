@@ -95,8 +95,10 @@ describe("encodeQueryValue", () => {
     },
     {
       input: String.raw`!@#$%^&*()_+{}[]|\:;<>,./?`,
-      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
+      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F%3F",
     },
+    { input: "https://example.com?foo=bar", out: "https:%2F%2Fexample.com%3Ffoo=bar" },
+    { input: "path?query=value", out: "path%3Fquery=value" },
   ];
 
   for (const t of tests) {

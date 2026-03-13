@@ -63,6 +63,16 @@ describe("withQuery", () => {
       query: { a: "X", "b[]": [], c: "Y" },
       out: "/?a=X&c=Y",
     },
+    {
+      input: "/",
+      query: { url: "https://google.com?query=123" },
+      out: "/?url=https:%2F%2Fgoogle.com%3Fquery=123",
+    },
+    {
+      input: "/login",
+      query: { to: "/article?id=1" },
+      out: "/login?to=%2Farticle%3Fid=1",
+    },
   ];
 
   for (const t of tests) {
