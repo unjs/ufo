@@ -64,8 +64,7 @@ export function encodeQueryValue(input: QueryValue): string {
       .replace(ENC_SPACE_RE, "+")
       .replace(HASH_RE, "%23")
       .replace(AMPERSAND_RE, "%26")
-      .replace(ENC_BACKTICK_RE, "`")
-      .replace(ENC_CARET_RE, "^")
+      // ^ (`%5E`) and backtick (`%60`) must remain encoded per RFC 1738
       .replace(SLASH_RE, "%2F")
   );
 }
