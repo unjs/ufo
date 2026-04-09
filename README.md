@@ -166,7 +166,7 @@ stringifyParsedURL(obj); // "http://bar.com/foo?test=123#token"
 
 ### `encodeQueryItem(key, value)`
 
-Encodes a pair of key and value into a url query string value.
+Encodes a pair of key and value into a URL query string value.
 
 If the value is an array, it will be encoded as multiple key-value pairs with the same key.
 
@@ -211,8 +211,6 @@ stringifyQuery({ foo: 'bar', baz: undefined })
 ```
 
 ## Utils
-
-### `$URL()`
 
 ### `cleanDoubleSlashes(input)`
 
