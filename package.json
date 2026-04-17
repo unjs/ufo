@@ -35,7 +35,7 @@
     "@vitest/coverage-v8": "^4.0.17",
     "automd": "^0.4.2",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.2.1",
     "eslint-config-unjs": "^0.6.2",
     "jiti": "^2.6.1",
     "prettier": "^3.7.4",
