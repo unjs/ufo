@@ -1,24 +1,13 @@
 #!/usr/bin/env node
 
-import { deepStrictEqual } from "node:assert";
 import { performance } from "node:perf_hooks";
 import { styleText } from "node:util";
-import {
-  decodeQueryKey,
-  decodeQueryValue,
-  parseQuery,
-  type ParsedQuery,
-} from "../src";
+import { parseQuery, type ParsedQuery } from "../src";
 
 const BENCHMARK_TIME_MS = readPositiveInteger("BENCHMARK_TIME_MS", 500);
 const WARMUP_TIME_MS = readPositiveInteger("BENCHMARK_WARMUP_MS", 100);
 const SAMPLE_COUNT = readPositiveInteger("BENCHMARK_SAMPLES", 3);
 const BATCH_SIZE = readPositiveInteger("BENCHMARK_BATCH_SIZE", 1000);
-
-type BenchmarkTask<TInput, TResult> = {
-  name: string;
-  run: (input: TInput) => TResult;
-};
 
 type BenchmarkCase<TInput> = {
   name: string;
@@ -28,11 +17,10 @@ type BenchmarkCase<TInput> = {
 type BenchmarkSuite<TInput, TResult> = {
   name: string;
   cases: Array<BenchmarkCase<TInput>>;
-  tasks: Array<BenchmarkTask<TInput, TResult>>;
+  run: (input: TInput) => TResult;
 };
 
-type BenchmarkResult<TInput, TResult> = {
-  task: BenchmarkTask<TInput, TResult>;
+type BenchmarkResult = {
   samples: number[];
   ops: number;
 };
@@ -42,36 +30,8 @@ function readPositiveInteger(name: string, fallback: number): number {
   return Number.isInteger(value) && value > 0 ? value : fallback;
 }
 
-function parseQueryBefore(parametersString = ""): ParsedQuery {
-  const object: ParsedQuery = Object.create(null);
-  if (parametersString[0] === "?") {
-    parametersString = parametersString.slice(1);
-  }
-  for (const parameter of parametersString.split("&")) {
-    const s = parameter.match(/([^=]+)=?(.*)/) || [];
-    if (s.length < 2) {
-      continue;
-    }
-
-    const key = decodeQueryKey(s[1]);
-    if (key === "__proto__" || key === "constructor") {
-      continue;
-    }
-
-    const value = decodeQueryValue(s[2] || "");
-    const currentValue = object[key];
-    if (currentValue === undefined) {
-      object[key] = value;
-    } else if (Array.isArray(currentValue)) {
-      currentValue.push(value);
-    } else {
-      object[key] = [currentValue, value];
-    }
-  }
-  return object;
-}
-
-let sink: unknown;
+const EMPTY_SINK = Symbol("empty-sink");
+let sink: unknown = EMPTY_SINK;
 let observedRuns = 0;
 
 function runFor(milliseconds: number, task: () => unknown): number {
@@ -105,81 +65,42 @@ function formatOps(value: number): string {
   });
 }
 
-function assertSameResults<TInput, TResult>(
-  suite: BenchmarkSuite<TInput, TResult>,
-): void {
-  const [baseline, ...candidates] = suite.tasks;
-  if (!baseline) {
-    throw new Error(`${suite.name} has no benchmark tasks`);
-  }
-
-  for (const testCase of suite.cases) {
-    const expected = baseline.run(testCase.input);
-    for (const candidate of candidates) {
-      deepStrictEqual(
-        candidate.run(testCase.input),
-        expected,
-        `${suite.name}/${testCase.name}/${candidate.name}`,
-      );
-    }
-  }
-}
-
 function runCase<TInput, TResult>(
   suite: BenchmarkSuite<TInput, TResult>,
   testCase: BenchmarkCase<TInput>,
-): Array<BenchmarkResult<TInput, TResult>> {
-  const results = suite.tasks.map((task) => ({
-    task,
-    samples: [] as number[],
+): BenchmarkResult {
+  const result: BenchmarkResult = {
+    samples: [],
     ops: 0,
-  }));
+  };
 
-  // Alternate task order to reduce first-run and branch-predictor bias.
   for (let sampleIndex = 0; sampleIndex < SAMPLE_COUNT; sampleIndex++) {
-    const orderedResults =
-      sampleIndex % 2 === 0 ? results : [...results].reverse();
-
-    for (const result of orderedResults) {
-      const task = () => result.task.run(testCase.input);
-      runFor(WARMUP_TIME_MS, task);
-      result.samples.push(runFor(BENCHMARK_TIME_MS, task));
-    }
+    const task = () => suite.run(testCase.input);
+    runFor(WARMUP_TIME_MS, task);
+    result.samples.push(runFor(BENCHMARK_TIME_MS, task));
   }
 
-  for (const result of results) {
-    result.ops = median(result.samples);
-  }
-  return results;
+  result.ops = median(result.samples);
+  return result;
 }
 
 function runSuite<TInput, TResult>(
   suite: BenchmarkSuite<TInput, TResult>,
 ): void {
-  assertSameResults(suite);
   process.stdout.write(`\n${styleText("bold", suite.name)}\n`);
 
-  const longestTaskName = Math.max(
-    ...suite.tasks.map((task) => task.name.length),
+  const longestCaseName = Math.max(
+    ...suite.cases.map((testCase) => testCase.name.length),
   );
 
   for (const testCase of suite.cases) {
-    const results = runCase(suite, testCase);
-    const baselineOps = results[0].ops;
-
-    process.stdout.write(`\n  ${testCase.name}\n`);
-    for (const result of results) {
-      const ratio = result.ops / baselineOps;
-      const ratioText =
-        result === results[0] ? "baseline" : `${ratio.toFixed(2)}x`;
-
-      process.stdout.write(
-        `  ${result.task.name.padEnd(longestTaskName)}  ${styleText(
-          "bold",
-          formatOps(result.ops).padStart(14),
-        )} ${styleText("dim", "ops/sec")}  ${ratioText}\n`,
-      );
-    }
+    const result = runCase(suite, testCase);
+    process.stdout.write(
+      `${testCase.name.padEnd(longestCaseName)}  ${styleText(
+        "bold",
+        formatOps(result.ops).padStart(14),
+      )} ${styleText("dim", "ops/sec")}\n`,
+    );
   }
 }
 
@@ -190,16 +111,7 @@ const longQuery = Array.from(
 
 const parseQuerySuite: BenchmarkSuite<string, ParsedQuery> = {
   name: "parseQuery",
-  tasks: [
-    {
-      name: "before (split + regex)",
-      run: parseQueryBefore,
-    },
-    {
-      name: "after  (single pass)",
-      run: parseQuery,
-    },
-  ],
+  run: parseQuery,
   cases: [
     {
       name: "empty",
@@ -234,7 +146,6 @@ const parseQuerySuite: BenchmarkSuite<string, ParsedQuery> = {
 
 runSuite(parseQuerySuite);
 
-if (observedRuns === 0) {
+if (observedRuns === 0 || sink === EMPTY_SINK) {
   process.exitCode = 1;
 }
-void sink;
