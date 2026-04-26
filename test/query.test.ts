@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -70,6 +70,52 @@ describe("withQuery", () => {
       expect(withQuery(t.input, t.query)).toBe(t.out);
     });
   }
+});
+
+describe("parseQuery", () => {
+  test("parses repeated keys into arrays", () => {
+    const query = parseQuery("tags=javascript&tags=web&tags=dev");
+
+    expect(query.tags).toEqual(["javascript", "web", "dev"]);
+  });
+
+  test("parses empty values and values containing equals", () => {
+    const query = parseQuery("?empty=&flag&param=a=b=c");
+
+    expect(query.empty).toBe("");
+    expect(query.flag).toBe("");
+    expect(query.param).toBe("a=b=c");
+  });
+
+  test("decodes plus and invalid percent sequences like encoding helpers", () => {
+    const query = parseQuery("key+with+space=value+with+space&bad=%E0%A4%A");
+
+    expect(query["key with space"]).toBe("value with space");
+    expect(query.bad).toBe("%E0%A4%A");
+  });
+
+  test("ignores dangerous keys and returns a null-prototype object", () => {
+    const query = parseQuery(
+      "__proto__=polluted&%5F%5Fproto%5F%5F=encoded&constructor=evil&safe=ok",
+    );
+
+    expect(Object.getPrototypeOf(query)).toBe(null);
+    expect(Object.prototype.hasOwnProperty.call(query, "__proto__")).toBe(
+      false,
+    );
+    expect(Object.prototype.hasOwnProperty.call(query, "constructor")).toBe(
+      false,
+    );
+    expect(query.safe).toBe("ok");
+  });
+
+  test("preserves leading equals compatibility", () => {
+    const query = parseQuery("=foo=bar&==baz=qux&===");
+
+    expect(query.foo).toBe("bar");
+    expect(query.baz).toBe("qux");
+    expect(Object.keys(query)).toEqual(["foo", "baz"]);
+  });
 });
 
 describe("filterQuery", () => {

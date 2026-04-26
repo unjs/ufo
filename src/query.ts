@@ -18,11 +18,35 @@ export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
 export type ParsedQuery = Record<string, string | string[]>;
 
+const AMPERSAND_CHAR_CODE = 38;
+const EQUAL_CHAR_CODE = 61;
+
 // const EmptyObject = /* @__PURE__ */ (() => {
 //   const C = function () {};
 //   C.prototype = Object.create(null);
 //   return C;
 // })() as unknown as { new (): any };
+
+function appendQueryParameter(
+  object: ParsedQuery,
+  key: string,
+  value: string,
+): void {
+  key = decodeQueryKey(key);
+  if (key === "__proto__" || key === "constructor") {
+    return;
+  }
+
+  value = decodeQueryValue(value);
+  const currentValue = object[key];
+  if (currentValue === undefined) {
+    object[key] = value;
+  } else if (Array.isArray(currentValue)) {
+    currentValue.push(value);
+  } else {
+    object[key] = [currentValue, value];
+  }
+}
 
 /**
  * Parses and decodes a query string into an object.
@@ -50,25 +74,47 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   // TODO: Use new EmptyObject() instead of Object.create(null) for better performance in next major version
   // https://github.com/unjs/ufo/pull/290
   const object: ParsedQuery = Object.create(null);
-  if (parametersString[0] === "?") {
-    parametersString = parametersString.slice(1);
-  }
-  for (const parameter of parametersString.split("&")) {
-    const s = parameter.match(/([^=]+)=?(.*)/) || [];
-    if (s.length < 2) {
+
+  let keyStart = -1;
+  let keyEnd = -1;
+  const stringLength = parametersString.length;
+
+  for (
+    let index = parametersString[0] === "?" ? 1 : 0;
+    index <= stringLength;
+    index++
+  ) {
+    const isEnd = index === stringLength;
+    const character = isEnd
+      ? AMPERSAND_CHAR_CODE
+      : parametersString.charCodeAt(index);
+
+    if (character === AMPERSAND_CHAR_CODE) {
+      if (keyStart !== -1) {
+        appendQueryParameter(
+          object,
+          parametersString.slice(keyStart, keyEnd === -1 ? index : keyEnd),
+          keyEnd === -1 ? "" : parametersString.slice(keyEnd + 1, index),
+        );
+      }
+      keyStart = -1;
+      keyEnd = -1;
       continue;
     }
-    const key = decodeQueryKey(s[1]);
-    if (key === "__proto__" || key === "constructor") {
+
+    if (character === EQUAL_CHAR_CODE) {
+      if (keyStart === -1) {
+        // Match the old unanchored regex: `=a=b` parses as `a=b`.
+        continue;
+      }
+      if (keyEnd === -1) {
+        keyEnd = index;
+      }
       continue;
     }
-    const value = decodeQueryValue(s[2] || "");
-    if (object[key] === undefined) {
-      object[key] = value;
-    } else if (Array.isArray(object[key])) {
-      (object[key] as string[]).push(value);
-    } else {
-      object[key] = [object[key] as string, value];
+
+    if (keyStart === -1) {
+      keyStart = index;
     }
   }
   return object as T;
