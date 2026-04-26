@@ -132,7 +132,7 @@ export function encodeQueryItem(
 export function stringifyQuery(query: QueryObject): string {
   let stringifiedQuery = "";
   for (const key in query) {
-    if (!Object.prototype.hasOwnProperty.call(query, key)) {
+    if (!Object.hasOwn(query, key)) {
       continue;
     }
     const value = query[key];
