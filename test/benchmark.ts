@@ -25,6 +25,9 @@ type BenchmarkResult = {
   ops: number;
 };
 
+/**
+ * Reads a positive integer from the environment.
+ */
 function readPositiveInteger(name: string, fallback: number): number {
   const value = Number(process.env[name]);
   return Number.isInteger(value) && value > 0 ? value : fallback;
@@ -34,6 +37,9 @@ const EMPTY_SINK = Symbol("empty-sink");
 let sink: unknown = EMPTY_SINK;
 let observedRuns = 0;
 
+/**
+ * Runs a task for the requested duration and returns ops/sec.
+ */
 function runFor(milliseconds: number, task: () => unknown): number {
   const start = performance.now();
   let iterations = 0;
@@ -51,6 +57,9 @@ function runFor(milliseconds: number, task: () => unknown): number {
   return (iterations / elapsed) * 1000;
 }
 
+/**
+ * Returns the median sample value.
+ */
 function median(values: number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
@@ -59,12 +68,18 @@ function median(values: number[]): number {
     : sorted[middle];
 }
 
+/**
+ * Formats ops/sec for benchmark output.
+ */
 function formatOps(value: number): string {
   return value.toLocaleString("en-US", {
     maximumFractionDigits: 0,
   });
 }
 
+/**
+ * Benchmarks one input case with warmup and repeated samples.
+ */
 function runCase<TInput, TResult>(
   suite: BenchmarkSuite<TInput, TResult>,
   testCase: BenchmarkCase<TInput>,
@@ -84,6 +99,9 @@ function runCase<TInput, TResult>(
   return result;
 }
 
+/**
+ * Prints benchmark results for a utility suite.
+ */
 function runSuite<TInput, TResult>(
   suite: BenchmarkSuite<TInput, TResult>,
 ): void {

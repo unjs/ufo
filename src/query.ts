@@ -27,6 +27,9 @@ const EQUAL_CHAR_CODE = 61;
 //   return C;
 // })() as unknown as { new (): any };
 
+/**
+ * Decodes and stores one parsed query parameter.
+ */
 function appendQueryParameter(
   object: ParsedQuery,
   key: string,
