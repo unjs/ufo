@@ -145,6 +145,7 @@ describe("withHttp", () => {
     },
     { input: "file:///home/user", out: "http:///home/user" },
     { input: "foo.bar.com", out: "http://foo.bar.com" },
+    { input: "localhost:9000", out: "http://localhost:9000" },
   ];
 
   for (const t of tests) {
@@ -167,6 +168,7 @@ describe("withHttps", () => {
     },
     { input: "file:///home/user", out: "https:///home/user" },
     { input: "foo.bar.com", out: "https://foo.bar.com" },
+    { input: "localhost:9000", out: "https://localhost:9000" },
   ];
 
   for (const t of tests) {
@@ -224,6 +226,16 @@ describe("withProtocol", () => {
       protocol: "callto://",
       out: "callto://+1234567890",
     },
+    {
+      input: "localhost:9000",
+      protocol: "ftp://",
+      out: "ftp://localhost:9000",
+    },
+    {
+      input: "api-service:9000/path?query=1#hash",
+      protocol: "http://",
+      out: "http://api-service:9000/path?query=1#hash",
+    },
   ];
 
   for (const t of tests) {
@@ -238,6 +250,7 @@ describe("withoutProtocol", () => {
     { input: "http://example.com", out: "example.com" },
     { input: "https://example.com", out: "example.com" },
     { input: "ftp://example.com/test?foo", out: "example.com/test?foo" },
+    { input: "localhost:9000", out: "localhost:9000" },
     {
       input: "http://foo.com/test?query=123#hash",
       out: "foo.com/test?query=123#hash",
