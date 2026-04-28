@@ -232,6 +232,16 @@ describe("withProtocol", () => {
       out: "ftp://localhost:9000",
     },
     {
+      input: " localhost:9000",
+      protocol: "http://",
+      out: "http:// localhost:9000",
+    },
+    {
+      input: "\0localhost:9000",
+      protocol: "http://",
+      out: "http://\0localhost:9000",
+    },
+    {
       input: "api-service:9000/path?query=1#hash",
       protocol: "http://",
       out: "http://api-service:9000/path?query=1#hash",

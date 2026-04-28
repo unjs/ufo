@@ -12,7 +12,7 @@ const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
-const HOST_PORT_RE = /^[^\s:/?#\\]+:\d+(?:[/?#]|$)/;
+const HOST_PORT_RE = /^[\s\0]*[^\s:/?#\\]+:\d+(?:[/?#]|$)/;
 const NON_SLASH_PROTOCOL_RE =
   /^(?:blob|data|javascript|vbscript|mailto|tel|sms|urn|skype|callto):/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
