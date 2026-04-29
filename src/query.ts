@@ -130,9 +130,19 @@ export function encodeQueryItem(
  * @group Query_utils
  */
 export function stringifyQuery(query: QueryObject): string {
-  return Object.keys(query)
-    .filter((k) => query[k] !== undefined)
-    .map((k) => encodeQueryItem(k, query[k]))
-    .filter(Boolean)
-    .join("&");
+  let stringifiedQuery = "";
+  for (const key in query) {
+    if (!Object.hasOwn(query, key)) {
+      continue;
+    }
+    const value = query[key];
+    if (value === undefined) {
+      continue;
+    }
+    const queryItem = encodeQueryItem(key, value);
+    if (queryItem) {
+      stringifiedQuery += stringifiedQuery ? `&${queryItem}` : queryItem;
+    }
+  }
+  return stringifiedQuery;
 }
