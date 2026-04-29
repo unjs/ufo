@@ -62,6 +62,11 @@ describe("withoutBase", () => {
     },
     { base: "/admin", input: "/admin-dashboard", out: "/admin-dashboard" },
     { base: "/admin/", input: "/admin/dashboard", out: "/dashboard" },
+    // Collapse leading "//" to prevent protocol-relative URL injection
+    { base: "/legacy", input: "/legacy//evil.com", out: "/evil.com" },
+    { base: "/legacy/", input: "/legacy//evil.com", out: "/evil.com" },
+    { base: "/legacy", input: "/legacy///evil.com", out: "/evil.com" },
+    { base: "/legacy", input: "/legacy//", out: "/" },
   ];
 
   for (const t of tests) {
