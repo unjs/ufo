@@ -12,6 +12,9 @@ const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
+const HOST_PORT_RE = /^[\s\0]*[^\s:/?#\\]+:\d+(?:[/?#]|$)/;
+const NON_SLASH_PROTOCOL_RE =
+  /^(?:blob|data|javascript|vbscript|mailto|tel|sms|urn|skype|callto):/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 const JOIN_LEADING_SLASH_RE = /^\.?\//;
 
@@ -566,6 +569,13 @@ export function withoutProtocol(input: string): string {
  */
 export function withProtocol(input: string, protocol: string): string {
   let match = input.match(PROTOCOL_REGEX);
+  if (
+    match?.[0].endsWith(":") &&
+    HOST_PORT_RE.test(input) &&
+    !NON_SLASH_PROTOCOL_RE.test(input)
+  ) {
+    match = null;
+  }
   if (!match) {
     match = input.match(/^\/{2,}/);
   }
