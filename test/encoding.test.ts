@@ -89,13 +89,17 @@ describe("encodeQueryValue", () => {
     { input: true, out: "true" },
     { input: 42, out: "42" },
     { input: "a=1&b=2", out: "a=1%26b=2" },
+    // ^  should be percent-encoded in query values (issue #304)
+    { input: "^", out: "%5E" },
+    // backtick should be percent-encoded in query values (issue #302)
+    { input: "`", out: "%60" },
     {
       input: ["apple", "banana", "cherry"],
       out: "apple,banana,cherry",
     },
     {
       input: String.raw`!@#$%^&*()_+{}[]|\:;<>,./?`,
-      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
+      out: "!@%23$%25%5E%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
     },
   ];
 
