@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -108,4 +108,26 @@ describe("getQuery", () => {
       expect(getQuery(t)).toMatchObject(tests[t]);
     });
   }
+});
+
+describe("parseQuery", () => {
+  test("treats a single []-suffixed key as an array value", () => {
+    expect(parseQuery("filter[size][]=large")).toMatchObject({
+      "filter[size][]": ["large"],
+    });
+  });
+
+  test("preserves repeated []-suffixed keys as arrays", () => {
+    expect(
+      parseQuery("filter[size][]=large&filter[size][]=medium"),
+    ).toMatchObject({
+      "filter[size][]": ["large", "medium"],
+    });
+  });
+
+  test("keeps non-array keys as scalar values", () => {
+    expect(parseQuery("filter[size]=large")).toMatchObject({
+      "filter[size]": "large",
+    });
+  });
 });
