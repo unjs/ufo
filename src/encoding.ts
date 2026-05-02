@@ -11,7 +11,7 @@ const IM_RE = /\?/g; // %3F
 const PLUS_RE = /\+/g; // %2B
 
 const ENC_CARET_RE = /%5e/gi; // ^
-const ENC_BACKTICK_RE = /%60/gi; // `
+// Backtick (%60) is intentionally kept encoded per RFC1738 Section 2.2
 const ENC_CURLY_OPEN_RE = /%7b/gi; // {
 const ENC_PIPE_RE = /%7c/gi; // |
 const ENC_CURLY_CLOSE_RE = /%7d/gi; // }
@@ -64,7 +64,6 @@ export function encodeQueryValue(input: QueryValue): string {
       .replace(ENC_SPACE_RE, "+")
       .replace(HASH_RE, "%23")
       .replace(AMPERSAND_RE, "%26")
-      .replace(ENC_BACKTICK_RE, "`")
       .replace(ENC_CARET_RE, "^")
       .replace(SLASH_RE, "%2F")
   );
