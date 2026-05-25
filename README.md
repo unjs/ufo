@@ -237,6 +237,16 @@ Removes the query section of the URL.
 filterQuery("/foo?bar=1&baz=2", (key) => key !== "bar"); // "/foo?baz=2"
 ```
 
+### `withoutQuery(input)`
+
+Removes the entire query section of the URL.
+
+**Example:**
+
+```js
+withoutQuery("/foo?bar=1&baz=2"); // "/foo"
+```
+
 ### `getQuery(input)`
 
 Parses and decodes the query object of an input URL into an object.
