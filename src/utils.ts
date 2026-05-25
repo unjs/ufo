@@ -1,5 +1,11 @@
 import { parseURL, stringifyParsedURL } from "./parse";
-import { QueryObject, parseQuery, stringifyQuery, ParsedQuery } from "./query";
+import {
+  QueryObject,
+  QueryValue,
+  parseQuery,
+  stringifyQuery,
+  ParsedQuery,
+} from "./query";
 import {
   decode,
   decodePath,
@@ -365,7 +371,7 @@ export function withQuery(input: string, query: QueryObject): string {
  */
 export function filterQuery(
   input: string,
-  predicate: (key: string, value: string | string[]) => boolean,
+  predicate: (key: string, value: QueryValue | QueryValue[]) => boolean,
 ): string {
   if (!input.includes("?")) {
     return input;

@@ -98,7 +98,7 @@ describe("getQuery", () => {
     "http://foo.com/?param=": { param: "" },
     "http://foo.com/?param=&param=2&param=3": { param: ["", "2", "3"] },
     "http://foo.com/?param=%7B%22a%22:%5B%7B%22obj%22:%5B1,2,3%5D%7D%5D%7D": {
-      param: '{"a":[{"obj":[1,2,3]}]}',
+      param: { a: [{ obj: [1, 2, 3] }] },
     },
     "http://foo.com/?toString=foo": { toString: "foo" },
   };
@@ -108,4 +108,12 @@ describe("getQuery", () => {
       expect(getQuery(t)).toMatchObject(tests[t]);
     });
   }
+
+  test("parses nested json objects created by withQuery", () => {
+    const url = withQuery("https://foo.com/", { foo: 2, bar: { k: "v" } });
+    expect(getQuery(url)).toMatchObject({
+      foo: "2",
+      bar: { k: "v" },
+    });
+  });
 });
