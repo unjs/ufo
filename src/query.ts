@@ -37,6 +37,9 @@ export type ParsedQuery = Record<string, string | string[]>;
  *
  * parseQuery("tags=javascript&tags=web&tags=dev");
  * // { tags: ["javascript", "web", "dev"] }
+ *
+ * parseQuery("filter[size][]=large");
+ * // { "filter[size]": ["large"] }
  * ```
  *
  * @note
@@ -63,12 +66,14 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (object[key] === undefined) {
-      object[key] = value;
-    } else if (Array.isArray(object[key])) {
-      (object[key] as string[]).push(value);
+    const arrayKey = key.endsWith("[]");
+    const storageKey = arrayKey ? key.slice(0, -2) : key;
+    if (object[storageKey] === undefined) {
+      object[storageKey] = arrayKey ? [value] : value;
+    } else if (Array.isArray(object[storageKey])) {
+      (object[storageKey] as string[]).push(value);
     } else {
-      object[key] = [object[key] as string, value];
+      object[storageKey] = [object[storageKey] as string, value];
     }
   }
   return object as T;

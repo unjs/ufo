@@ -101,6 +101,12 @@ describe("getQuery", () => {
       param: '{"a":[{"obj":[1,2,3]}]}',
     },
     "http://foo.com/?toString=foo": { toString: "foo" },
+    "http://foo.com/?filter[size][]=large": { "filter[size]": ["large"] },
+    "http://foo.com/?filter[size]=large": { "filter[size]": "large" },
+    "http://foo.com/?filter[size][]=large&filter[size][]=medium": {
+      "filter[size]": ["large", "medium"],
+    },
+    "http://foo.com/?foo[]=bar": { foo: ["bar"] },
   };
 
   for (const t in tests) {
