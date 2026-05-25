@@ -5,6 +5,7 @@ import {
   decodePath,
   encodeHash,
   encodeHost,
+  encodeParam,
   encodePath,
 } from "./encoding";
 
@@ -349,6 +350,51 @@ export function withQuery(input: string, query: QueryObject): string {
   const parsed = parseURL(input);
   const mergedQuery = { ...parseQuery(parsed.search), ...query };
   parsed.search = stringifyQuery(mergedQuery);
+  return stringifyParsedURL(parsed);
+}
+
+const DEFAULT_PATH_PARAM_RE = /\{([^}]+)\}/g;
+
+export interface WithPathParametersOptions {
+  interpolate?: RegExp;
+}
+
+/**
+ * Replace path parameters in the input URL.
+ *
+ * @example
+ *
+ * ```js
+ * withPathParameters("/api/users/{userId}", { userId: "abc" }); // "/api/users/abc"
+ *
+ * withPathParameters("/api/users/{{userId}}", { userId: "abc" }, {
+ *   interpolate: /\{\{([\s\S]+?)\}\}/g,
+ * }); // "/api/users/abc"
+ * ```
+ *
+ * @group utils
+ */
+export function withPathParameters(
+  input: string,
+  params: Record<string, string | number>,
+  options?: WithPathParametersOptions,
+): string {
+  const interpolate = options?.interpolate ?? DEFAULT_PATH_PARAM_RE;
+  const parsed = parseURL(input);
+
+  parsed.pathname = parsed.pathname.replace(
+    interpolate,
+    (match, key: string) => {
+      const paramKey = key.trim();
+
+      if (!(paramKey in params)) {
+        return match;
+      }
+
+      return encodeParam(params[paramKey]!);
+    },
+  );
+
   return stringifyParsedURL(parsed);
 }
 
