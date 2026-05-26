@@ -95,8 +95,9 @@ describe("encodeQueryValue", () => {
     },
     {
       input: String.raw`!@#$%^&*()_+{}[]|\:;<>,./?`,
-      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
+      out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:%3B%3C%3E,.%2F?",
     },
+    { input: "sec;ret", out: "sec%3Bret" },
   ];
 
   for (const t of tests) {

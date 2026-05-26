@@ -63,6 +63,11 @@ describe("withQuery", () => {
       query: { a: "X", "b[]": [], c: "Y" },
       out: "/?a=X&c=Y",
     },
+    {
+      input: "/foo?page=a",
+      query: { token: "sec;ret" },
+      out: "/foo?page=a&token=sec%3Bret",
+    },
   ];
 
   for (const t of tests) {

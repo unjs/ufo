@@ -9,6 +9,7 @@ const SLASH_RE = /\//g; // %2F
 const EQUAL_RE = /=/g; // %3D
 const IM_RE = /\?/g; // %3F
 const PLUS_RE = /\+/g; // %2B
+const SEMICOLON_RE = /;/g; // %3B
 
 const ENC_CARET_RE = /%5e/gi; // ^
 const ENC_BACKTICK_RE = /%60/gi; // `
@@ -67,6 +68,7 @@ export function encodeQueryValue(input: QueryValue): string {
       .replace(ENC_BACKTICK_RE, "`")
       .replace(ENC_CARET_RE, "^")
       .replace(SLASH_RE, "%2F")
+      .replace(SEMICOLON_RE, "%3B")
   );
 }
 
