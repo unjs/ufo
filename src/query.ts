@@ -16,7 +16,22 @@ export type QueryValue =
 
 export type QueryObject = Record<string, QueryValue | QueryValue[]>;
 
-export type ParsedQuery = Record<string, string | string[]>;
+export type ParsedQuery = Record<string, QueryValue | QueryValue[]>;
+
+const parseQueryJsonValue = (value: string): QueryValue => {
+  if (
+    (value.startsWith("{") && value.endsWith("}")) ||
+    (value.startsWith("[") && value.endsWith("]"))
+  ) {
+    try {
+      return JSON.parse(value);
+    } catch {
+      // noop
+    }
+  }
+
+  return value;
+};
 
 // const EmptyObject = /* @__PURE__ */ (() => {
 //   const C = function () {};
@@ -37,6 +52,9 @@ export type ParsedQuery = Record<string, string | string[]>;
  *
  * parseQuery("tags=javascript&tags=web&tags=dev");
  * // { tags: ["javascript", "web", "dev"] }
+ *
+ * parseQuery("foo=2&bar=%7B%22k%22:%22v%22%7D");
+ * // { foo: "2", bar: { k: "v" } }
  * ```
  *
  * @note
@@ -62,13 +80,13 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
-    const value = decodeQueryValue(s[2] || "");
+    const value = parseQueryJsonValue(decodeQueryValue(s[2] || ""));
     if (object[key] === undefined) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
-      (object[key] as string[]).push(value);
+      (object[key] as QueryValue[]).push(value);
     } else {
-      object[key] = [object[key] as string, value];
+      object[key] = [object[key] as QueryValue, value];
     }
   }
   return object as T;
