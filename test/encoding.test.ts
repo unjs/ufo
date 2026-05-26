@@ -83,6 +83,7 @@ describe("encodeHash", () => {
 
 describe("encodeQueryValue", () => {
   const tests = [
+    { input: "", out: "" },
     { input: "hello world", out: "hello+world" },
     { input: "hello+world", out: "hello%2Bworld" },
     { input: "key=value", out: "key=value" },
@@ -97,6 +98,11 @@ describe("encodeQueryValue", () => {
       input: String.raw`!@#$%^&*()_+{}[]|\:;<>,./?`,
       out: "!@%23$%25^%26*()_%2B%7B%7D%5B%5D|%5C:;%3C%3E,.%2F?",
     },
+    { input: "%20", out: "%2520" },
+    { input: "hello%2Bworld", out: "hello%252Bworld" },
+    { input: "#&+", out: "%23%26%2B" },
+    { input: "😀", out: "%F0%9F%98%80" },
+    { input: "test%26value", out: "test%2526value" },
   ];
 
   for (const t of tests) {
@@ -108,10 +114,14 @@ describe("encodeQueryValue", () => {
 
 describe("encodeQueryKey", () => {
   const tests = [
+    { input: "", out: "" },
     { input: "key", out: "key" },
     { input: "key=value", out: "key%3Dvalue" },
     { input: 123, out: "123" },
     { input: "=value", out: "%3Dvalue" },
+    { input: "%3D", out: "%253D" },
+    { input: "#&+=", out: "%23%26%2B%3D" },
+    { input: "😀", out: "%F0%9F%98%80" },
   ];
 
   for (const t of tests) {
@@ -123,6 +133,7 @@ describe("encodeQueryKey", () => {
 
 describe("encodePath", () => {
   const tests = [
+    { input: "", out: "" },
     { input: "path/to/resource", out: "path/to/resource" },
     { input: "/path/to/resource", out: "/path/to/resource" },
     { input: "path?query=value", out: "path%3Fquery=value" },
@@ -133,6 +144,10 @@ describe("encodePath", () => {
     { input: "path/to/re source", out: "path/to/re%20source" },
     { input: "p@th", out: "p@th" },
     { input: "path/to/resource/file.txt", out: "path/to/resource/file.txt" },
+    { input: "%2F", out: "%2F" },
+    { input: "path%23hash", out: "path%2523hash" },
+    { input: "#&+/", out: "%23%26%2B/" },
+    { input: "😀", out: "%F0%9F%98%80" },
   ];
 
   for (const t of tests) {
