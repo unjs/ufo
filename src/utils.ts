@@ -288,7 +288,7 @@ export function cleanDoubleSlashes(input = ""): string {
  * @group utils
  */
 export function withBase(input: string, base: string) {
-  if (isEmptyURL(base) || hasProtocol(input)) {
+  if (isEmptyURL(base) || hasProtocol(input, { acceptRelative: true })) {
     return input;
   }
   const _base = withoutTrailingSlash(base);
