@@ -13,6 +13,18 @@ describe("withBase", () => {
     { base: "/base/", input: "/base/a", out: "/base/a" },
     { base: "/base/", input: "https://test.com", out: "https://test.com" },
     { base: "/", input: "https://test.com", out: "https://test.com" },
+    // Protocol-relative URLs are absolute and should not get a base prepended
+    {
+      base: "/app",
+      input: "//cdn.example.com/asset.js",
+      out: "//cdn.example.com/asset.js",
+    },
+    { base: "/app/", input: "//cdn.example.com", out: "//cdn.example.com" },
+    {
+      base: "/",
+      input: "//cdn.example.com/path",
+      out: "//cdn.example.com/path",
+    },
     {
       base: "/admin/",
       input: "/admin-dashboard",
