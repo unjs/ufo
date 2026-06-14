@@ -42,6 +42,8 @@ describe("normalizeURL", () => {
       "http://localhost/abc/deg%2F%3F%26?email=some+v1@email.com&foo=bar",
     "http://example.com/foo\\bar": "http://example.com/foo/bar",
     "\0http://google.com": "http://google.com",
+    "data:text/plain;base64,aGVsbG8=": "data:text/plain;base64,aGVsbG8=",
+    "blob:https://example.com/uuid": "blob:https://example.com/uuid",
   };
 
   const validURLS = [
