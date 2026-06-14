@@ -3,6 +3,9 @@ import { hasProtocol } from "./utils";
 
 const protocolRelative = Symbol.for("ufo:protocolRelative");
 
+// Protocols whose value is an opaque path (no `//` authority component).
+const OPAQUE_PROTOCOL_RE = /^(?:blob|data|javascript|vbscript):$/i;
+
 export interface ParsedURL {
   protocol?: string;
   host?: string;
@@ -187,10 +190,14 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const hash = parsed.hash || "";
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
-  const proto =
-    parsed.protocol || parsed[protocolRelative]
-      ? (parsed.protocol || "") + "//"
-      : "";
+  let proto = "";
+  if (parsed.protocol && OPAQUE_PROTOCOL_RE.test(parsed.protocol)) {
+    // Opaque-path protocols (e.g. `data:`, `blob:`) are not followed by a `//`
+    // authority, so emitting one corrupts the URL on round-trip.
+    proto = parsed.protocol;
+  } else if (parsed.protocol || parsed[protocolRelative]) {
+    proto = (parsed.protocol || "") + "//";
+  }
   return proto + auth + host + pathname + search + hash;
 }
 

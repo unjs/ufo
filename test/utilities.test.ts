@@ -4,6 +4,7 @@ import {
   isEqual,
   isRelative,
   parsePath,
+  parseURL,
   stringifyParsedURL,
   withHttp,
   withHttps,
@@ -122,6 +123,19 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "https:", host: "google.com" },
       out: "https://google.com",
     },
+    // Opaque-path protocols must not gain a `//` authority (round-trip safe).
+    {
+      input: { protocol: "data:", pathname: "text/plain;base64,aGVsbG8=" },
+      out: "data:text/plain;base64,aGVsbG8=",
+    },
+    {
+      input: { protocol: "blob:", pathname: "https://example.com/uuid" },
+      out: "blob:https://example.com/uuid",
+    },
+    {
+      input: { protocol: "javascript:", pathname: "alert(1)" },
+      out: "javascript:alert(1)",
+    },
   ];
 
   for (const t of tests) {
@@ -133,6 +147,17 @@ describe("stringifyParsedURL", () => {
       ).toBe(t.out);
     });
   }
+
+  test("round-trips opaque-path protocols (data:, blob:, javascript:)", () => {
+    for (const input of [
+      "data:text/plain;base64,aGVsbG8=",
+      "data:image/png;base64,aaa//bbbbbb/ccc",
+      "blob:https://example.com/550e8400",
+      "javascript:alert('hello')",
+    ]) {
+      expect(stringifyParsedURL(parseURL(input))).toBe(input);
+    }
+  });
 });
 
 describe("withHttp", () => {
