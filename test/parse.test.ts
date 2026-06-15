@@ -174,6 +174,39 @@ describe("parseURL", () => {
         hash: "",
       },
     },
+    {
+      input: "mailto:foo@bar.com",
+      out: {
+        protocol: "mailto:",
+        auth: "",
+        host: "",
+        pathname: "foo@bar.com",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "tel:+123456789",
+      out: {
+        protocol: "tel:",
+        auth: "",
+        host: "",
+        pathname: "+123456789",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "urn:isbn:9780136091813",
+      out: {
+        protocol: "urn:",
+        auth: "",
+        host: "",
+        pathname: "isbn:9780136091813",
+        search: "",
+        hash: "",
+      },
+    },
   ];
 
   for (const t of tests) {
