@@ -69,6 +69,23 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
 
+  // Protocols without a `//` authority (e.g. `mailto:`, `tel:`, `urn:`) have an
+  // opaque path that must be preserved instead of being dropped by the
+  // host-based parser below.
+  const _opaqueProtoMatch = input.match(/^[\s\0]*([\w+.-]{2,}:)(?!\/\/)(.*)/);
+  if (_opaqueProtoMatch) {
+    const [, _proto, _rest = ""] = _opaqueProtoMatch;
+    const { pathname, search, hash } = parsePath(_rest);
+    return {
+      protocol: _proto.toLowerCase(),
+      auth: "",
+      host: "",
+      pathname,
+      search,
+      hash,
+    };
+  }
+
   const [, protocol = "", auth, hostAndPath = ""] =
     input
       .replace(/\\/g, "/")
@@ -187,10 +204,20 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const hash = parsed.hash || "";
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
-  const proto =
-    parsed.protocol || parsed[protocolRelative]
-      ? (parsed.protocol || "") + "//"
-      : "";
+  // Only emit the `//` authority separator when there is an authority to
+  // separate (a host/auth) or for protocol-relative URLs. Opaque-path
+  // protocols such as `mailto:`, `tel:` or `data:` must not gain a spurious
+  // `//`, otherwise the parse↔stringify round-trip corrupts the URL.
+  let proto = "";
+  if (parsed[protocolRelative]) {
+    proto = (parsed.protocol || "") + "//";
+  } else if (parsed.protocol) {
+    // `file:` URLs canonically keep their (possibly empty) `//` authority,
+    // while opaque-path protocols (`mailto:`, `tel:`, `data:`, ...) without a
+    // host/auth must not gain a spurious `//`.
+    const hasAuthority = host || auth || parsed.protocol === "file:";
+    proto = hasAuthority ? parsed.protocol + "//" : parsed.protocol;
+  }
   return proto + auth + host + pathname + search + hash;
 }
 

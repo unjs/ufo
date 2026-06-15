@@ -122,6 +122,18 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "https:", host: "google.com" },
       out: "https://google.com",
     },
+    {
+      input: { protocol: "mailto:", pathname: "foo@bar.com" },
+      out: "mailto:foo@bar.com",
+    },
+    {
+      input: { protocol: "tel:", pathname: "+123456789" },
+      out: "tel:+123456789",
+    },
+    {
+      input: { protocol: "urn:", pathname: "isbn:9780136091813" },
+      out: "urn:isbn:9780136091813",
+    },
   ];
 
   for (const t of tests) {
