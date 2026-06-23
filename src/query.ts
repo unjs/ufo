@@ -54,7 +54,10 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
     parametersString = parametersString.slice(1);
   }
   for (const parameter of parametersString.split("&")) {
-    const s = parameter.match(/([^=]+)=?(.*)/) || [];
+    if (!parameter) {
+      continue;
+    }
+    const s = parameter.match(/([^=]*)=?(.*)/) || [];
     if (s.length < 2) {
       continue;
     }

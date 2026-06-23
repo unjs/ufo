@@ -109,3 +109,18 @@ describe("getQuery", () => {
     });
   }
 });
+
+describe("parseQuery empty key", () => {
+  // Matches URLSearchParams: "=b" -> [["","b"]]
+  const tests = {
+    "http://foo.com/?=b": { "": "b" },
+    "http://foo.com/?a=1&=b": { a: "1", "": "b" },
+    "http://foo.com/?==": { "": "=" },
+    "http://foo.com/?=b&=c": { "": ["b", "c"] },
+  };
+  for (const t in tests) {
+    test(t, () => {
+      expect(getQuery(t)).toMatchObject(tests[t]);
+    });
+  }
+});
