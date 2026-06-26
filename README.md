@@ -387,7 +387,7 @@ Normalizes the input URL:
 
 ```js
 normalizeURL("test?query=123 123#hash, test");
-// Returns "test?query=123%20123#hash,%20test"
+// Returns "test?query=123+123#hash,%20test"
 
 normalizeURL("http://localhost:3000");
 // Returns "http://localhost:3000"
