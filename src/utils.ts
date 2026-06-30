@@ -734,7 +734,7 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
  * @group utils
  */
 export function withFragment(input: string, hash: string): string {
-  if (!hash || hash === "#") {
+  if (hash === undefined || hash === null || hash === "#") {
     return input;
   }
   const parsed = parseURL(input);
