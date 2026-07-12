@@ -31,7 +31,7 @@ export function toASCII(o) {
     const s = (function (n, t) {
       const o = [];
       let e = n.length;
-      for (; e--; ) {
+      for (; e--;) {
         o[e] = t(n[e]);
       }
       return o;
@@ -46,7 +46,7 @@ export function toASCII(o) {
               const t = [];
               let o = 0;
               const e = n.length;
-              for (; o < e; ) {
+              for (; o < e;) {
                 const r = n.charCodeAt(o++);
                 if (r >= 55296 && r <= 56319 && o < e) {
                   const e = n.charCodeAt(o++);
@@ -67,7 +67,7 @@ export function toASCII(o) {
             }
             const h = t.length;
             let p = h;
-            for (h && t.push("-"); p < o; ) {
+            for (h && t.push("-"); p < o;) {
               let o = 2147483647;
               for (const t of n) {
                 t >= f && t < o && (o = t);
