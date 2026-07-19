@@ -295,7 +295,7 @@ export function withBase(input: string, base: string) {
   if (input.startsWith(_base)) {
     const nextChar = input[_base.length];
     // Ensure '/admin-dashboard' is not considered as having base '/admin/'
-    if (!nextChar || nextChar === "/" || nextChar === "?") {
+    if (!nextChar || nextChar === "/" || nextChar === "?" || nextChar === "#") {
       return input;
     }
   }
@@ -325,7 +325,7 @@ export function withoutBase(input: string, base: string) {
   }
   // Ensure '/admin-dashboard' is not considered as having base '/admin/'
   const nextChar = input[_base.length];
-  if (nextChar && nextChar !== "/" && nextChar !== "?") {
+  if (nextChar && nextChar !== "/" && nextChar !== "?" && nextChar !== "#") {
     return input;
   }
   // Collapse leading slashes to prevent protocol-relative URL injection
