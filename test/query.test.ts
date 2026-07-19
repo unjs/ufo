@@ -101,6 +101,12 @@ describe("getQuery", () => {
       param: '{"a":[{"obj":[1,2,3]}]}',
     },
     "http://foo.com/?toString=foo": { toString: "foo" },
+    "http://foo.com/?filter[size][]=large": { "filter[size]": ["large"] },
+    "http://foo.com/?filter[size]=large": { "filter[size]": "large" },
+    "http://foo.com/?filter[size][]=large&filter[size][]=medium": {
+      "filter[size]": ["large", "medium"],
+    },
+    "http://foo.com/?foo[]=bar": { foo: ["bar"] },
   };
 
   for (const t in tests) {
@@ -108,4 +114,18 @@ describe("getQuery", () => {
       expect(getQuery(t)).toMatchObject(tests[t]);
     });
   }
+
+  test("ignores __proto__ and constructor keys even with array suffix", () => {
+    const result = getQuery(
+      "http://foo.com/?__proto__[]=bad&constructor[]=bad&safe=ok",
+    ) as Record<string, unknown>;
+    expect(result.safe).toBe("ok");
+    expect(Object.prototype.hasOwnProperty.call(result, "__proto__")).toBe(
+      false,
+    );
+    expect(Object.prototype.hasOwnProperty.call(result, "constructor")).toBe(
+      false,
+    );
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
 });

@@ -37,6 +37,9 @@ export type ParsedQuery = Record<string, string | string[]>;
  *
  * parseQuery("tags=javascript&tags=web&tags=dev");
  * // { tags: ["javascript", "web", "dev"] }
+ *
+ * parseQuery("filter[size][]=large");
+ * // { "filter[size]": ["large"] }
  * ```
  *
  * @note
@@ -59,16 +62,19 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       continue;
     }
     const key = decodeQueryKey(s[1]);
-    if (key === "__proto__" || key === "constructor") {
+    // Keys ending with "[]" are treated as arrays, even for a single value
+    const isArrayKey = key.endsWith("[]");
+    const storageKey = isArrayKey ? key.slice(0, -2) : key;
+    if (storageKey === "__proto__" || storageKey === "constructor") {
       continue;
     }
     const value = decodeQueryValue(s[2] || "");
-    if (object[key] === undefined) {
-      object[key] = value;
-    } else if (Array.isArray(object[key])) {
-      (object[key] as string[]).push(value);
+    if (object[storageKey] === undefined) {
+      object[storageKey] = isArrayKey ? [value] : value;
+    } else if (Array.isArray(object[storageKey])) {
+      (object[storageKey] as string[]).push(value);
     } else {
-      object[key] = [object[key] as string, value];
+      object[storageKey] = [object[storageKey] as string, value];
     }
   }
   return object as T;
