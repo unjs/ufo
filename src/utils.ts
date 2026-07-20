@@ -381,6 +381,29 @@ export function filterQuery(
 }
 
 /**
+ * Removes the entire query section from a URL string, preserving the rest of the
+ * URL (including any hash). Unlike {@link filterQuery}, no predicate is
+ * applied — the whole `?...` section is stripped. See issue #297.
+ *
+ * @example
+ *
+ * ```js
+ * withoutQuery("/foo?bar=1&baz=2#hash"); // "/foo#hash"
+ * withoutQuery("/foo");                  // "/foo"
+ * ```
+ *
+ * @group utils
+ */
+export function withoutQuery(input: string): string {
+  if (!input.includes("?")) {
+    return input;
+  }
+  const parsed = parseURL(input);
+  parsed.search = "";
+  return stringifyParsedURL(parsed);
+}
+
+/**
  * Parses and decodes the query object of an input URL into an object.
  *
  * @example
