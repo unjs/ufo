@@ -352,6 +352,46 @@ export function withQuery(input: string, query: QueryObject): string {
   return stringifyParsedURL(parsed);
 }
 
+export interface WithPathParametersOptions {
+  /**
+   * The regex used to find path-parameter placeholders. Defaults to `/{key}/`
+   * (curly braces); use `/{{ key }}/` for mustache-style templates. Capturing
+   * group 1 is the parameter name (whitespace-trimmed).
+   *
+   * @default /\{([\s\S]+?)\}/g
+   */
+  interpolate?: RegExp;
+}
+
+/**
+ * Substitutes path parameters into a URL template. Placeholders are matched by
+ * `options.interpolate` (curly braces by default); the matched parameter's
+ * value is URL-component-encoded before substitution. A placeholder whose
+ * parameter is missing from `params` is left untouched. See issue #243.
+ *
+ * @example
+ * ```js
+ * withPathParameters("/api/users/{userId}", { userId: "abc" }); // "/api/users/abc"
+ * withPathParameters("/api/users/{{userId}}", { userId: "abc" }, { interpolate: /{{([\s\S]+?)}}/g });
+ * ```
+ *
+ * @group utils
+ */
+export function withPathParameters(
+  input: string,
+  params: Record<string, string>,
+  options: WithPathParametersOptions = {}
+): string {
+  const interpolate = options.interpolate ?? /\{([\s\S]+?)\}/g;
+  return input.replace(interpolate, (match, rawKey) => {
+    const key = String(rawKey).trim();
+    if (!Object.prototype.hasOwnProperty.call(params, key)) {
+      return match;
+    }
+    return encodeURIComponent(params[key]);
+  });
+}
+
 /**
  * Removes the query section of the URL.
  *
