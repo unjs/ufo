@@ -3,6 +3,11 @@ import { hasProtocol } from "./utils";
 
 const protocolRelative = Symbol.for("ufo:protocolRelative");
 
+// Protocols that use an opaque path with no authority component, so they must
+// be stringified as `protocol:...` without the `//` prefix. Kept in sync with
+// the special protocols recognized by `parseURL`.
+const OPAQUE_PROTOCOL_RE = /^(?:blob|data|javascript|vbscript):$/i;
+
 export interface ParsedURL {
   protocol?: string;
   host?: string;
@@ -189,7 +194,10 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const host = parsed.host || "";
   const proto =
     parsed.protocol || parsed[protocolRelative]
-      ? (parsed.protocol || "") + "//"
+      ? (parsed.protocol || "") +
+        (parsed.protocol && OPAQUE_PROTOCOL_RE.test(parsed.protocol)
+          ? ""
+          : "//")
       : "";
   return proto + auth + host + pathname + search + hash;
 }
