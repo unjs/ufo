@@ -136,6 +136,10 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "javascript:", pathname: "void(0)" },
       out: "javascript:void(0)",
     },
+    {
+      input: { protocol: "vbscript:", pathname: "msgbox(1)" },
+      out: "vbscript:msgbox(1)",
+    },
   ];
 
   for (const t of tests) {
@@ -154,6 +158,7 @@ describe("parseURL <> stringifyParsedURL round-trip", () => {
     "data:text/plain;base64,SGk=",
     "blob:https://example.com/uuid-1234",
     "javascript:void(0)",
+    "vbscript:msgbox(1)",
     "file:///home/user",
     "https://user@example.com:8080/a/b?x=1#hash",
   ];
