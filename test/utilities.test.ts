@@ -4,6 +4,7 @@ import {
   isEqual,
   isRelative,
   parsePath,
+  parseURL,
   stringifyParsedURL,
   withHttp,
   withHttps,
@@ -122,6 +123,23 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "https:", host: "google.com" },
       out: "https://google.com",
     },
+    // Opaque protocols have no authority component and must not gain a "//".
+    {
+      input: { protocol: "data:", pathname: "text/plain;base64,SGk=" },
+      out: "data:text/plain;base64,SGk=",
+    },
+    {
+      input: { protocol: "blob:", pathname: "https://example.com/uuid-1234" },
+      out: "blob:https://example.com/uuid-1234",
+    },
+    {
+      input: { protocol: "javascript:", pathname: "void(0)" },
+      out: "javascript:void(0)",
+    },
+    {
+      input: { protocol: "vbscript:", pathname: "msgbox(1)" },
+      out: "vbscript:msgbox(1)",
+    },
   ];
 
   for (const t of tests) {
@@ -131,6 +149,22 @@ describe("stringifyParsedURL", () => {
           typeof t.input === "string" ? parsePath(t.input) : t.input,
         ),
       ).toBe(t.out);
+    });
+  }
+});
+
+describe("parseURL <> stringifyParsedURL round-trip", () => {
+  const urls = [
+    "data:text/plain;base64,SGk=",
+    "blob:https://example.com/uuid-1234",
+    "javascript:void(0)",
+    "vbscript:msgbox(1)",
+    "file:///home/user",
+    "https://user@example.com:8080/a/b?x=1#hash",
+  ];
+  for (const url of urls) {
+    test(url, () => {
+      expect(stringifyParsedURL(parseURL(url))).toBe(url);
     });
   }
 });
