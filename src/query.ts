@@ -67,8 +67,10 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
       const arrayKey = key.slice(0, -2);
       if (object[arrayKey] === undefined) {
         object[arrayKey] = [value];
-      } else {
+      } else if (Array.isArray(object[arrayKey])) {
         (object[arrayKey] as string[]).push(value);
+      } else {
+        object[arrayKey] = [object[arrayKey] as string, value];
       }
       continue;
     }
