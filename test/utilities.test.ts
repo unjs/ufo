@@ -122,6 +122,16 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "https:", host: "google.com" },
       out: "https://google.com",
     },
+    // Opaque schemes carry their body in pathname and have no authority, so
+    // they must not gain a "//" separator (e.g. "data:…" not "data://…").
+    {
+      input: { protocol: "data:", pathname: "text/plain,hello" },
+      out: "data:text/plain,hello",
+    },
+    {
+      input: { protocol: "blob:", pathname: "https://example.com/id" },
+      out: "blob:https://example.com/id",
+    },
   ];
 
   for (const t of tests) {
