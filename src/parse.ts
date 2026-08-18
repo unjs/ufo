@@ -188,9 +188,14 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
   const proto =
-    parsed.protocol || parsed[protocolRelative]
-      ? (parsed.protocol || "") + "//"
-      : "";
+    // Opaque schemes (the ones parseURL special-cases) carry their body in
+    // pathname and have no authority, so they must not gain a "//" — otherwise
+    // "data:…" round-trips to the invalid "data://…".
+    parsed.protocol && /^(?:blob|data|javascript|vbscript):$/i.test(parsed.protocol)
+      ? parsed.protocol
+      : parsed.protocol || parsed[protocolRelative]
+        ? (parsed.protocol || "") + "//"
+        : "";
   return proto + auth + host + pathname + search + hash;
 }
 
