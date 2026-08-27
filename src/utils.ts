@@ -9,6 +9,8 @@ import {
 } from "./encoding";
 
 const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
+const HOST_PORT_REGEX =
+  /^[\s\0]*(?!tel:|fax:|sms:|skype:|callto:)[\w+.-]{2,}:\d+(?:[/?#\\]|$)/i;
 const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
@@ -79,7 +81,7 @@ export function hasProtocol(
     return PROTOCOL_STRICT_REGEX.test(inputString);
   }
   return (
-    PROTOCOL_REGEX.test(inputString) ||
+    (PROTOCOL_REGEX.test(inputString) && !HOST_PORT_REGEX.test(inputString)) ||
     (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false)
   );
 }
@@ -566,6 +568,9 @@ export function withoutProtocol(input: string): string {
  */
 export function withProtocol(input: string, protocol: string): string {
   let match = input.match(PROTOCOL_REGEX);
+  if (match && HOST_PORT_REGEX.test(input)) {
+    match = null;
+  }
   if (!match) {
     match = input.match(/^\/{2,}/);
   }

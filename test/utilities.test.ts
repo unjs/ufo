@@ -22,6 +22,11 @@ describe("hasProtocol", () => {
     { input: "///", out: [false, false, false] },
     { input: "C:/test", out: [false, false, false] },
     { input: "/test", out: [false, false, false] },
+    { input: "localhost:9000", out: [false, false, false] },
+    { input: "localhost:9000/foo", out: [false, false, false] },
+    { input: "127.0.0.1:8080", out: [false, false, false] },
+    { input: "example.com:3000?q=1", out: [false, false, false] },
+    { input: "my-host:80#hash", out: [false, false, false] },
 
     // Has protocol (strict)
     { input: "custom:/", out: [true, true, true] },
@@ -224,6 +229,31 @@ describe("withProtocol", () => {
       protocol: "callto://",
       out: "callto://+1234567890",
     },
+    {
+      input: "localhost:9000",
+      protocol: "http://",
+      out: "http://localhost:9000",
+    },
+    {
+      input: "localhost:9000",
+      protocol: "https://",
+      out: "https://localhost:9000",
+    },
+    {
+      input: "localhost:9000/api",
+      protocol: "http://",
+      out: "http://localhost:9000/api",
+    },
+    {
+      input: "127.0.0.1:8080",
+      protocol: "http://",
+      out: "http://127.0.0.1:8080",
+    },
+    {
+      input: "example.com:3000",
+      protocol: "https://",
+      out: "https://example.com:3000",
+    },
   ];
 
   for (const t of tests) {
@@ -247,6 +277,9 @@ describe("withoutProtocol", () => {
     { input: "mailto:support@example.com", out: "support@example.com" },
     { input: "skype:1234567890", out: "1234567890" },
     { input: "callto://+1234567890", out: "+1234567890" },
+    { input: "localhost:9000", out: "localhost:9000" },
+    { input: "127.0.0.1:8080", out: "127.0.0.1:8080" },
+    { input: "example.com:3000/test", out: "example.com:3000/test" },
   ];
 
   for (const t of tests) {
