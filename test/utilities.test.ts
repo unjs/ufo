@@ -42,6 +42,10 @@ describe("hasProtocol", () => {
     { input: "\0javascript:alert(true)", out: [true, false, true] },
     { input: "\0https://", out: [true, true, true] },
     { input: "tel:123456", out: [true, false, true] },
+    { input: "javascript:1234", out: [true, false, true] },
+    { input: "data:1234", out: [true, false, true] },
+    { input: "blob:1234", out: [true, false, true] },
+    { input: "custom+proto:1234", out: [true, false, true] },
     { input: "mailto:support@example.com", out: [true, false, true] },
 
     // Relative

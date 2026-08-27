@@ -10,7 +10,7 @@ import {
 
 const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
 const HOST_PORT_REGEX =
-  /^[\s\0]*(?!tel:|fax:|sms:|skype:|callto:)[\w+.-]{2,}:\d+(?:[/?#\\]|$)/i;
+  /^[\s\0]*(?!tel:|fax:|sms:|skype:|callto:|mailto:|data:|javascript:|vbscript:|blob:|urn:|geo:|magnet:)[\w.-]{2,}:\d+(?:[/?#\\]|$)/i;
 const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
