@@ -38,6 +38,14 @@ describe("parseURL", () => {
     },
     { input: "/test", out: { hash: "", pathname: "/test", search: "" } },
     {
+      input: "localhost:9000",
+      out: { hash: "", pathname: "localhost:9000", search: "" },
+    },
+    {
+      input: "localhost:9000/api",
+      out: { hash: "", pathname: "localhost:9000/api", search: "" },
+    },
+    {
       input: "file:///home/user",
       out: {
         auth: "",
@@ -293,4 +301,17 @@ describe("parseFilename", () => {
       ).toStrictEqual(t.out);
     });
   }
+});
+
+describe("parseURL with defaultProto", () => {
+  test("localhost:9000 with defaultProto", () => {
+    expect(structuredClone(parseURL("localhost:9000", "https://"))).toEqual({
+      protocol: "https:",
+      auth: "",
+      host: "localhost:9000",
+      pathname: "",
+      search: "",
+      hash: "",
+    });
+  });
 });
