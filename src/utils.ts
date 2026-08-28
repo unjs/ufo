@@ -5,6 +5,7 @@ import {
   decodePath,
   encodeHash,
   encodeHost,
+  encodeParam,
   encodePath,
 } from "./encoding";
 
@@ -363,6 +364,63 @@ export function withQuery(input: string, query: QueryObject): string {
  *
  * @group utils
  */
+export interface WithPathParametersOptions {
+  /**
+   * The regex used to find path-parameter placeholders. Defaults to `/\{([\s\S]+?)\}/g`
+   * (curly braces); use `/{{([\s\S]+?)}}/g` for mustache-style templates or `/:([\w$]+)/g` for colon-style routes.
+   * Capturing group 1 is the parameter name (whitespace-trimmed).
+   *
+   * @default /\{([\s\S]+?)\}/g
+   */
+  interpolate?: RegExp;
+  /**
+   * Function used to encode parameter values.
+   *
+   * @default encodeParam
+   */
+  encode?: (value: string) => string;
+}
+
+/**
+ * Replace path parameter placeholders in a URL template with values.
+ *
+ * @example
+ * ```js
+ * withPathParameters('/api/users/{userId}', { userId: 'abc' });
+ * // '/api/users/abc'
+ *
+ * withPathParameters('/api/users/{userId}', { userId: 'foo/bar' });
+ * // '/api/users/foo%2Fbar'
+ *
+ * withPathParameters('/api/users/{{userId}}', { userId: 'abc' }, { interpolate: /\{\{([\s\S]+?)\}\}/g });
+ * // '/api/users/abc'
+ *
+ * withPathParameters('/api/users/:userId', { userId: 'abc' }, { interpolate: /:([\w$]+)/g });
+ * // '/api/users/abc'
+ * ```
+ *
+ * @group utils
+ */
+export function withPathParameters(
+  input: string,
+  parameters: Record<string, any>,
+  options: WithPathParametersOptions = {},
+): string {
+  const interpolate = options.interpolate || /\{([\s\S]+?)\}/g;
+  const encode = options.encode || encodeParam;
+
+  return input.replace(interpolate, (match, rawKey) => {
+    const key = String(rawKey).trim();
+    if (
+      !Object.prototype.hasOwnProperty.call(parameters, key) ||
+      parameters[key] == null
+    ) {
+      return match;
+    }
+    return encode(String(parameters[key]));
+  });
+}
+
 export function filterQuery(
   input: string,
   predicate: (key: string, value: string | string[]) => boolean,
