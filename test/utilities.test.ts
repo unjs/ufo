@@ -13,6 +13,7 @@ import {
   withFragment,
   withoutFragment,
   withoutHost,
+  withPathParameters,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -316,6 +317,81 @@ describe("withFragment", () => {
       expect(withFragment(t.input, t.fragment)).toBe(t.out);
     });
   }
+});
+
+describe("withPathParameters", () => {
+  test("basic parameter substitution", () => {
+    expect(withPathParameters("/api/users/{userId}", { userId: "abc" })).toBe(
+      "/api/users/abc",
+    );
+  });
+
+  test("multiple and numeric parameters", () => {
+    expect(
+      withPathParameters("/api/orgs/{orgId}/users/{userId}/posts/{postId}", {
+        orgId: "org-1",
+        userId: "user-2",
+        postId: 42,
+      }),
+    ).toBe("/api/orgs/org-1/users/user-2/posts/42");
+  });
+
+  test("encodes special characters in path parameters", () => {
+    expect(
+      withPathParameters("/search/{query}", { query: "hello world" }),
+    ).toBe("/search/hello%20world");
+    expect(withPathParameters("/files/{filePath}", { filePath: "a/b/c" })).toBe(
+      "/files/a%2Fb%2Fc",
+    );
+  });
+
+  test("supports trimmed whitespace in placeholder keys", () => {
+    expect(withPathParameters("/api/users/{ userId }", { userId: "123" })).toBe(
+      "/api/users/123",
+    );
+  });
+
+  test("preserves missing or null/undefined parameters", () => {
+    expect(
+      withPathParameters("/api/users/{userId}/{missing}", {
+        userId: "123",
+        missing: null,
+      }),
+    ).toBe("/api/users/123/{missing}");
+    expect(
+      withPathParameters("/api/users/{userId}/{missing}", {
+        userId: "123",
+      }),
+    ).toBe("/api/users/123/{missing}");
+  });
+
+  test("custom interpolate regex (mustache and colon styles)", () => {
+    expect(
+      withPathParameters(
+        "/api/users/{{userId}}",
+        { userId: "abc" },
+        { interpolate: /\{\{([\s\S]+?)\}\}/g },
+      ),
+    ).toBe("/api/users/abc");
+
+    expect(
+      withPathParameters(
+        "/api/users/:userId/posts/:postId",
+        { userId: "u1", postId: "p2" },
+        { interpolate: /:([\w$]+)/g },
+      ),
+    ).toBe("/api/users/u1/posts/p2");
+  });
+
+  test("custom encode function", () => {
+    expect(
+      withPathParameters(
+        "/files/{filePath}",
+        { filePath: "folder/subfolder/file.txt" },
+        { encode: (v) => v },
+      ),
+    ).toBe("/files/folder/subfolder/file.txt");
+  });
 });
 
 describe("withoutFragment", () => {
