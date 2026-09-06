@@ -146,7 +146,13 @@ export function parseAuth(input = ""): ParsedAuth {
  * ```js
  * parseHost("foo.com:8080");
  * // { hostname: 'foo.com', port: '8080' }
+ *
+ * parseHost("[::1]:8080");
+ * // { hostname: '[::1]', port: '8080' }
  * ```
+ *
+ * @note
+ * An IPv6 address keeps its surrounding brackets in `hostname`, matching `URL.hostname`.
  *
  * @group parsing_utils
  *
@@ -155,7 +161,9 @@ export function parseAuth(input = ""): ParsedAuth {
  * `port`.
  */
 export function parseHost(input = ""): ParsedHost {
-  const [hostname, port] = (input.match(/([^/:]*):?(\d+)?/) || []).splice(1);
+  const [hostname, port] = (
+    input.match(/(\[[^/\]]*\]|[^/:]*):?(\d+)?/) || []
+  ).splice(1);
   return {
     hostname: decode(hostname),
     port,
