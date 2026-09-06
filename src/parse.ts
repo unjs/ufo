@@ -162,7 +162,7 @@ export function parseAuth(input = ""): ParsedAuth {
  */
 export function parseHost(input = ""): ParsedHost {
   const [hostname, port] = (
-    input.match(/(\[[^/\]]*\]|[^/:]*):?(\d+)?/) || []
+    input.match(/(\[[^/\]]*\]|[^/:]*)(?::(\d+))?/) || []
   ).splice(1);
   return {
     hostname: decode(hostname),

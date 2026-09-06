@@ -197,6 +197,9 @@ describe("parseHost", () => {
       input: "[2001:db8::1]:3000",
       out: { hostname: "[2001:db8::1]", port: "3000" },
     },
+    // A port only follows a colon.
+    { input: "[::1]8080", out: { hostname: "[::1]", port: undefined } },
+    { input: "localhost", out: { hostname: "localhost", port: undefined } },
   ];
 
   for (const t of tests) {
