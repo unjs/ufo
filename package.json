@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "@vitest/coverage-v8": "^4.1.5",
+    "@vitest/coverage-v8": "^5.0.0",
     "automd": "^0.4.3",
     "changelogen": "^0.6.2",
     "eslint": "^10.2.1",
@@ -42,7 +42,7 @@
     "typescript": "^6.0.3",
     "unbuild": "^3.6.1",
     "untyped": "^2.0.0",
-    "vitest": "^4.1.5"
+    "vitest": "^5.0.0"
   },
   "packageManager": "pnpm@10.33.2"
 }
