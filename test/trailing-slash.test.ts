@@ -1,5 +1,45 @@
 import { describe, expect, test } from "vitest";
-import { withTrailingSlash, withoutTrailingSlash } from "../src";
+import {
+  hasTrailingSlash,
+  withTrailingSlash,
+  withoutTrailingSlash,
+} from "../src";
+
+describe("trailing slashes in query and fragment values", () => {
+  test.each([
+    "?redirect=/",
+    "?redirect=/?page=2",
+    "?redirect=/#section",
+    "#section/",
+    "#section/?page=2",
+    "#section/#nested",
+    "?page=2#section/",
+  ])("respects the pathname before %s", (suffix) => {
+    const input = `/docs${suffix}`;
+    const withSlash = `/docs/${suffix}`;
+
+    expect(hasTrailingSlash(input, true)).toBe(false);
+    expect(hasTrailingSlash(withSlash, true)).toBe(true);
+    expect(withTrailingSlash(input, true)).toBe(withSlash);
+    expect(withTrailingSlash(withSlash, true)).toBe(withSlash);
+    expect(withoutTrailingSlash(withSlash, true)).toBe(input);
+    expect(withoutTrailingSlash(input, true)).toBe(input);
+  });
+
+  test("adds the pathname slash before a redirect query", () => {
+    expect(withTrailingSlash("/login?redirect=/", true)).toBe(
+      "/login/?redirect=/",
+    );
+  });
+
+  test.each(["#section/", "#section/?page=2", "#section/#nested"])(
+    "preserves fragment-only references: %s",
+    (input) => {
+      expect(hasTrailingSlash(input, true)).toBe(false);
+      expect(withTrailingSlash(input, true)).toBe(input);
+    },
+  );
+});
 
 describe("withTrailingSlash, queryParams: false", () => {
   const tests = {
