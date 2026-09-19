@@ -2,6 +2,17 @@ import { describe, expect, test } from "vitest";
 import { $URL } from "../src";
 
 describe("$URL", () => {
+  test.each([
+    ["http://[::1]:8080/p", "[::1]", "8080"],
+    ["http://[2001:db8::1]/p", "[2001:db8::1]", ""],
+    ["http://[::1]8080/p", "[::1]", ""],
+  ])("IPv6 hostname and port: %s", (input, hostname, port) => {
+    const url = new $URL(input);
+    expect(url.hostname).toBe(hostname);
+    expect(url.port).toBe(port);
+    expect(url.href).toBe(input);
+  });
+
   test("getters", () => {
     const inputURL =
       "https://john:doe@example.com:1080/path?query=value&v=1&v=2#hash";
