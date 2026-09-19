@@ -188,6 +188,9 @@ describe("parseHost", () => {
     { input: "localhost:3000", out: { hostname: "localhost", port: "3000" } },
     { input: "google.com", out: { hostname: "google.com", port: undefined } },
     { input: "[::1]:8080", out: { hostname: "[::1]", port: "8080" } },
+    { input: "[::1]8080", out: { hostname: "[::1]", port: undefined } },
+    { input: "[::1]:", out: { hostname: "[::1]", port: undefined } },
+    { input: "[::1]:0", out: { hostname: "[::1]", port: "0" } },
     {
       input: "[2001:db8::1]",
       out: { hostname: "[2001:db8::1]", port: undefined },
