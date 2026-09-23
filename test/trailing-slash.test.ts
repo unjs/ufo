@@ -34,6 +34,9 @@ describe("withTrailingSlash, queryParams: true", () => {
     "/#abc": "/#abc",
     "#abc": "#abc",
     "#": "#",
+    "foo?redirect=/bar/": "foo/?redirect=/bar/",
+    "foo?k=/?v": "foo/?k=/?v",
+    "foo#/bar/": "foo/#/bar/",
   };
 
   for (const input in tests) {
@@ -89,6 +92,7 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo/?k=/&x=y#abc": "foo?k=/&x=y#abc",
     "/a/#abc": "/a#abc",
     "/#abc": "/#abc",
+    "foo#/bar/": "foo#/bar/",
   };
 
   for (const input in tests) {
