@@ -131,7 +131,21 @@ export function hasTrailingSlash(
   if (!respectQueryAndFragment) {
     return input.endsWith("/");
   }
-  return TRAILING_SLASH_RE.test(input);
+  let path = input;
+  const qIndex = input.indexOf("?");
+  const hIndex = input.indexOf("#");
+  let cutIndex = -1;
+  if (qIndex !== -1 && hIndex !== -1) {
+    cutIndex = Math.min(qIndex, hIndex);
+  } else if (qIndex !== -1) {
+    cutIndex = qIndex;
+  } else if (hIndex !== -1) {
+    cutIndex = hIndex;
+  }
+  if (cutIndex !== -1) {
+    path = input.slice(0, cutIndex);
+  }
+  return path.endsWith("/");
 }
 
 /**
