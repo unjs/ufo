@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { withTrailingSlash, withoutTrailingSlash } from "../src";
+import { hasTrailingSlash, withTrailingSlash, withoutTrailingSlash } from "../src";
 
 describe("withTrailingSlash, queryParams: false", () => {
   const tests = {
@@ -34,6 +34,8 @@ describe("withTrailingSlash, queryParams: true", () => {
     "/#abc": "/#abc",
     "#abc": "#abc",
     "#": "#",
+    "/foo?redirect=/bar/": "/foo/?redirect=/bar/",
+    "/foo#/bar/": "/foo/#/bar/",
   };
 
   for (const input in tests) {
@@ -101,3 +103,13 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     expect(withoutTrailingSlash()).toBe("/");
   });
 });
+
+describe("hasTrailingSlash, respectQueryAndFragment: true", () => {
+  test("correctly checks pathname trailing slash ignoring query and fragment contents", () => {
+    expect(hasTrailingSlash("/foo?redirect=/bar/", true)).toBe(false);
+    expect(hasTrailingSlash("/foo/?redirect=/bar/", true)).toBe(true);
+    expect(hasTrailingSlash("/foo#/bar/", true)).toBe(false);
+    expect(hasTrailingSlash("/foo/#/bar/", true)).toBe(true);
+  });
+});
+
