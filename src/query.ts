@@ -54,15 +54,19 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
     parametersString = parametersString.slice(1);
   }
   for (const parameter of parametersString.split("&")) {
-    const s = parameter.match(/([^=]+)=?(.*)/) || [];
-    if (s.length < 2) {
+    if (!parameter) {
       continue;
     }
-    const key = decodeQueryKey(s[1]);
+    const equalsIndex = parameter.indexOf("=");
+    const rawKey =
+      equalsIndex === -1 ? parameter : parameter.slice(0, equalsIndex);
+    const key = decodeQueryKey(rawKey);
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
-    const value = decodeQueryValue(s[2] || "");
+    const value = decodeQueryValue(
+      equalsIndex === -1 ? "" : parameter.slice(equalsIndex + 1),
+    );
     if (object[key] === undefined) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
