@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -83,6 +83,22 @@ describe("filterQuery", () => {
   for (const t of tests) {
     test(t.input.toString() + ' filter "bar"', () => {
       expect(filterQuery(t.input, predicate)).toBe(t.out);
+    });
+  }
+});
+
+describe("parseQuery", () => {
+  const tests = {
+    // A leading "=" means an empty key, not a key named after the value
+    // (matches `new URLSearchParams("=foo")` -> { "": "foo" }).
+    "=foo": { "": "foo" },
+    "a=1&=foo&b=2": { a: "1", "": "foo", b: "2" },
+    "=": { "": "" },
+  };
+
+  for (const t in tests) {
+    test(t, () => {
+      expect(parseQuery(t)).toMatchObject(tests[t]);
     });
   }
 });
