@@ -1,5 +1,66 @@
 import { describe, expect, test } from "vitest";
-import { withTrailingSlash, withoutTrailingSlash } from "../src";
+import {
+  hasTrailingSlash,
+  withTrailingSlash,
+  withoutTrailingSlash,
+} from "../src";
+
+describe("hasTrailingSlash, queryParams: false", () => {
+  const tests: Record<string, boolean> = {
+    "": false,
+    "/": true,
+    bar: false,
+    "bar/": true,
+    "bar#abc": false,
+    "bar/#abc": false,
+    "bar/#abc/": true,
+    "foo?123": false,
+    "foo/?123": false,
+    "foo?redirect=/bar/": true,
+  };
+
+  for (const input in tests) {
+    test(input, () => {
+      expect(hasTrailingSlash(input)).toBe(tests[input]);
+    });
+  }
+
+  test("falsy value", () => {
+    expect(hasTrailingSlash()).toBe(false);
+  });
+});
+
+describe("hasTrailingSlash, queryParams: true", () => {
+  const tests: Record<string, boolean> = {
+    "": false,
+    "/": true,
+    bar: false,
+    "bar/": true,
+    "bar#abc": false,
+    "bar/#abc": true,
+    "bar#/abc/": false,
+    "foo?123": false,
+    "foo/?123": true,
+    "foo/?123#abc": true,
+    "foo?redirect=/bar/": false,
+    "foo/?redirect=/bar/": true,
+    "foo#/bar/": false,
+    "foo/#/bar/": true,
+    "/#abc": true,
+    "#abc": false,
+    "#": false,
+  };
+
+  for (const input in tests) {
+    test(input, () => {
+      expect(hasTrailingSlash(input, true)).toBe(tests[input]);
+    });
+  }
+
+  test("falsy value", () => {
+    expect(hasTrailingSlash(undefined, true)).toBe(false);
+  });
+});
 
 describe("withTrailingSlash, queryParams: false", () => {
   const tests = {
@@ -31,6 +92,10 @@ describe("withTrailingSlash, queryParams: true", () => {
     "foo?123": "foo/?123",
     "foo/?123": "foo/?123",
     "foo?123#abc": "foo/?123#abc",
+    "foo?redirect=/bar/": "foo/?redirect=/bar/",
+    "foo/?redirect=/bar/": "foo/?redirect=/bar/",
+    "foo#/bar/": "foo/#/bar/",
+    "foo/#/bar/": "foo/#/bar/",
     "/#abc": "/#abc",
     "#abc": "#abc",
     "#": "#",
@@ -87,6 +152,10 @@ describe("withoutTrailingSlash, queryParams: true", () => {
     "foo?k=/": "foo?k=/",
     "foo/?k=/": "foo?k=/",
     "foo/?k=/&x=y#abc": "foo?k=/&x=y#abc",
+    "foo?redirect=/bar/": "foo?redirect=/bar/",
+    "foo/?redirect=/bar/": "foo?redirect=/bar/",
+    "foo#/bar/": "foo#/bar/",
+    "foo/#/bar/": "foo#/bar/",
     "/a/#abc": "/a#abc",
     "/#abc": "/#abc",
   };
