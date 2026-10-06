@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseURL, parseHost, parseFilename } from "../src";
+import { parseURL, parseHost, parseFilename, parseAuth } from "../src";
 
 describe("parseURL", () => {
   const tests = [
@@ -293,4 +293,19 @@ describe("parseFilename", () => {
       ).toStrictEqual(t.out);
     });
   }
+});
+
+describe("parseAuth", () => {
+  test.each([
+    ["user:pass:word", { username: "user", password: "pass:word" }],
+    ["user::pass:", { username: "user", password: ":pass:" }],
+    ["user:pass%3Aword:tail", { username: "user", password: "pass:word:tail" }],
+    ["user:pass", { username: "user", password: "pass" }],
+    ["user", { username: "user", password: "" }],
+  ])(
+    "preserves the password after the first colon in %s",
+    (input, expected) => {
+      expect(parseAuth(input)).toEqual(expected);
+    },
+  );
 });

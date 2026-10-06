@@ -131,7 +131,9 @@ export function parsePath(input = ""): ParsedPath {
  * @returns An object with two properties: username and password.
  */
 export function parseAuth(input = ""): ParsedAuth {
-  const [username, password] = input.split(":");
+  const separator = input.indexOf(":");
+  const username = separator === -1 ? input : input.slice(0, separator);
+  const password = separator === -1 ? "" : input.slice(separator + 1);
   return {
     username: decode(username),
     password: decode(password),
