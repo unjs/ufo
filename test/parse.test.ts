@@ -334,3 +334,31 @@ describe("parseURL authority boundaries", () => {
     });
   });
 });
+
+describe("parseURL user-info separator", () => {
+  test.each([
+    ["https://user@team@example.com", "user@team", "", ""],
+    [
+      "https://user@team@example.com?email=user@example.org",
+      "user@team",
+      "?email=user@example.org",
+      "",
+    ],
+    [
+      "https://user@team@example.com#user@example.org",
+      "user@team",
+      "",
+      "#user@example.org",
+    ],
+    ["https://@example.com", "", "", ""],
+  ])("uses the last authority @ in %s", (input, auth, search, hash) => {
+    expect(parseURL(input)).toMatchObject({
+      protocol: "https:",
+      auth,
+      host: "example.com",
+      pathname: "",
+      search,
+      hash,
+    });
+  });
+});
