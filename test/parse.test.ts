@@ -294,3 +294,43 @@ describe("parseFilename", () => {
     });
   }
 });
+
+describe("parseURL authority boundaries", () => {
+  test.each([
+    [
+      "http://example.com?email=user@example.org",
+      "?email=user@example.org",
+      "",
+    ],
+    ["https://example.com#user@example.org", "", "#user@example.org"],
+    [
+      "//example.com?email=user@example.org#fragment",
+      "?email=user@example.org",
+      "#fragment",
+    ],
+  ])("keeps @ after the authority boundary in %s", (input, search, hash) => {
+    expect(parseURL(input)).toMatchObject({
+      protocol: input.startsWith("//") ? "" : input.split("//")[0],
+      auth: "",
+      host: "example.com",
+      pathname: "",
+      search,
+      hash,
+    });
+  });
+
+  test("preserves actual user info before query and fragment", () => {
+    expect(
+      parseURL(
+        "https://user:pass@example.com?email=user@example.org#user@example.org",
+      ),
+    ).toMatchObject({
+      protocol: "https:",
+      auth: "user:pass",
+      host: "example.com",
+      pathname: "",
+      search: "?email=user@example.org",
+      hash: "#user@example.org",
+    });
+  });
+});

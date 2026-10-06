@@ -72,7 +72,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   const [, protocol = "", auth, hostAndPath = ""] =
     input
       .replace(/\\/g, "/")
-      .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
+      .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/?#@]+@)?(.*)/) || [];
 
   // eslint-disable-next-line prefer-const
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
