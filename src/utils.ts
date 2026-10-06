@@ -12,7 +12,6 @@ const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
 const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
-const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
 const JOIN_LEADING_SLASH_RE = /^\.?\//;
 
 /**
@@ -131,7 +130,16 @@ export function hasTrailingSlash(
   if (!respectQueryAndFragment) {
     return input.endsWith("/");
   }
-  return TRAILING_SLASH_RE.test(input);
+  let path = input;
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex !== -1) {
+    path = input.slice(0, fragmentIndex);
+  }
+  const queryIndex = path.indexOf("?");
+  if (queryIndex !== -1) {
+    path = path.slice(0, queryIndex);
+  }
+  return path.endsWith("/");
 }
 
 /**
