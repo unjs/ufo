@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, withQuery, withoutQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -83,6 +83,26 @@ describe("filterQuery", () => {
   for (const t of tests) {
     test(t.input.toString() + ' filter "bar"', () => {
       expect(filterQuery(t.input, predicate)).toBe(t.out);
+    });
+  }
+});
+
+describe("withoutQuery", () => {
+  const tests = [
+    { input: "", out: "" },
+    { input: "/foo", out: "/foo" },
+    { input: "/foo?bar=1", out: "/foo" },
+    { input: "/foo?bar=1&baz=2", out: "/foo" },
+    { input: "http://example.com/foo?q=123#bar", out: "http://example.com/foo#bar" },
+    { input: "http://example.com/?", out: "http://example.com/" },
+    { input: "/?foo=1&bar=2", out: "/" },
+    { input: "?foo=1", out: "" },
+    { input: "https://example.com/api?a=1&b=2#section", out: "https://example.com/api#section" },
+  ];
+
+  for (const t of tests) {
+    test(t.input.toString(), () => {
+      expect(withoutQuery(t.input)).toBe(t.out);
     });
   }
 });

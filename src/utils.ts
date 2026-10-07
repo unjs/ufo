@@ -381,6 +381,22 @@ export function filterQuery(
 }
 
 /**
+ * Removes the query section from the URL.
+ *
+ * @example
+ *
+ * ```js
+ * withoutQuery("/foo?bar=1&baz=2"); // "/foo"
+ * withoutQuery("http://example.com/foo?q=123#bar"); // "http://example.com/foo#bar"
+ * ```
+ *
+ * @group utils
+ */
+export function withoutQuery(input: string): string {
+  return stringifyParsedURL({ ...parseURL(input), search: "" });
+}
+
+/**
  * Parses and decodes the query object of an input URL into an object.
  *
  * @example
