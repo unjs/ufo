@@ -13,6 +13,7 @@ import {
   withFragment,
   withoutFragment,
   withoutHost,
+  withoutQuery,
 } from "../src";
 
 describe("hasProtocol", () => {
@@ -345,6 +346,25 @@ describe("withoutFragment", () => {
   for (const t of tests) {
     test(`${t.input}`, () => {
       expect(withoutFragment(t.input)).toBe(t.out);
+    });
+  }
+});
+
+describe("withoutQuery", () => {
+  const tests = [
+    {
+      input: "/foo?bar=1",
+      out: "/foo",
+    },
+    {
+      input: "http://example.com/foo?q=123#bar",
+      out: "http://example.com/foo#bar",
+    },
+  ];
+
+  for (const t of tests) {
+    test(`${t.input}`, () => {
+      expect(withoutQuery(t.input)).toBe(t.out);
     });
   }
 });
