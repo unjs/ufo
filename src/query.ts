@@ -53,7 +53,13 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
   }
+  if (!parametersString) {
+    return object as T;
+  }
   for (const parameter of parametersString.split("&")) {
+    if (!parameter) {
+      continue;
+    }
     const s = parameter.match(/([^=]+)=?(.*)/) || [];
     if (s.length < 2) {
       continue;
@@ -103,12 +109,15 @@ export function encodeQueryItem(
   }
 
   if (Array.isArray(value)) {
-    return value
-      .map(
-        (_value: QueryValue) =>
-          `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`,
-      )
-      .join("&");
+    if (value.length === 0) {
+      return "";
+    }
+    const encodedKey = encodeQueryKey(key);
+    let res = "";
+    for (const val of value) {
+      res += (res ? "&" : "") + `${encodedKey}=${encodeQueryValue(val)}`;
+    }
+    return res;
   }
 
   return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
@@ -130,9 +139,16 @@ export function encodeQueryItem(
  * @group Query_utils
  */
 export function stringifyQuery(query: QueryObject): string {
-  return Object.keys(query)
-    .filter((k) => query[k] !== undefined)
-    .map((k) => encodeQueryItem(k, query[k]))
-    .filter(Boolean)
-    .join("&");
+  let result = "";
+  for (const key of Object.keys(query)) {
+    const value = query[key];
+    if (value === undefined) {
+      continue;
+    }
+    const item = encodeQueryItem(key, value);
+    if (item) {
+      result += (result ? "&" : "") + item;
+    }
+  }
+  return result;
 }
