@@ -37,6 +37,7 @@ describe("withTrailingSlash, queryParams: true", () => {
     "foo?123#abc": "foo/?123#abc",
     "foo?query=/": "foo/?query=/",
     "foo?query=/#abc": "foo/?query=/#abc",
+    "/foo#/bar/": "/foo/#/bar/",
     "foo/?query=/": "foo/?query=/",
     "/#abc": "/#abc",
     "#abc": "#abc",
@@ -58,6 +59,7 @@ describe("hasTrailingSlash, queryParams: true", () => {
   const tests = {
     "foo?query=/": false,
     "foo?query=/#abc": false,
+    "/foo#/bar/": false,
     "foo/?query=/": true,
     "foo/#abc": true,
   };
