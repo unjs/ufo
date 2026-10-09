@@ -1,5 +1,12 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import {
+  filterQuery,
+  getQuery,
+  withQuery,
+  stringifyQuery,
+  encodeQueryItem,
+  parseQuery,
+} from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -108,4 +115,105 @@ describe("getQuery", () => {
       expect(getQuery(t)).toMatchObject(tests[t]);
     });
   }
+});
+
+describe("stringifyQuery", () => {
+  test("empty query", () => {
+    expect(stringifyQuery({})).toBe("");
+  });
+
+  test("undefined values are omitted", () => {
+    expect(stringifyQuery({ foo: undefined, bar: undefined })).toBe("");
+    expect(stringifyQuery({ foo: "1", bar: undefined, baz: "2" })).toBe(
+      "foo=1&baz=2",
+    );
+  });
+
+  test("primitives and boolean values", () => {
+    expect(
+      stringifyQuery({
+        num: 42,
+        zero: 0,
+        truthy: true,
+        falsy: false,
+      }),
+    ).toBe("num=42&zero=0&truthy=true&falsy=false");
+  });
+
+  test("null and empty string values", () => {
+    expect(
+      stringifyQuery({
+        empty: "",
+        nul: null,
+      }),
+    ).toBe("empty&nul");
+  });
+
+  test("array values", () => {
+    expect(stringifyQuery({ tags: ["javascript", "web", "dev"] })).toBe(
+      "tags=javascript&tags=web&tags=dev",
+    );
+    expect(stringifyQuery({ empty: [] })).toBe("");
+    expect(stringifyQuery({ a: "1", empty: [], b: "2" })).toBe("a=1&b=2");
+  });
+
+  test("encoded keys and values", () => {
+    expect(
+      stringifyQuery({
+        "my key": "val & val",
+      }),
+    ).toBe("my+key=val+%26+val");
+  });
+
+  test("does not iterate prototype properties", () => {
+    const proto = { inherited: "proto-value" };
+    const query = Object.create(proto);
+    query.own = "own-value";
+    expect(stringifyQuery(query)).toBe("own=own-value");
+  });
+});
+
+describe("encodeQueryItem", () => {
+  test("handles primitives", () => {
+    expect(encodeQueryItem("num", 100)).toBe("num=100");
+    expect(encodeQueryItem("bool", true)).toBe("bool=true");
+    expect(encodeQueryItem("bool", false)).toBe("bool=false");
+  });
+
+  test("handles empty and null values", () => {
+    expect(encodeQueryItem("key", "")).toBe("key");
+    expect(encodeQueryItem("key", null)).toBe("key");
+  });
+
+  test("handles arrays efficiently", () => {
+    expect(encodeQueryItem("tags", [])).toBe("");
+    expect(encodeQueryItem("tags", ["one"])).toBe("tags=one");
+    expect(encodeQueryItem("tags", ["one", "two"])).toBe("tags=one&tags=two");
+    expect(encodeQueryItem("a b", ["1", "2"])).toBe("a+b=1&a+b=2");
+  });
+});
+
+describe("parseQuery", () => {
+  test("empty and leading question mark", () => {
+    expect(parseQuery("")).toEqual({});
+    expect(parseQuery("?")).toEqual({});
+    expect(parseQuery("?foo=bar")).toEqual({ foo: "bar" });
+  });
+
+  test("skips empty segments and handles keys without values", () => {
+    expect(parseQuery("foo&&bar&")).toEqual({ foo: "", bar: "" });
+    expect(parseQuery("a=1&&b=2")).toEqual({ a: "1", b: "2" });
+  });
+
+  test("handles multiple and duplicate keys", () => {
+    expect(parseQuery("tag=a&tag=b&tag=c")).toEqual({
+      tag: ["a", "b", "c"],
+    });
+  });
+
+  test("ignores proto and constructor to prevent pollution", () => {
+    expect(parseQuery("__proto__=evil&constructor=bad&valid=ok")).toEqual({
+      valid: "ok",
+    });
+  });
 });
