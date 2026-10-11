@@ -104,9 +104,10 @@ export function encodeQueryItem(
 
   if (Array.isArray(value)) {
     return value
-      .map(
-        (_value: QueryValue) =>
-          `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`,
+      .map((_value: QueryValue) =>
+        _value === ""
+          ? encodeQueryKey(key)
+          : `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`,
       )
       .join("&");
   }

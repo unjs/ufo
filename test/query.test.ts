@@ -1,5 +1,48 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import {
+  encodeQueryItem,
+  filterQuery,
+  getQuery,
+  parseQuery,
+  stringifyQuery,
+  withQuery,
+} from "../src";
+
+describe("encodeQueryItem", () => {
+  const tests = [
+    { key: "flag", value: "", out: "flag" },
+    { key: "flag", value: [], out: "" },
+    { key: "flag", value: [""], out: "flag" },
+    { key: "flag", value: ["", ""], out: "flag&flag" },
+    { key: "flag", value: ["", "value", ""], out: "flag&flag=value&flag" },
+    { key: "a b=c", value: ["", "&"], out: "a+b%3Dc&a+b%3Dc=%26" },
+    { key: "flag", value: [0, false, ""], out: "flag=0&flag=false&flag" },
+    { key: "flag", value: null, out: "flag" },
+    { key: "flag", value: undefined, out: "flag" },
+    { key: "flag", value: [null, undefined], out: "flag=null&flag=undefined" },
+  ];
+
+  for (const t of tests) {
+    test(`${t.key} with ${JSON.stringify(t.value)}`, () => {
+      expect(encodeQueryItem(t.key, t.value)).toBe(t.out);
+    });
+  }
+});
+
+describe("stringifyQuery", () => {
+  test("preserves empty strings in scalar and array query values", () => {
+    const query = { scalar: "", array: ["", "value", ""] };
+    const encoded = stringifyQuery(query);
+    expect(encoded).toBe("scalar&array&array=value&array");
+    expect(parseQuery(encoded)).toEqual(query);
+  });
+
+  test("preserves zero and false and omits undefined query values", () => {
+    expect(
+      stringifyQuery({ zero: 0, falsy: false, nil: null, omitted: undefined }),
+    ).toBe("zero=0&falsy=false&nil");
+  });
+});
 
 describe("withQuery", () => {
   const tests = [
@@ -41,8 +84,8 @@ describe("withQuery", () => {
       query: { json: '{"test":["content"]}' },
       out: "/?json=%7B%22test%22:%5B%22content%22%5D%7D",
     },
-    { input: "/", query: { param: ["3", ""] }, out: "/?param=3&param=" },
-    { input: "/", query: { param: ["", "3"] }, out: "/?param=&param=3" },
+    { input: "/", query: { param: ["3", ""] }, out: "/?param=3&param" },
+    { input: "/", query: { param: ["", "3"] }, out: "/?param&param=3" },
     {
       input: "/",
       query: { param: { a: { nested: { object: 123 } } } },
