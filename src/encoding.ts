@@ -18,6 +18,7 @@ const ENC_CURLY_CLOSE_RE = /%7d/gi; // }
 const ENC_SPACE_RE = /%20/gi;
 const ENC_SLASH_RE = /%2f/gi;
 const ENC_ENC_SLASH_RE = /%252f/gi;
+const QUERY_VALUE_UNSAFE_RE = /[#%&+/]/; // characters the replacements below act on
 
 /**
  * Encodes characters that need to be encoded in the path, search and hash
@@ -29,7 +30,8 @@ const ENC_ENC_SLASH_RE = /%252f/gi;
  * @returns encoded string
  */
 export function encode(text: string | number): string {
-  return encodeURI("" + text).replace(ENC_PIPE_RE, "|");
+  const encoded = encodeURI("" + text);
+  return encoded.includes("%") ? encoded.replace(ENC_PIPE_RE, "|") : encoded;
 }
 
 /**
@@ -57,8 +59,15 @@ export function encodeHash(text: string): string {
  * @returns encoded string
  */
 export function encodeQueryValue(input: QueryValue): string {
+  const encoded = encode(
+    typeof input === "string" ? input : JSON.stringify(input),
+  );
+  // Fast path: none of the replacements below can match
+  if (!QUERY_VALUE_UNSAFE_RE.test(encoded)) {
+    return encoded;
+  }
   return (
-    encode(typeof input === "string" ? input : JSON.stringify(input))
+    encoded
       // Encodes the space as +, encode the + to differentiate it from the space
       .replace(PLUS_RE, "%2B")
       .replace(ENC_SPACE_RE, "+")
