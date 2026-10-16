@@ -20,6 +20,10 @@ describe("normalizeURL", () => {
     "/%c": "/%25c",
     "/%": "/%25",
     "/test%2Bfile.txt": "/test%2Bfile.txt",
+    "/test+file.txt": "/test+file.txt",
+    "/another+test%2Bfile.txt": "/another+test%2Bfile.txt",
+    "http://foo.com/c++/test?query=a+b#hash+test":
+      "http://foo.com/c++/test?query=a+b#hash+test",
     "http://foo.com/test?query=123#hash": "http://foo.com/test?query=123#hash",
     "http://localhost:3000": "http://localhost:3000",
     "http://my_email%40gmail.com:password@www.my_site.com":
@@ -69,6 +73,7 @@ describe("normalizeURL", () => {
     "http://foo.com/blah_(wikipedia)_blah#cite-1",
     "http://foo.com/unicode_(✪)_in_parens",
     "http://foo.com/(something)?after=parens",
+    "http://foo.com/c++/another+test%2Bfile.txt",
     "http://☺.damowmow.com/",
     "http://code.google.com/events/#&product=browser",
     "http://j.mp",
