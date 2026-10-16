@@ -596,7 +596,11 @@ export function withProtocol(input: string, protocol: string): string {
  */
 export function normalizeURL(input: string): string {
   const parsed = parseURL(input);
-  parsed.pathname = encodePath(decodePath(parsed.pathname));
+  // Keep literal `+` as-is (distinct from `%2B`) while normalizing the rest
+  parsed.pathname = parsed.pathname
+    .split("+")
+    .map((part) => encodePath(decodePath(part)))
+    .join("+");
   parsed.hash = encodeHash(decode(parsed.hash));
   parsed.host = encodeHost(decode(parsed.host));
   parsed.search = stringifyQuery(parseQuery(parsed.search));
