@@ -414,6 +414,11 @@ export function isNonEmptyURL(url: string) {
   return url && url !== "/";
 }
 
+/**
+ * Strips leading slash (`/`) or `./` prefix from a URL segment.
+ *
+ * @internal
+ */
 function stripLeadingSlash(segment: string): string {
   if (segment.charCodeAt(0) === 47 /* '/' */) {
     return segment.slice(1);
