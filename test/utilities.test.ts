@@ -135,6 +135,51 @@ describe("stringifyParsedURL", () => {
   }
 });
 
+describe("parsePath", () => {
+  const tests = [
+    { input: "", out: { pathname: "", search: "", hash: "" } },
+    { input: "/foo/bar", out: { pathname: "/foo/bar", search: "", hash: "" } },
+    {
+      input: "/foo?bar=1",
+      out: { pathname: "/foo", search: "?bar=1", hash: "" },
+    },
+    {
+      input: "/foo#section",
+      out: { pathname: "/foo", search: "", hash: "#section" },
+    },
+    {
+      input: "/foo?bar=1#section",
+      out: { pathname: "/foo", search: "?bar=1", hash: "#section" },
+    },
+    {
+      input: "/foo#section?bar=1",
+      out: { pathname: "/foo", search: "", hash: "#section?bar=1" },
+    },
+    { input: "?bar=1", out: { pathname: "", search: "?bar=1", hash: "" } },
+    { input: "#section", out: { pathname: "", search: "", hash: "#section" } },
+    {
+      input: "?bar=1#section",
+      out: { pathname: "", search: "?bar=1", hash: "#section" },
+    },
+    { input: "?#", out: { pathname: "", search: "?", hash: "#" } },
+    { input: "#?", out: { pathname: "", search: "", hash: "#?" } },
+    {
+      input: "/path?foo=1?bar=2#hash1#hash2",
+      out: { pathname: "/path", search: "?foo=1?bar=2", hash: "#hash1#hash2" },
+    },
+  ];
+
+  test("handles undefined", () => {
+    expect(parsePath()).toEqual({ pathname: "", search: "", hash: "" });
+  });
+
+  for (const t of tests) {
+    test(`parsePath(${JSON.stringify(t.input)})`, () => {
+      expect(parsePath(t.input)).toEqual(t.out);
+    });
+  }
+});
+
 describe("withHttp", () => {
   const tests = [
     { input: "https://example.com", out: "http://example.com" },

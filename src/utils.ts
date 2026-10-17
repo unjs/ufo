@@ -13,7 +13,6 @@ const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
 const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
 const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
 const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
-const JOIN_LEADING_SLASH_RE = /^\.?\//;
 
 /**
  * Check if a path starts with `./` or `../`.
@@ -416,6 +415,24 @@ export function isNonEmptyURL(url: string) {
 }
 
 /**
+ * Strips leading slash (`/`) or `./` prefix from a URL segment.
+ *
+ * @internal
+ */
+function stripLeadingSlash(segment: string): string {
+  if (segment.charCodeAt(0) === 47 /* '/' */) {
+    return segment.slice(1);
+  }
+  if (
+    segment.charCodeAt(0) === 46 /* '.' */ &&
+    segment.charCodeAt(1) === 47 /* '/' */
+  ) {
+    return segment.slice(2);
+  }
+  return segment;
+}
+
+/**
  * Joins multiple URL segments into a single URL.
  *
  * @example
@@ -429,11 +446,14 @@ export function isNonEmptyURL(url: string) {
 export function joinURL(base: string, ...input: string[]): string {
   let url = base || "";
 
-  for (const segment of input.filter((url) => isNonEmptyURL(url))) {
+  for (const segment of input) {
+    if (!segment || segment === "/") {
+      continue;
+    }
     if (url) {
       // TODO: Handle .. when joining
-      const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
-      url = withTrailingSlash(url) + _segment;
+      const _segment = stripLeadingSlash(segment);
+      url = url.endsWith("/") ? url + _segment : url + "/" + _segment;
     } else {
       url = segment;
     }

@@ -110,14 +110,36 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
  * @returns An object with three properties: `pathname`, `search`, and `hash`.
  */
 export function parsePath(input = ""): ParsedPath {
-  const [pathname = "", search = "", hash = ""] = (
-    input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []
-  ).splice(1);
+  const hashIndex = input.indexOf("#");
+  const queryIndex = input.indexOf("?");
+
+  if (hashIndex === -1) {
+    if (queryIndex === -1) {
+      return {
+        pathname: input,
+        search: "",
+        hash: "",
+      };
+    }
+    return {
+      pathname: input.slice(0, queryIndex),
+      search: input.slice(queryIndex),
+      hash: "",
+    };
+  }
+
+  if (queryIndex === -1 || queryIndex > hashIndex) {
+    return {
+      pathname: input.slice(0, hashIndex),
+      search: "",
+      hash: input.slice(hashIndex),
+    };
+  }
 
   return {
-    pathname,
-    search,
-    hash,
+    pathname: input.slice(0, queryIndex),
+    search: input.slice(queryIndex, hashIndex),
+    hash: input.slice(hashIndex),
   };
 }
 
