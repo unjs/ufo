@@ -159,6 +159,7 @@ describe("stringifyParsedURL", () => {
     "data:image/png;base64,AAAA",
     "blob:abc",
     "javascript:void(0)",
+    "vbscript:msgbox(1)",
     "file:///a/b",
     "http://foo.com/p?x=1#h",
     "//cdn.example.com/x",
