@@ -4,6 +4,7 @@ import {
   isEqual,
   isRelative,
   parsePath,
+  parseURL,
   stringifyParsedURL,
   withHttp,
   withHttps,
@@ -122,6 +123,24 @@ describe("stringifyParsedURL", () => {
       input: { protocol: "https:", host: "google.com" },
       out: "https://google.com",
     },
+    // opaque schemes have no `//` authority
+    {
+      input: { protocol: "data:", pathname: "text/plain,hi" },
+      out: "data:text/plain,hi",
+    },
+    {
+      input: { protocol: "blob:", pathname: "abc" },
+      out: "blob:abc",
+    },
+    {
+      input: { protocol: "javascript:", pathname: "void(0)" },
+      out: "javascript:void(0)",
+    },
+    // `file:` keeps its authority even with an empty host
+    {
+      input: { protocol: "file:", host: "", pathname: "/a/b" },
+      out: "file:///a/b",
+    },
   ];
 
   for (const t of tests) {
@@ -131,6 +150,24 @@ describe("stringifyParsedURL", () => {
           typeof t.input === "string" ? parsePath(t.input) : t.input,
         ),
       ).toBe(t.out);
+    });
+  }
+
+  // regression: opaque schemes used to gain a `//` and accumulate slashes
+  const roundtrips = [
+    "data:text/plain,hi",
+    "data:image/png;base64,AAAA",
+    "blob:abc",
+    "javascript:void(0)",
+    "file:///a/b",
+    "http://foo.com/p?x=1#h",
+    "//cdn.example.com/x",
+  ];
+  for (const input of roundtrips) {
+    test(`roundtrip ${input}`, () => {
+      const once = stringifyParsedURL(parseURL(input));
+      expect(once).toBe(input);
+      expect(stringifyParsedURL(parseURL(once))).toBe(input);
     });
   }
 });
