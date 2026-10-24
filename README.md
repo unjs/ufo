@@ -98,6 +98,8 @@ Takes a string of the form `username:password` and returns an object with the us
 
 Parses a URL and returns last segment in path as filename.
 
+Supports relative paths, including a filename without a leading slash.
+
 If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
 
 **Example:**
