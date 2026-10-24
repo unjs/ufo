@@ -155,7 +155,9 @@ export function parseAuth(input = ""): ParsedAuth {
  * `port`.
  */
 export function parseHost(input = ""): ParsedHost {
-  const [hostname, port] = (input.match(/([^/:]*):?(\d+)?/) || []).splice(1);
+  const [hostname, port] = (
+    input.match(/(\[[^\]]+\]|[^/:]*):?(\d+)?/) || []
+  ).splice(1);
   return {
     hostname: decode(hostname),
     port,
