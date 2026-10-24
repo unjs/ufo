@@ -194,11 +194,13 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   return proto + auth + host + pathname + search + hash;
 }
 
-const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
-const FILENAME_REGEX = /\/([^/]+)$/;
+const FILENAME_STRICT_REGEX = /(?:^|\/)([^/]+\.[^/]+)$/;
+const FILENAME_REGEX = /(?:\/|^(?!\.{1,2}$))([^/]+)$/;
 
 /**
  * Parses a URL and returns last segment in path as filename.
+ *
+ * Supports relative paths, including a filename without a leading slash.
  *
  * If `{ strict: true }` is passed as the second argument, it will only return the last segment only if ending with an extension.
  *

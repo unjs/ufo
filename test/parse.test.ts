@@ -198,6 +198,14 @@ describe("parseHost", () => {
 
 describe("parseFilename", () => {
   const tests = [
+    { input: ["filename.ext", false], out: "filename.ext" },
+    { input: ["filename.ext", true], out: "filename.ext" },
+    { input: ["README", false], out: "README" },
+    { input: [".hidden-file", false], out: ".hidden-file" },
+    { input: [".hidden-file", true], out: undefined },
+    { input: ["..", false], out: undefined },
+    { input: ["filename.ext?query=true#hash", false], out: "filename.ext" },
+    { input: ["filename.ext?query=true#hash", true], out: "filename.ext" },
     { input: ["/path/to/filename.ext", false], out: "filename.ext" },
     { input: ["/path/to/.hidden-file", false], out: ".hidden-file" },
     { input: ["/path/to/dir/", false], out: undefined },
@@ -284,6 +292,7 @@ describe("parseFilename", () => {
 
   test("works", () => {
     expect(parseFilename("/path/to/filename.ext")).toEqual("filename.ext");
+    expect(parseFilename("filename.ext")).toEqual("filename.ext");
   });
 
   for (const t of tests) {
