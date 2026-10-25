@@ -44,6 +44,7 @@ export type ParsedQuery = Record<string, string | string[]>;
  *
  * @group Query_utils
  */
+/* @__NO_SIDE_EFFECTS__ */
 export function parseQuery<T extends ParsedQuery = ParsedQuery>(
   parametersString = "",
 ): T {
