@@ -22,6 +22,18 @@ describe("normalizeURL", () => {
     "/test%2Bfile.txt": "/test%2Bfile.txt",
     "http://foo.com/test?query=123#hash": "http://foo.com/test?query=123#hash",
     "http://localhost:3000": "http://localhost:3000",
+    "http://例え.テスト:8080/path?foo=bar#hash":
+      "http://xn--r8jz45g.xn--zckzah:8080/path?foo=bar#hash",
+    "http://münich:3000/path": "http://xn--mnich-kva:3000/path",
+    "http://例え.テスト:08080/path": "http://xn--r8jz45g.xn--zckzah:08080/path",
+    "http://例え.テスト:/path": "http://xn--r8jz45g.xn--zckzah:/path",
+    "//例え.テスト:8080/path": "//xn--r8jz45g.xn--zckzah:8080/path",
+    "http://%E4%BE%8B%E3%81%88.%E3%83%86%E3%82%B9%E3%83%88:8080/path":
+      "http://xn--r8jz45g.xn--zckzah:8080/path",
+    "http://例え.テスト/path": "http://xn--r8jz45g.xn--zckzah/path",
+    "http://münich.com:8080/path": "http://xn--mnich-kva.com:8080/path",
+    "http://[::1]:8080/path": "http://[::1]:8080/path",
+    "http://[::1]/path": "http://[::1]/path",
     "http://my_email%40gmail.com:password@www.my_site.com":
       "http://my_email%40gmail.com:password@www.my_site.com",
     "/test?query=123,123#hash, test": "/test?query=123,123#hash,%20test",

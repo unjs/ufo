@@ -598,7 +598,9 @@ export function normalizeURL(input: string): string {
   const parsed = parseURL(input);
   parsed.pathname = encodePath(decodePath(parsed.pathname));
   parsed.hash = encodeHash(decode(parsed.hash));
-  parsed.host = encodeHost(decode(parsed.host));
+  const host = decode(parsed.host);
+  const port = host.match(/:\d*$/)?.[0] || "";
+  parsed.host = encodeHost(port ? host.slice(0, -port.length) : host) + port;
   parsed.search = stringifyQuery(parseQuery(parsed.search));
   return stringifyParsedURL(parsed);
 }
