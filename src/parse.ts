@@ -77,7 +77,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   // eslint-disable-next-line prefer-const
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
 
-  if (protocol === "file:") {
+  if (protocol.toLowerCase() === "file:") {
     path = path.replace(/\/(?=[A-Za-z]:)/, "");
   }
 
