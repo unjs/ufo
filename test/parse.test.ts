@@ -181,6 +181,18 @@ describe("parseURL", () => {
       expect(structuredClone(parseURL(t.input))).toEqual(t.out);
     });
   }
+
+  test.each([
+    ["FILE:///C:/home/user", "C:/home/user"],
+    ["FiLe:///c:/home/user", "c:/home/user"],
+    ["FILE://localhost/C:/home/user", "C:/home/user"],
+    ["FiLe:///C:/home/user?download=1#section", "C:/home/user"],
+    ["FILE:///home/user", "/home/user"],
+    ["FiLe://server/share/file.txt", "/share/file.txt"],
+    ["HTTPS://example.com/C:/home/user", "/C:/home/user"],
+  ])("parses the pathname of %s", (input, pathname) => {
+    expect(parseURL(input).pathname).toBe(pathname);
+  });
 });
 
 describe("parseHost", () => {
