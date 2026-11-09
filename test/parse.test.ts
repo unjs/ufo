@@ -181,6 +181,29 @@ describe("parseURL", () => {
       expect(structuredClone(parseURL(t.input))).toEqual(t.out);
     });
   }
+
+  test.each([
+    ["file:///tmp/C:/file.txt", "/tmp/C:/file.txt", "", ""],
+    ["file://server/share/c:/file.txt", "/share/c:/file.txt", "", ""],
+    [
+      "file:///tmp/file.txt?next=/C:/data",
+      "/tmp/file.txt",
+      "?next=/C:/data",
+      "",
+    ],
+    ["file:///tmp/file.txt#/c:/data", "/tmp/file.txt", "", "#/c:/data"],
+    ["file:///?next=/C:/data", "/", "?next=/C:/data", ""],
+    ["file:///#/c:/data", "/", "", "#/c:/data"],
+    [
+      "file:///C:/file.txt?next=/D:/data#/E:/data",
+      "C:/file.txt",
+      "?next=/D:/data",
+      "#/E:/data",
+    ],
+    ["file://localhost/c:/file.txt", "c:/file.txt", "", ""],
+  ])("preserves file URL components in %s", (input, pathname, search, hash) => {
+    expect(parseURL(input)).toMatchObject({ pathname, search, hash });
+  });
 });
 
 describe("parseHost", () => {

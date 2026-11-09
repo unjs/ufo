@@ -78,7 +78,7 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
 
   if (protocol === "file:") {
-    path = path.replace(/\/(?=[A-Za-z]:)/, "");
+    path = path.replace(/^\/(?=[A-Za-z]:)/, "");
   }
 
   const { pathname, search, hash } = parsePath(path);
