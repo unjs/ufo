@@ -1,5 +1,24 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
+
+describe("parseQuery", () => {
+  test.each([
+    ["line feed", "\n"],
+    ["carriage return", "\r"],
+    ["CRLF", "\r\n"],
+    ["line separator", "\u2028"],
+    ["paragraph separator", "\u2029"],
+  ])("preserves %s in query values", (_, separator) => {
+    const value = `first${separator}second=third`;
+    expect(parseQuery(`?text=${value}&text=last&other=ok`)).toEqual({
+      text: [value, "last"],
+      other: "ok",
+    });
+    expect(parseQuery(`text=${encodeURIComponent(value)}`)).toEqual({
+      text: value,
+    });
+  });
+});
 
 describe("withQuery", () => {
   const tests = [
