@@ -2,6 +2,16 @@ import { describe, expect, test } from "vitest";
 import { parseURL, parseHost, parseFilename } from "../src";
 
 describe("parseURL", () => {
+  test.each(["\n", "\r", "\u2028", "\u2029"])(
+    "preserves line terminators in opaque URL content (%j)",
+    (separator) => {
+      const input = `data:image/svg+xml,<svg>${separator}<text>hello</text></svg>`;
+      const parsed = parseURL(input);
+      expect(parsed.pathname).toBe(input.slice("data:".length));
+      expect(parsed.href).toBe(input);
+    },
+  );
+
   const tests = [
     {
       input: "//test",

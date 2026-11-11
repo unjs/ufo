@@ -50,7 +50,7 @@ export interface ParsedHost {
  */
 export function parseURL(input = "", defaultProto?: string): ParsedURL {
   const _specialProtoMatch = input.match(
-    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i,
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)([\s\S]*)/i,
   );
   if (_specialProtoMatch) {
     const [, _proto, _pathname = ""] = _specialProtoMatch;
