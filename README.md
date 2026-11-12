@@ -106,6 +106,9 @@ If `{ strict: true }` is passed as the second argument, it will only return the 
 // Result: filename.ext
 parseFilename("http://example.com/path/to/filename.ext");
 
+// Result: filename.ext
+parseFilename("filename.ext");
+
 // Result: undefined
 parseFilename("/path/to/.hidden-file", { strict: true });
 ```
