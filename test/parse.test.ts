@@ -278,6 +278,19 @@ describe("parseFilename", () => {
     },
     { input: ["file:///path/to/filename.ext", true], out: "filename.ext" },
     { input: ["/path/to/filename.ext/", true], out: undefined },
+    { input: ["report.csv", false], out: "report.csv" },
+    { input: ["report.csv", true], out: "report.csv" },
+    { input: ["report.csv?download=1#section", false], out: "report.csv" },
+    { input: ["report.csv?download=1#section", true], out: "report.csv" },
+    { input: [".hidden-file", false], out: ".hidden-file" },
+    { input: [".hidden-file", true], out: undefined },
+    { input: ["README", false], out: "README" },
+    { input: ["README", true], out: undefined },
+    { input: ["..", false], out: undefined },
+    { input: ["..", true], out: undefined },
+    { input: ["/path/to/file.", true], out: undefined },
+    { input: ["/path/to/a.b.", true], out: "a.b." },
+    { input: ["/path/to/...", true], out: "..." },
     { input: ["/path/to/dir/../filename.ext", true], out: "filename.ext" },
     { input: ["/path/to/dir/../filename.ext/", true], out: undefined },
   ] as const;
@@ -293,4 +306,14 @@ describe("parseFilename", () => {
       ).toStrictEqual(t.out);
     });
   }
+
+  test("long dotted segments", () => {
+    const segment = "a.".repeat(50_000) + "a";
+    for (const strict of [false, true]) {
+      expect(parseFilename(segment + "/", { strict })).toBeUndefined();
+      expect(parseFilename(`/${segment}/`, { strict })).toBeUndefined();
+      expect(parseFilename(segment, { strict })).toBe(segment);
+      expect(parseFilename(`/path/${segment}`, { strict })).toBe(segment);
+    }
+  });
 });

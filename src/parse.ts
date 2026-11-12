@@ -194,9 +194,6 @@ export function stringifyParsedURL(parsed: Partial<ParsedURL>): string {
   return proto + auth + host + pathname + search + hash;
 }
 
-const FILENAME_STRICT_REGEX = /\/([^/]+\.[^/]+)$/;
-const FILENAME_REGEX = /\/([^/]+)$/;
-
 /**
  * Parses a URL and returns last segment in path as filename.
  *
@@ -210,6 +207,9 @@ const FILENAME_REGEX = /\/([^/]+)$/;
  * // Result: filename.ext
  * parseFilename("http://example.com/path/to/filename.ext");
  *
+ * // Result: filename.ext
+ * parseFilename("filename.ext");
+ *
  * // Result: undefined
  * parseFilename("/path/to/.hidden-file", { strict: true });
  * ```
@@ -222,8 +222,17 @@ export function parseFilename(
   opts?: { strict?: boolean },
 ): string | undefined {
   const { pathname } = parseURL(input);
-  const matches = opts?.strict
-    ? pathname.match(FILENAME_STRICT_REGEX)
-    : pathname.match(FILENAME_REGEX);
-  return matches ? matches[1] : undefined;
+  const filename = pathname.slice(pathname.lastIndexOf("/") + 1);
+  // A bare `.` or `..` is a relative path, not a filename.
+  if (!filename || pathname === "." || pathname === "..") {
+    return undefined;
+  }
+  if (opts?.strict) {
+    // Strict mode needs an extension: a dot that is neither the first nor the last character.
+    const dot = filename.indexOf(".", 1);
+    if (dot === -1 || dot === filename.length - 1) {
+      return undefined;
+    }
+  }
+  return filename;
 }
