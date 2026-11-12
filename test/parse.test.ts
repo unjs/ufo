@@ -288,6 +288,9 @@ describe("parseFilename", () => {
     { input: ["README", true], out: undefined },
     { input: ["..", false], out: undefined },
     { input: ["..", true], out: undefined },
+    { input: ["/path/to/file.", true], out: undefined },
+    { input: ["/path/to/a.b.", true], out: "a.b." },
+    { input: ["/path/to/...", true], out: "..." },
     { input: ["/path/to/dir/../filename.ext", true], out: "filename.ext" },
     { input: ["/path/to/dir/../filename.ext/", true], out: undefined },
   ] as const;
@@ -303,4 +306,14 @@ describe("parseFilename", () => {
       ).toStrictEqual(t.out);
     });
   }
+
+  test("long dotted segments", () => {
+    const segment = "a.".repeat(50_000) + "a";
+    for (const strict of [false, true]) {
+      expect(parseFilename(segment + "/", { strict })).toBeUndefined();
+      expect(parseFilename(`/${segment}/`, { strict })).toBeUndefined();
+      expect(parseFilename(segment, { strict })).toBe(segment);
+      expect(parseFilename(`/path/${segment}`, { strict })).toBe(segment);
+    }
+  });
 });
