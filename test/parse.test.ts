@@ -106,6 +106,42 @@ describe("parseURL", () => {
       },
     },
     {
+      input: "data:image/svg+xml,<svg>\n<text>hello</text></svg>",
+      out: {
+        protocol: "data:",
+        auth: "",
+        host: "",
+        href: "data:image/svg+xml,<svg>\n<text>hello</text></svg>",
+        pathname: "image/svg+xml,<svg>\n<text>hello</text></svg>",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "data:text/plain;charset=utf-8,line1\r\nline2",
+      out: {
+        protocol: "data:",
+        auth: "",
+        host: "",
+        href: "data:text/plain;charset=utf-8,line1\r\nline2",
+        pathname: "text/plain;charset=utf-8,line1\r\nline2",
+        search: "",
+        hash: "",
+      },
+    },
+    {
+      input: "javascript:console.log('line1');\nconsole.log('line2');",
+      out: {
+        protocol: "javascript:",
+        auth: "",
+        host: "",
+        href: "javascript:console.log('line1');\nconsole.log('line2');",
+        pathname: "console.log('line1');\nconsole.log('line2');",
+        search: "",
+        hash: "",
+      },
+    },
+    {
       input: "https://domain.test:3000#owo",
       out: {
         protocol: "https:",
