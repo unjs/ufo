@@ -69,10 +69,11 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
   }
 
-  const [, protocol = "", auth, hostAndPath = ""] =
-    input
-      .replace(/\\/g, "/")
-      .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
+  const rawParts = parsePath(input);
+  const match = rawParts.pathname
+    .replace(/\\/g, "/")
+    .match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/);
+  const [, protocol = "", auth, hostAndPath = ""] = match || [];
 
   // eslint-disable-next-line prefer-const
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
@@ -81,7 +82,9 @@ export function parseURL(input = "", defaultProto?: string): ParsedURL {
     path = path.replace(/\/(?=[A-Za-z]:)/, "");
   }
 
-  const { pathname, search, hash } = parsePath(path);
+  const { pathname } = parsePath(path);
+  // Query and fragment backslashes are data, not path separators.
+  const { search, hash } = match ? rawParts : parsePath(path);
 
   return {
     protocol: protocol.toLowerCase(),
