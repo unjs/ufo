@@ -157,3 +157,85 @@ describe("URL backslashes", () => {
     ).toBe(String.raw`//example.com/a/b?q=c\d#e\f`);
   });
 });
+
+describe("authority and suffix boundaries", () => {
+  test.each([
+    [
+      "https://example.com?email=a@b.test",
+      "https:",
+      "",
+      "",
+      "?email=a@b.test",
+      "",
+    ],
+    [
+      "https://example.com#email=a@b.test",
+      "https:",
+      "",
+      "",
+      "",
+      "#email=a@b.test",
+    ],
+    [
+      "https://example.com?email=a@b.test#c@d",
+      "https:",
+      "",
+      "",
+      "?email=a@b.test",
+      "#c@d",
+    ],
+    ["//example.com?email=a@b.test", "", "", "", "?email=a@b.test", ""],
+    [
+      String.raw`https://example.com?email=a@b.test\c`,
+      "https:",
+      "",
+      "",
+      String.raw`?email=a@b.test\c`,
+      "",
+    ],
+    [
+      String.raw`https://example.com#email=a@b.test\c`,
+      "https:",
+      "",
+      "",
+      "",
+      String.raw`#email=a@b.test\c`,
+    ],
+    [
+      "https://user:pass@example.com?email=a@b.test",
+      "https:",
+      "user:pass",
+      "",
+      "?email=a@b.test",
+      "",
+    ],
+    [
+      "https://user%40name:p%40ss@example.com/path?q=a@b#c@d",
+      "https:",
+      "user%40name:p%40ss",
+      "/path",
+      "?q=a@b",
+      "#c@d",
+    ],
+  ])(
+    "parses and round-trips %s",
+    (input, protocol, auth, pathname, search, hash) => {
+      const parsed = parseURL(input);
+      expect(parsed).toMatchObject({
+        protocol,
+        auth,
+        host: "example.com",
+        pathname,
+        search,
+        hash,
+      });
+      expect(stringifyParsedURL(parsed)).toBe(input);
+    },
+  );
+
+  test("adds a query parameter without duplicating the existing query", () => {
+    expect(withQuery("https://example.com?email=a@b.test", { page: 2 })).toBe(
+      "https://example.com?email=a@b.test&page=2",
+    );
+  });
+});
