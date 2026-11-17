@@ -181,6 +181,16 @@ describe("parseURL", () => {
       expect(structuredClone(parseURL(t.input))).toEqual(t.out);
     });
   }
+
+  test.each(["\n", "\r", "\u2028", "\u2029"])(
+    "preserves data URL content after a line terminator",
+    (lineTerminator) => {
+      const input = `data:image/svg+xml,<svg>${lineTerminator}<text>hello</text></svg>`;
+      const parsed = parseURL(input);
+      expect(parsed.pathname).toBe(input.slice(5));
+      expect(parsed.href).toBe(input);
+    },
+  );
 });
 
 describe("parseHost", () => {
