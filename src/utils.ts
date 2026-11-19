@@ -728,6 +728,7 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
  * ```js
  * withFragment("/foo", "bar"); // "/foo#bar"
  * withFragment("/foo#bar", "baz"); // "/foo#baz"
+ * withFragment("/foo", "#bar"); // "/foo#bar"
  * withFragment("/foo#bar", ""); // "/foo"
  * ```
  *
@@ -738,7 +739,10 @@ export function withFragment(input: string, hash: string): string {
     return input;
   }
   const parsed = parseURL(input);
-  parsed.hash = hash === "" ? "" : "#" + encodeHash(hash);
+  // Tolerate a leading `#` (e.g. a value taken from `parseURL(...).hash`)
+  // instead of producing a doubled `##` fragment.
+  const fragment = hash.startsWith("#") ? hash.slice(1) : hash;
+  parsed.hash = "#" + encodeHash(fragment);
   return stringifyParsedURL(parsed);
 }
 
