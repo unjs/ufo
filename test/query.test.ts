@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -108,4 +108,29 @@ describe("getQuery", () => {
       expect(getQuery(t)).toMatchObject(tests[t]);
     });
   }
+});
+
+describe("parseQuery", () => {
+  test("preserves query values containing line terminators", () => {
+    expect(parseQuery("text=first\u2028second")).toEqual({
+      text: "first\u2028second",
+    });
+    expect(parseQuery("text=first\u2029second")).toEqual({
+      text: "first\u2029second",
+    });
+    expect(parseQuery("text=first\nsecond")).toEqual({
+      text: "first\nsecond",
+    });
+    expect(parseQuery("text=first\r\nsecond")).toEqual({
+      text: "first\r\nsecond",
+    });
+  });
+
+  test("handles empty values and multiple keys with line terminators", () => {
+    expect(parseQuery("a=hello\nworld&b=foo&c=")).toEqual({
+      a: "hello\nworld",
+      b: "foo",
+      c: "",
+    });
+  });
 });
