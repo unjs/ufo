@@ -58,13 +58,17 @@ export function parseQuery<T extends ParsedQuery = ParsedQuery>(
     if (s.length < 2) {
       continue;
     }
-    const key = decodeQueryKey(s[1]);
+    let key = decodeQueryKey(s[1]);
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
+    const isArrayKey = key.endsWith("[]");
+    if (isArrayKey) {
+      key = key.slice(0, -2);
+    }
     const value = decodeQueryValue(s[2] || "");
     if (object[key] === undefined) {
-      object[key] = value;
+      object[key] = isArrayKey ? [value] : value;
     } else if (Array.isArray(object[key])) {
       (object[key] as string[]).push(value);
     } else {

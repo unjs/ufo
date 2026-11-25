@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterQuery, getQuery, withQuery } from "../src";
+import { filterQuery, getQuery, parseQuery, withQuery } from "../src";
 
 describe("withQuery", () => {
   const tests = [
@@ -70,6 +70,17 @@ describe("withQuery", () => {
       expect(withQuery(t.input, t.query)).toBe(t.out);
     });
   }
+});
+
+describe("parseQuery", () => {
+  test("parses bracket array keys as arrays", () => {
+    expect(parseQuery("filter[size][]=large")).toEqual({
+      "filter[size]": ["large"],
+    });
+    expect(parseQuery("filter[size][]=large&filter[size][]=medium")).toEqual({
+      "filter[size]": ["large", "medium"],
+    });
+  });
 });
 
 describe("filterQuery", () => {
