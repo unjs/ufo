@@ -723,6 +723,9 @@ export function isEqual(a: string, b: string, options: CompareURLOptions = {}) {
 /**
  * Adds or replaces the fragment section of the URL.
  *
+ * The fragment is treated as unencoded text. One leading `#` is ignored,
+ * and existing percent escapes are encoded again.
+ *
  * @example
  *
  * ```js
@@ -739,8 +742,7 @@ export function withFragment(input: string, hash: string): string {
     return input;
   }
   const parsed = parseURL(input);
-  // Tolerate a leading `#` (e.g. a value taken from `parseURL(...).hash`)
-  // instead of producing a doubled `##` fragment.
+  // Strip one leading delimiter before encoding the fragment text.
   const fragment = hash.startsWith("#") ? hash.slice(1) : hash;
   parsed.hash = "#" + encodeHash(fragment);
   return stringifyParsedURL(parsed);

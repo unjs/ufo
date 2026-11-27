@@ -303,6 +303,21 @@ describe("withFragment", () => {
       fragment: "#bar",
       out: "/foo#bar",
     },
+    {
+      input: "/foo",
+      fragment: "#hello world",
+      out: "/foo#hello%20world",
+    },
+    {
+      input: "/foo",
+      fragment: "#hello%20world",
+      out: "/foo#hello%2520world",
+    },
+    {
+      input: "/foo",
+      fragment: "hello%20world",
+      out: "/foo#hello%2520world",
+    },
     { input: "https://example.com", fragment: "", out: "https://example.com" },
     {
       input: "https://example.com#bar",
