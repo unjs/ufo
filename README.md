@@ -422,11 +422,14 @@ withBase("/foo/bar", "/baz"); // "/baz/foo/bar"
 
 Adds or replaces the fragment section of the URL.
 
+The fragment is treated as unencoded text. One leading `#` is ignored, and existing percent escapes are encoded again.
+
 **Example:**
 
 ```js
 withFragment("/foo", "bar"); // "/foo#bar"
 withFragment("/foo#bar", "baz"); // "/foo#baz"
+withFragment("/foo", "#bar"); // "/foo#bar"
 withFragment("/foo#bar", ""); // "/foo"
 ```
 

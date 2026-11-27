@@ -288,6 +288,36 @@ describe("withFragment", () => {
       fragment: "foo",
       out: "https://example.com#foo",
     },
+    {
+      input: "https://example.com",
+      fragment: "#foo",
+      out: "https://example.com#foo",
+    },
+    {
+      input: "https://example.com#bar",
+      fragment: "#foo",
+      out: "https://example.com#foo",
+    },
+    {
+      input: "/foo",
+      fragment: "#bar",
+      out: "/foo#bar",
+    },
+    {
+      input: "/foo",
+      fragment: "#hello world",
+      out: "/foo#hello%20world",
+    },
+    {
+      input: "/foo",
+      fragment: "#hello%20world",
+      out: "/foo#hello%2520world",
+    },
+    {
+      input: "/foo",
+      fragment: "hello%20world",
+      out: "/foo#hello%2520world",
+    },
     { input: "https://example.com", fragment: "", out: "https://example.com" },
     {
       input: "https://example.com#bar",
